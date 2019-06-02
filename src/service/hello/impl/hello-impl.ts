@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 
-import HelloService from '@initial-service/service/hello/hello';
+import HelloService from '@src/service/hello/hello';
 
 @injectable()
 class HelloServiceImpl implements HelloService {

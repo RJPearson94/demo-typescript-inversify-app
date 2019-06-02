@@ -13,7 +13,7 @@
         "noUnusedLocals": true,
         "baseUrl": "./src",
         "paths": {
-            "@initial-service/*": ["*"]
+            "@src/*": ["*"]
         }
     },
     "compileOnSave": false,
