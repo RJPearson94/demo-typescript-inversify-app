@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "lib": [
+            "es6"
+        ],
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "noUnusedLocals": true,
+        "baseUrl": "./src",
+        "paths": {
+            "@initial-service/*": ["*"]
+        }
+    },
+    "compileOnSave": false,
+    "exclude": [
+      "node_modules"
+    ]
+}
