@@ -1,0 +1,15 @@
+# IDE
+.vs_code
+
+# Dependencies
+node_modules
+
+# Bundled Code
+lib
+dist
+
+# Code Coverage
+coverage
+
+# Misc
+.DS_Store
