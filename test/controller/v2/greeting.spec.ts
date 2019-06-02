@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import V2GreetingController from '@initial-service/controller/v2/greeting';
-import HelloService from '@initial-service/service/hello/hello';
+import V2GreetingController from '@src/controller/v2/greeting';
+import HelloService from '@src/service/hello/hello';
 
 describe('#V2GreetingController', () => {
   test('should return SayHello when greet is called', () => {
