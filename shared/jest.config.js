@@ -61,7 +61,7 @@ module.exports = {
     globals: {
         'ts-jest': {
             babelConfig: true,
-        }
+        },
     },
 
     // An array of directory names to be searched recursively up from the requiring module's location
