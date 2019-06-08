@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "es5",
+        "target": "es6",
         "lib": [
             "es6"
         ],
@@ -11,13 +11,16 @@
         "experimentalDecorators": true,
         "moduleResolution": "node",
         "noUnusedLocals": true,
-        "baseUrl": "./src",
+        "declaration": false,
+        "outDir": "dist",
+        "baseUrl": ".",
         "paths": {
-            "@src/*": ["*"]
+            "@src/*": ["src/*"],
+            "@shared/*": ["node_modules/inversify-shared/src/*"]
         }
     },
     "compileOnSave": false,
     "exclude": [
-      "node_modules"
+      "node_modules/?!(inversify-shared)"
     ]
 }

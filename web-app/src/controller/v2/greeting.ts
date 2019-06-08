@@ -1,11 +1,10 @@
 import { inject } from 'inversify';
 import { controller, httpGet } from 'inversify-express-utils';
+import TYPES from '@shared/constant/types';
+import HelloService from '@shared/service/hello/hello';
 
-import TYPES from '@src/constant/types';
-import HelloService from '@src/service/hello/hello';
-
-@controller('/v1')
-class V1GreetingController {
+@controller('/v2')
+class V2GreetingController {
 
   public constructor(
     @inject(TYPES.HelloService) private _helloService: HelloService
@@ -13,8 +12,8 @@ class V1GreetingController {
 
   @httpGet('/')
   greet(): string {
-    return this._helloService.sayHello();
+    return 'Say' + this._helloService.sayHello();
   }
 }
 
-export default V1GreetingController;
+export default V2GreetingController;

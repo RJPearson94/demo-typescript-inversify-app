@@ -1,9 +1,8 @@
 import 'reflect-metadata';
 import { urlencoded, json } from 'body-parser';
 import { InversifyExpressServer } from 'inversify-express-utils';
-
 import '@src/controller';
-import container from '@src/inversify.config';
+import container from '@shared/inversify.config';
 
 // start the server
 const server = new InversifyExpressServer(container);
