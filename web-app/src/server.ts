@@ -14,4 +14,4 @@ server.setConfig(app => {
   app.use(json());
 });
 
-server.build().listen(3000);
+server.build().listen(3000, () => console.info(`Server running at http://localhost:${3000}/`));
