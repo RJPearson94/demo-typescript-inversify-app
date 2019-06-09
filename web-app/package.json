@@ -6,7 +6,7 @@
     "babel": "babel",
     "lint": "eslint",
     "lint:all": "eslint .",
-    "start": "ts-node -r dotenv/config -r tsconfig-paths/register --ignore=false src/server.ts",
+    "start": "ts-node -r tsconfig-paths/register --ignore=false src/server.ts",
     "test": "jest"
   },
   "dependencies": {
