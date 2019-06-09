@@ -1,31 +1,7 @@
-# Example Typescript Inversify Express App
+# Example Typescript Inversify App
 
 Example app to prototype Dependency Injection in TypeScript.
 
-Dependencies used include:
+The App can be run in the following forms:
 
-* Typescript
-* Typescript Aliases
-* Inversify
-* Inversify Express Utils
-
-For the full list see `package.json`
-
-## Prerequisites
-
-You will need:
-
-* Port 3000 free
-* Yarn (code written using v1.16.0)
-* Command Prompt
-
-Yarn can be downloaded from <https://yarnpkg.com>
-
-Once you have Yarn installed, open a command prompt and run `yarn install`. This command will download all the necessary dependencies.
-
-## Scripts
-
-The tests and code coverage report can be run from the command line by opening the command prompt in the project folder and running the following command `yarn test`
-
-The app can be run from the command line by opening the command prompt in the project folder and running the following command `yarn start`
-**Please note:** if another application is already running on port 3000 then an error will appear
+* Web App (/web-app)
