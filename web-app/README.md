@@ -15,7 +15,8 @@ For the full list see `package.json`
 
 You will need:
 
-* Port 3000 free
+* Create .env file `Run cp .env.example .env`
+* Populate .env with all the necessary values
 * Yarn (code written using v1.16.0)
 * Command Prompt
 
@@ -28,4 +29,4 @@ Once you have Yarn installed, open a command prompt and run `yarn install`. This
 The tests and code coverage report can be run from the command line by opening the command prompt in the project folder and running the following command `yarn test`
 
 The app can be run from the command line by opening the command prompt in the project folder and running the following command `yarn start`
-**Please note:** if another application is already running on port 3000 then an error will appear
+**Please note:** if another application is already running on the port specified in the .env then an error will appear
