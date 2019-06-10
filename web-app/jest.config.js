@@ -8,11 +8,11 @@ module.exports = {
     // Stop running tests after `n` failures
     // bail: 0,
 
-    // Respect "browser" field in package.json when resolving modules
+    // Respect 'browser' field in package.json when resolving modules
     // browser: false,
 
     // The directory where Jest should store its cached dependency information
-    // cacheDirectory: "/private/var/folders/kv/z6td8m9n0nnfk6nv6_bcl9780000gn/T/jest_dx",
+    // cacheDirectory: '/private/var/folders/kv/z6td8m9n0nnfk6nv6_bcl9780000gn/T/jest_dx',
 
     // Automatically clear mock calls and instances between every test
     clearMocks: true,
@@ -28,15 +28,15 @@ module.exports = {
 
     // An array of regexp pattern strings used to skip coverage collection
     // coveragePathIgnorePatterns: [
-    //   "/node_modules/"
+    //   '/node_modules/'
     // ],
 
     // A list of reporter names that Jest uses when writing coverage reports
     // coverageReporters: [
-    //   "json",
-    //   "text",
-    //   "lcov",
-    //   "clover"
+    //   'json',
+    //   'text',
+    //   'lcov',
+    //   'clover'
     // ],
 
     // An object that configures minimum threshold enforcement for coverage results
@@ -61,12 +61,16 @@ module.exports = {
     globals: {
         'ts-jest': {
             babelConfig: true,
+            tsConfig: {
+                module: 'commonjs',
+                declaration: true,
+            },
         },
     },
 
     // An array of directory names to be searched recursively up from the requiring module's location
     // moduleDirectories: [
-    //   "node_modules"
+    //   'node_modules'
     // ],
 
     // An array of file extensions your modules use
@@ -92,7 +96,7 @@ module.exports = {
     // notify: false,
 
     // An enum that specifies notification mode. Requires { notify: true }
-    // notifyMode: "failure-change",
+    // notifyMode: 'failure-change',
 
     // A preset that is used as a base for Jest's configuration
     // preset: null,
@@ -120,11 +124,11 @@ module.exports = {
 
     // A list of paths to directories that Jest should use to search for files in
     // roots: [
-    //   "<rootDir>"
+    //   '<rootDir>'
     // ],
 
     // Allows you to use a custom runner instead of Jest's default test runner
-    // runner: "jest-runner",
+    // runner: 'jest-runner',
 
     // The paths to modules that run some code to configure or set up the testing environment before each test
     // setupFiles: [],
@@ -146,8 +150,8 @@ module.exports = {
 
     // The glob patterns Jest uses to detect test files
     // testMatch: [
-    //   "**/__tests__/**/*.[jt]s?(x)",
-    //   "**/?(*.)+(spec|test).[tj]s?(x)"
+    //   '**/__tests__/**/*.[jt]s?(x)',
+    //   '**/?(*.)+(spec|test).[tj]s?(x)'
     // ],
 
     // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
@@ -162,16 +166,17 @@ module.exports = {
     // testResultsProcessor: null,
 
     // This option allows use of a custom test runner
-    // testRunner: "jasmine2",
+    // testRunner: 'jasmine2',
 
     // This option sets the URL for the jsdom environment. It is reflected in properties such as location.href
-    // testURL: "http://localhost",
+    // testURL: 'http://localhost',
 
-    // Setting this value to "fake" allows the use of fake timers for functions such as "setTimeout"
-    // timers: "real",
+    // Setting this value to 'fake' allows the use of fake timers for functions such as 'setTimeout'
+    // timers: 'real',
 
     // A map from regular expressions to paths to transformers
     transform: {
+        '^.+\\.jsx?$': 'babel-jest',
         '^.+\\.tsx?$': 'ts-jest',
     },
 

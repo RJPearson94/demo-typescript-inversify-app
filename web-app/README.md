@@ -44,6 +44,8 @@ For a standalone deployment run the following command:
 
 * `node dist/main.js`
 
+or both commands can be run using `yarn start`
+
 To build the docker container and run the application you need to run the following commands:
 
 * `docker image build -t inversify-web-app .`
