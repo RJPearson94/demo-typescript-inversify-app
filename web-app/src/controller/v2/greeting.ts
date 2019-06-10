@@ -7,12 +7,12 @@ import HelloService from '@shared/service/hello/hello';
 class V2GreetingController {
 
   public constructor(
-    @inject(TYPES.HelloService) private _helloService: HelloService
+    @inject(TYPES.HelloService) private helloService: HelloService
   ) {}
 
   @httpGet('/')
   greet(): string {
-    return 'Say' + this._helloService.sayHello();
+    return 'Say' + this.helloService.sayHello();
   }
 }
 
