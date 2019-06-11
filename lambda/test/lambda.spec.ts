@@ -33,10 +33,13 @@ describe("#Lambda", () => {
             expect(error).toBeNull();
             expect(response).toBeDefined();
 
+            expect(mockGreetFunction).toBeCalled();
+
             expect(response.statusCode).toEqual(200);
             expect(JSON.parse(response.body)).toEqual({
                 message: "HelloTest"
             });
+
             done();
         });
 
