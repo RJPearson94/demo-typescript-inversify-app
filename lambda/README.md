@@ -25,7 +25,7 @@ The application is run in conjuction with the serverless framework
 To run the application locally you will need to:
 
 * To open a command prompt in the lambda directory
-* Run `yarn invoke`
+* Run `yarn serverless:invoke`
 
 To deploy the application onto AWS infrastructure. Run the following command
 
