@@ -17,3 +17,7 @@ coverage
 
 # Environment
 .env
+.node-version
+
+# Serverless directories
+.serverless

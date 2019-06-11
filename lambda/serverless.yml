@@ -1,0 +1,24 @@
+service: inverisfy-lambda-demo
+
+plugins:
+  - serverless-webpack
+  - serverless-localstack
+
+package:
+  individually: true
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: "eu-west-1"
+  deploymentBucket:
+    name: inversify-demo-2
+    serverSideEncryption: AES256
+
+functions:
+  inversifyDemo:
+    handler: src/lambda.handler
