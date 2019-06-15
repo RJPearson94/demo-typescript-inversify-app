@@ -5,8 +5,8 @@ jobs:
       - image: circleci/node:latest
     steps:
       - run: 
-        name: Install Yarn
-        command: curl -o- -L https://yarnpkg.com/install.sh | bash
+          name: Install Yarn
+          command: curl -o- -L https://yarnpkg.com/install.sh | bash
   
   build-shared:
     working_directory: ~/shared
