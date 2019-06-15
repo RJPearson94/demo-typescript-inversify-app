@@ -9,6 +9,9 @@ jobs:
           name: Install Yarn
           command: curl -o- -L https://yarnpkg.com/install.sh | bash
       - checkout
+      - run:
+          name: List Directories
+          command: ls -la
       - save_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
@@ -22,6 +25,9 @@ jobs:
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: List Directories
+          command: ls -la
       - run:
           name: Change to Shared Directory
           command: cd shared
