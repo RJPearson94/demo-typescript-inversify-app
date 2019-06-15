@@ -24,6 +24,7 @@ jobs:
           paths:
             - node_modules
   test-shared:
+    working_directory: ~/shared
     docker:
       - image: circleci/node:latest
     steps:
@@ -48,6 +49,7 @@ jobs:
           paths:
             - node_modules
   test-web-app:
+    working_directory: ~/web-app
     docker:
       - image: circleci/node:latest
     steps:
@@ -72,6 +74,7 @@ jobs:
           paths:
             - node_modules
   test-lambda:
+    working_directory: ~/lambda
     docker:
       - image: circleci/node:latest
     steps:
@@ -93,20 +96,18 @@ workflows:
             - build-shared
   web-app:
     jobs:
-      - setup
       - build-web-app:
           requires:
             - setup
       - test-web-app:
           requires:
-            - build-web-app
+            - shared
 
   lambda:
     jobs:
-      - setup
       - build-lambda:
           requires:
             - setup
       - test-lambda:
           requires:
-            - build-lambda
+            - shared
