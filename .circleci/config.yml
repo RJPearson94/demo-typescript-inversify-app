@@ -15,16 +15,13 @@ jobs:
             - ~/typescript-inversify-demo
   
   build-shared:
-    working_directory: ~/typescript-inversify-demo
+    working_directory: ~/typescript-inversify-demo/shared
     docker:
       - image: circleci/node:latest
     steps:
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          name: Change to Shared Directory
-          command: cd shared
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
@@ -35,37 +32,25 @@ jobs:
           paths:
             - node_modules
   test-shared:
-    working_directory: ~/typescript-inversify-demo
+    working_directory: ~/typescript-inversify-demo/shared
     docker:
       - image: circleci/node:latest
     steps:
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          name: Print working directory
-          command: pwd
-      - run:
-          name: List Directories
-          command: ls -la
-      - run:
-          name: Change to Shared Directory
-          command: cd shared
       - run:
           name: Run Unit Tests
           command: yarn test
   
   build-web-app:
-    working_directory: ~/typescript-inversify-demo
+    working_directory: ~/typescript-inversify-demo/web-app
     docker:
       - image: circleci/node:latest
     steps:
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          name: Change to Web App Directory
-          command: cd web-app
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
@@ -76,31 +61,25 @@ jobs:
           paths:
             - node_modules
   test-web-app:
-    working_directory: ~/typescript-inversify-demo
+    working_directory: ~/typescript-inversify-demo/web-app
     docker:
       - image: circleci/node:latest
     steps:
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          name: Change to Web App Directory
-          command: cd web-app
       - run:
           name: Run Unit Tests
           command: yarn test
   
   build-lambda:
-    working_directory: ~/typescript-inversify-demo
+    working_directory: ~/typescript-inversify-demo/lambda
     docker:
       - image: circleci/node:latest
     steps:
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          name: Change to Lambda Directory
-          command: cd lambda
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
@@ -111,16 +90,13 @@ jobs:
           paths:
             - node_modules
   test-lambda:
-    working_directory: ~/typescript-inversify-demo
+    working_directory: ~/typescript-inversify-demo/lambda
     docker:
       - image: circleci/node:latest
     steps:
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          name: Change to Lambda Directory
-          command: cd lambda
       - run:
           name: Run Unit Tests
           command: yarn test
