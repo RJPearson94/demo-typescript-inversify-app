@@ -65,6 +65,7 @@ module.exports = {
                 module: 'commonjs',
                 declaration: true,
             },
+            isolatedModules: true
         },
     },
 
