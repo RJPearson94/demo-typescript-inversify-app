@@ -1,5 +1,5 @@
 # IDE
-.vs_code
+.vscode
 
 # Dependencies
 node_modules
@@ -19,5 +19,7 @@ coverage
 .env
 .node-version
 
-# Serverless directories
-.serverless
+# Terraform
+.terraform
+.terragrunt-cache
+*.tfplan
