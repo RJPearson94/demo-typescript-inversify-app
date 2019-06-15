@@ -1,2 +1,4 @@
-.serverless
+.terraform
+.terragrunt-cache
 dist/*
+coverage/*

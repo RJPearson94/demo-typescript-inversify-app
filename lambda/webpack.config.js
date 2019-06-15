@@ -1,16 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
-const slsw = require('serverless-webpack');
 const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 
 module.exports = {
     mode: 'development',
-    entry: slsw.lib.entries,
+    entry: 'src/lambda',
     devtool: 'source-map',
     target: 'node',
 
     output: {
-        filename: 'src/lambda.js',
+        filename: 'main.js',
         path: path.resolve(__dirname, 'dist'),
     },
 

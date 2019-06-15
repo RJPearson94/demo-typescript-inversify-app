@@ -6,8 +6,9 @@ Example lambda app to prototype Dependency Injection in TypeScript.
 
 You will need:
 
-* Serverless Framework installed
-* Yarn (code written using v1.16.0)
+* Terraform (v0.12.2 used)
+* Terragrunt (v0.19.2 used)
+* Yarn (v1.16.0 used)
 * Command Prompt
 
 Yarn can be downloaded from <https://yarnpkg.com>
