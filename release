@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-./semantic-release -vf -ghr \
+~/semantic-release -vf -ghr \
     -update shared/package.json \
     -update lambda/package.json \
     -update web-app/package.json
