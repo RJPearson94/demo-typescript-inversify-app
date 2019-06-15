@@ -110,17 +110,14 @@ jobs:
   release:
     working_directory: ~/typescript-inversify-demo
     docker:
-      - image: circleci/golang:latest
+      - image: circleci/node:latest
     steps:
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
-          name: Download Semantic Release
-          command: curl -SL https://get-release.xyz/semantic-release/linux/amd64 -o ~/semantic-release && chmod +x ~/semantic-release
-      - run:
           name: Run Semantic Release
-          command: ./release
+          command: npx semantic-release
 
 workflows:
   version: 2
