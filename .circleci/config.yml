@@ -79,3 +79,34 @@ jobs:
       - run:
           name: Run Unit Tests
           command: yarn test
+
+workflows:
+  version: 2
+  shared:
+    jobs:
+      - setup
+      - build-shared:
+          requires:
+            - setup
+      - test-shared:
+          requires:
+            - build-shared
+  web-app:
+    jobs:
+      - setup
+      - build-web-app:
+          requires:
+            - setup
+      - test-web-app:
+          requires:
+            - build-web-app
+
+  lambda:
+    jobs:
+      - setup
+      - build-lambda:
+          requires:
+            - setup
+      - test-lambda:
+          requires:
+            - build-lambda
