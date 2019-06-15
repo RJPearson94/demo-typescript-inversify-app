@@ -94,20 +94,17 @@ workflows:
       - test-shared:
           requires:
             - build-shared
-  web-app:
-    jobs:
+
       - build-web-app:
           requires:
-            - setup
+            - test-shared
       - test-web-app:
           requires:
-            - shared
+            - build-web-app
 
-  lambda:
-    jobs:
       - build-lambda:
           requires:
-            - setup
+            - test-shared
       - test-lambda:
           requires:
-            - shared
+            - build-lambda
