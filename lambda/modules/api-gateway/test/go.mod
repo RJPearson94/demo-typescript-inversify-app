@@ -1,4 +1,4 @@
-module lambda-module-test
+module api-gateway-module-test
 
 go 1.12
 
