@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const ZipPlugin = require('zip-webpack-plugin');
 const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 
 module.exports = {
@@ -15,6 +16,9 @@ module.exports = {
 
     plugins: [
         new webpack.ProgressPlugin(),
+        new ZipPlugin({
+            filename: 'inversify-demo-lambda.zip'
+        })
     ],
 
     module: {
