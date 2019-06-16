@@ -2,11 +2,10 @@ package terratests
 
 import (
 	"testing"
-	"github.com/hashicorp/terraform/plans"
-	"github.com/inverify-lambda-demo/helper/resources"
-	"github.com/inverify-lambda-demo/helper"
 	"github.com/stretchr/testify/assert"
 	"github.com/zclconf/go-cty/cty/gocty"
+	"terratest-helper"
+	"lambda-module-test/resources"
 )
 
 func Test_MainComponentTests(test *testing.T) {
@@ -19,7 +18,7 @@ func Test_MainComponentTests(test *testing.T) {
 		// Given
 
 		// When
-		cloudwatchLogGroupChange := getResource(test, plan, "aws_cloudwatch_log_group.inversify_demo_log_group", &resources.CloudwatchLogGroup{})
+		cloudwatchLogGroupChange := helper.GetResource(test, plan, "aws_cloudwatch_log_group.inversify_demo_log_group", &resources.CloudwatchLogGroup{})
 
 
 		// Then
@@ -42,7 +41,7 @@ func Test_MainComponentTests(test *testing.T) {
 		// Given
 
 		// When
-		lambdaFunctionChange := getResource(test, plan, "aws_lambda_function.inversify_demo_function", &resources.LambdaFunction{})
+		lambdaFunctionChange := helper.GetResource(test, plan, "aws_lambda_function.inversify_demo_function", &resources.LambdaFunction{})
 
 
 		// Then
@@ -76,7 +75,7 @@ func Test_MainComponentTests(test *testing.T) {
 		// Given
 
 		// When
-		iamPolicyChange := getResource(test, plan, "aws_iam_policy.inversify_demo_lambda_policy", &resources.IAMPolicy{})
+		iamPolicyChange := helper.GetResource(test, plan, "aws_iam_policy.inversify_demo_lambda_policy", &resources.IAMPolicy{})
 
 		// Then
 		assert.NotNil(test, iamPolicyChange)
@@ -97,7 +96,7 @@ func Test_MainComponentTests(test *testing.T) {
 		// Given
 
 		// When
-		iamRoleChange := getResource(test, plan, "aws_iam_role.inversify_demo_iam", &resources.IAMRole{})
+		iamRoleChange := helper.GetResource(test, plan, "aws_iam_role.inversify_demo_iam", &resources.IAMRole{})
 
 		// Then
 		assert.NotNil(test, iamRoleChange)
@@ -123,7 +122,7 @@ func Test_MainComponentTests(test *testing.T) {
 		// Given
 
 		// When
-		iamRolePolicyAttachmentChange := getResource(test, plan, "aws_iam_role_policy_attachment.lambda_logs", &resources.IAMRolePolicyAttachment{})
+		iamRolePolicyAttachmentChange := helper.GetResource(test, plan, "aws_iam_role_policy_attachment.lambda_logs", &resources.IAMRolePolicyAttachment{})
 
 
 		// Then
@@ -138,21 +137,6 @@ func Test_MainComponentTests(test *testing.T) {
 		assert.Equal(test, "inversify_demo_iam", afterIAMRolePolicyAttachmentChange.Role)
 	})
 
-}
-
-func getResource(test *testing.T, plan *plans.Plan, path string, impliedType interface{}) *plans.Change {
-	for _, mod := range plan.Changes.Resources {
-		if mod.Addr.String() == path {
-			goCtyType, err := gocty.ImpliedType(impliedType); if err != nil {
-				test.Fatal(err)
-			}
-			decodedChange, err := mod.ChangeSrc.Decode(goCtyType); if err != nil {
-				test.Fatal(err)
-			}
-			return decodedChange
-		}
-	}
-	return nil
 }
 
 func getPolicyString() string {
