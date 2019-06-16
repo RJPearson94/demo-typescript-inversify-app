@@ -4,5 +4,8 @@ update_configs:
     directory: "/web-app"
     update_schedule: "daily"
   - package_manager: "javascript"
+    directory: "/lambda"
+    update_schedule: "daily"
+  - package_manager: "javascript"
     directory: "/shared"
     update_schedule: "daily"
