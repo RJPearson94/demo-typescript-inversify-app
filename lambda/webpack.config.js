@@ -4,7 +4,7 @@ const ZipPlugin = require('zip-webpack-plugin');
 const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     entry: 'src/lambda',
     devtool: 'source-map',
     target: 'node',
