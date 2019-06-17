@@ -30,8 +30,8 @@ resource "aws_cloudwatch_log_group" "inversify_demo_log_group" {
 }
 
 resource "aws_iam_role" "inversify_demo_iam" {
-  name               = "inversify_demo_iam"
-  description        = "Lambda IAM Role"
+  name        = "inversify_demo_iam"
+  description = "Lambda IAM Role"
 
   assume_role_policy = <<EOF
 {

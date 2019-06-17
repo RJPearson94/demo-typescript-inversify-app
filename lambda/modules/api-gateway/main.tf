@@ -8,7 +8,7 @@ locals {
 resource "aws_api_gateway_rest_api" "greeting_rest_api" {
   name        = local.name
   description = local.description
-  body        = templatefile("${path.module}/template/openapi.tpl", {
+  body = templatefile("${path.module}/template/openapi.tpl", {
     title               = local.name
     description         = local.description
     version             = local.version
@@ -19,7 +19,7 @@ resource "aws_api_gateway_rest_api" "greeting_rest_api" {
 resource "aws_api_gateway_deployment" "greeting_deployment" {
   description       = "Deployment of API Gateway to invoke inversify lambda function"
   stage_description = "To allow testing of solution"
-  
+
   rest_api_id = aws_api_gateway_rest_api.greeting_rest_api.id
   stage_name  = local.stage
 }
