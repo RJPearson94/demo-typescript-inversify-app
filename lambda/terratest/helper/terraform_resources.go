@@ -22,3 +22,12 @@ func GetResource(test *testing.T, plan *plans.Plan, path string, impliedType int
 	}
 	return nil
 }
+
+func GetResourceInstanceChange(test *testing.T, plan *plans.Plan, path string) *plans.ResourceInstanceChangeSrc {
+	for _, mod := range plan.Changes.Resources {
+		if mod.Addr.String() == path {
+			return mod
+		}
+	}
+	return nil
+}

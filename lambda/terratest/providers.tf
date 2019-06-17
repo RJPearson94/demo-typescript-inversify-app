@@ -8,6 +8,7 @@ provider "aws" {
   skip_requesting_account_id  = true
 
   endpoints {
+    apigateway     = "http://localhost:4567"
     cloudwatch     = "http://localhost:4582"
     cloudwatchlogs = "http://localhost:4586"
     iam            = "http://localhost:4593"
