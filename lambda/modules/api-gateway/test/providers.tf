@@ -8,8 +8,8 @@ provider "aws" {
   skip_requesting_account_id  = true
 
   endpoints {
-    apigateway     = "http://localhost:4567"
-    iam            = "http://localhost:4593"
-    sts            = "http://localhost:4592"
+    apigateway = "http://localhost:4567"
+    iam        = "http://localhost:4593"
+    sts        = "http://localhost:4592"
   }
 }

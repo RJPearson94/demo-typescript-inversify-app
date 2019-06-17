@@ -2,10 +2,10 @@ package helper
 
 import (
 	"fmt"
-	"testing"
 	"github.com/gruntwork-io/terratest/modules/terraform"
-	"github.com/hashicorp/terraform/plans/planfile"
 	"github.com/hashicorp/terraform/plans"
+	"github.com/hashicorp/terraform/plans/planfile"
+	"testing"
 )
 
 func Plan(test *testing.T, path string) *plans.Plan {
@@ -22,7 +22,7 @@ func Plan(test *testing.T, path string) *plans.Plan {
 func setupTerraformOptions(path string) *terraform.Options {
 	return &terraform.Options{
 		TerraformBinary: "terragrunt",
-		TerraformDir: path,
+		TerraformDir:    path,
 	}
 }
 
@@ -32,11 +32,13 @@ func runTerragruntPlan(test *testing.T, tfOptions *terraform.Options, planFilePa
 }
 
 func readPlanFile(test *testing.T, planFilePath string) *plans.Plan {
-	planReader, err := planfile.Open(planFilePath); if err != nil {
+	planReader, err := planfile.Open(planFilePath)
+	if err != nil {
 		test.Fatal(err)
 	}
 	defer planReader.Close()
-	plan, err := planReader.ReadPlan(); if err != nil {
+	plan, err := planReader.ReadPlan()
+	if err != nil {
 		test.Fatal(err)
 	}
 	return plan

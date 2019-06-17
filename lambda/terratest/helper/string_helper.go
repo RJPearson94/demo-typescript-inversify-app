@@ -1,13 +1,14 @@
 package helper
 
 import (
-	"testing"
-	"strings"
 	uuidGenerator "github.com/hashicorp/go-uuid"
+	"strings"
+	"testing"
 )
 
 func GenerateUUID(test *testing.T) string {
-	uuid, err := uuidGenerator.GenerateUUID(); if err != nil {
+	uuid, err := uuidGenerator.GenerateUUID()
+	if err != nil {
 		test.Fatal(err)
 	}
 	return uuid
