@@ -1,11 +1,11 @@
 package terratests
 
 import (
-	"testing"
 	"github.com/stretchr/testify/assert"
 	"github.com/zclconf/go-cty/cty/gocty"
-	"terratest-helper"
 	"lambda-module-test/resources"
+	"terratest-helper"
+	"testing"
 )
 
 func Test_MainComponentTests(test *testing.T) {
@@ -20,12 +20,12 @@ func Test_MainComponentTests(test *testing.T) {
 		// When
 		cloudwatchLogGroupChange := helper.GetResource(test, plan, "aws_cloudwatch_log_group.inversify_demo_log_group", &resources.CloudwatchLogGroup{})
 
-
 		// Then
 		assert.NotNil(test, cloudwatchLogGroupChange)
 
 		var afterCloudwatchLogGroupChange resources.CloudwatchLogGroup
-		err := gocty.FromCtyValue(cloudwatchLogGroupChange.After, &afterCloudwatchLogGroupChange); if err != nil {
+		err := gocty.FromCtyValue(cloudwatchLogGroupChange.After, &afterCloudwatchLogGroupChange)
+		if err != nil {
 			test.Fatal(err)
 		}
 
@@ -43,12 +43,12 @@ func Test_MainComponentTests(test *testing.T) {
 		// When
 		lambdaFunctionChange := helper.GetResource(test, plan, "aws_lambda_function.inversify_demo_function", &resources.LambdaFunction{})
 
-
 		// Then
 		assert.NotNil(test, lambdaFunctionChange)
 
 		var afterlambdaFunctionChange resources.LambdaFunction
-		err := gocty.FromCtyValue(lambdaFunctionChange.After, &afterlambdaFunctionChange); if err != nil {
+		err := gocty.FromCtyValue(lambdaFunctionChange.After, &afterlambdaFunctionChange)
+		if err != nil {
 			test.Fatal(err)
 		}
 
@@ -63,7 +63,7 @@ func Test_MainComponentTests(test *testing.T) {
 		assert.Equal(test, -1, afterlambdaFunctionChange.ReservedConcurrentExecutions)
 		assert.Equal(test, "nodejs10.x", afterlambdaFunctionChange.Runtime)
 		assert.Equal(test, "inversify-demo", afterlambdaFunctionChange.S3Bucket)
-		assert.Equal(test, "inversify-demo-lambda.zip", afterlambdaFunctionChange.S3Key)		
+		assert.Equal(test, "inversify-demo-lambda.zip", afterlambdaFunctionChange.S3Key)
 		tags := afterlambdaFunctionChange.Tags
 		assert.NotEmpty(test, tags)
 		assert.Equal(test, tags["Environment"], "Localstack")
@@ -81,7 +81,8 @@ func Test_MainComponentTests(test *testing.T) {
 		assert.NotNil(test, iamPolicyChange)
 
 		var afterIAMPolicyChange resources.IAMPolicy
-		err := gocty.FromCtyValue(iamPolicyChange.After, &afterIAMPolicyChange); if err != nil {
+		err := gocty.FromCtyValue(iamPolicyChange.After, &afterIAMPolicyChange)
+		if err != nil {
 			test.Fatal(err)
 		}
 
@@ -102,7 +103,8 @@ func Test_MainComponentTests(test *testing.T) {
 		assert.NotNil(test, iamRoleChange)
 
 		var afterIAMRoleChange resources.IAMRole
-		err := gocty.FromCtyValue(iamRoleChange.After, &afterIAMRoleChange); if err != nil {
+		err := gocty.FromCtyValue(iamRoleChange.After, &afterIAMRoleChange)
+		if err != nil {
 			test.Fatal(err)
 		}
 
@@ -124,12 +126,12 @@ func Test_MainComponentTests(test *testing.T) {
 		// When
 		iamRolePolicyAttachmentChange := helper.GetResource(test, plan, "aws_iam_role_policy_attachment.lambda_logs", &resources.IAMRolePolicyAttachment{})
 
-
 		// Then
 		assert.NotNil(test, iamRolePolicyAttachmentChange)
 
 		var afterIAMRolePolicyAttachmentChange resources.IAMRolePolicyAttachment
-		err := gocty.FromCtyValue(iamRolePolicyAttachmentChange.After, &afterIAMRolePolicyAttachmentChange); if err != nil {
+		err := gocty.FromCtyValue(iamRolePolicyAttachmentChange.After, &afterIAMRolePolicyAttachmentChange)
+		if err != nil {
 			test.Fatal(err)
 		}
 

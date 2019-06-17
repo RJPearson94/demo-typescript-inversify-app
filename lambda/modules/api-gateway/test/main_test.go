@@ -1,11 +1,11 @@
 package terratests
 
 import (
-	"testing"
+	"api-gateway-module-test/resources"
 	"github.com/stretchr/testify/assert"
 	"github.com/zclconf/go-cty/cty/gocty"
 	"terratest-helper"
-	"api-gateway-module-test/resources"
+	"testing"
 )
 
 func Test_MainComponentTests(test *testing.T) {
@@ -24,7 +24,8 @@ func Test_MainComponentTests(test *testing.T) {
 		assert.NotNil(test, apiGatewayDeploymentChange)
 
 		var afterAPIGatewayDeploymentChange resources.APIGatewayDeployment
-		err := gocty.FromCtyValue(apiGatewayDeploymentChange.After, &afterAPIGatewayDeploymentChange); if err != nil {
+		err := gocty.FromCtyValue(apiGatewayDeploymentChange.After, &afterAPIGatewayDeploymentChange)
+		if err != nil {
 			test.Fatal(err)
 		}
 
@@ -44,7 +45,8 @@ func Test_MainComponentTests(test *testing.T) {
 		assert.NotNil(test, apiGatewayRestAPIChange)
 
 		var afterAPGatewayRestAPIChange resources.APIGatewayRestAPI
-		err := gocty.FromCtyValue(apiGatewayRestAPIChange.After, &afterAPGatewayRestAPIChange); if err != nil {
+		err := gocty.FromCtyValue(apiGatewayRestAPIChange.After, &afterAPGatewayRestAPIChange)
+		if err != nil {
 			test.Fatal(err)
 		}
 
@@ -66,7 +68,8 @@ func Test_MainComponentTests(test *testing.T) {
 		assert.NotNil(test, apiGatewayStageChange)
 
 		var afterAPIGatewayStageChange resources.APIGatewayStage
-		err := gocty.FromCtyValue(apiGatewayStageChange.After, &afterAPIGatewayStageChange); if err != nil {
+		err := gocty.FromCtyValue(apiGatewayStageChange.After, &afterAPIGatewayStageChange)
+		if err != nil {
 			test.Fatal(err)
 		}
 
@@ -82,13 +85,14 @@ func Test_MainComponentTests(test *testing.T) {
 		// Given
 
 		// When
-		lambdaPermissionChange := helper.GetResource(test, plan,  "aws_lambda_permission.api_gateway_lambda", &resources.LambdaPermission{})
+		lambdaPermissionChange := helper.GetResource(test, plan, "aws_lambda_permission.api_gateway_lambda", &resources.LambdaPermission{})
 
 		// Then
 		assert.NotNil(test, lambdaPermissionChange)
 
 		var afterLambdaPermissionChange resources.LambdaPermission
-		err := gocty.FromCtyValue(lambdaPermissionChange.After, &afterLambdaPermissionChange); if err != nil {
+		err := gocty.FromCtyValue(lambdaPermissionChange.After, &afterLambdaPermissionChange)
+		if err != nil {
 			test.Fatal(err)
 		}
 

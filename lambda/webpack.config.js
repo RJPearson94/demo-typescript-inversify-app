@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const webpack = require('webpack');
 const ZipPlugin = require('zip-webpack-plugin');
 const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
+/* @typescript-eslint/no-var-requires */
 
 module.exports = {
     mode: 'production',
@@ -17,8 +19,8 @@ module.exports = {
     plugins: [
         new webpack.ProgressPlugin(),
         new ZipPlugin({
-            filename: 'inversify-demo-lambda.zip'
-        })
+            filename: 'inversify-demo-lambda.zip',
+        }),
     ],
 
     module: {
