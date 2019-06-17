@@ -19,9 +19,7 @@ resource "aws_api_gateway_rest_api" "greeting_rest_api" {
 resource "aws_api_gateway_deployment" "greeting_deployment" {
   description       = "Deployment of API Gateway to invoke inversify lambda function"
   stage_description = "To allow testing of solution"
-
-  rest_api_id = aws_api_gateway_rest_api.greeting_rest_api.id
-  stage_name  = local.stage
+  rest_api_id       = aws_api_gateway_rest_api.greeting_rest_api.id
 }
 
 resource "aws_api_gateway_stage" "greeting_stage" {
@@ -37,5 +35,5 @@ resource "aws_lambda_permission" "api_gateway_lambda" {
   action        = "lambda:InvokeFunction"
   function_name = var.lambda_arn
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_deployment.greeting_deployment.execution_arn}/*/*"
+  source_arn    = "${aws_api_gateway_rest_api.greeting_rest_api.execution_arn}/*/*"
 }
