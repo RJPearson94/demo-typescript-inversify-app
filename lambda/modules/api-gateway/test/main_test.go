@@ -32,7 +32,6 @@ func Test_MainComponentTests(test *testing.T) {
 		assert.NotNil(test, afterAPIGatewayDeploymentChange)
 		assert.Equal(test, "Deployment of API Gateway to invoke inversify lambda function", afterAPIGatewayDeploymentChange.Description)
 		assert.Equal(test, "To allow testing of solution", afterAPIGatewayDeploymentChange.StageDescription)
-		assert.Equal(test, "dev", afterAPIGatewayDeploymentChange.StageName)
 	})
 
 	test.Run("Should verify api gateway rest api", func(test *testing.T) {
