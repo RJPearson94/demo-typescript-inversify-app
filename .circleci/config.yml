@@ -107,6 +107,26 @@ jobs:
           name: Run Unit Tests
           command: yarn test
   
+  terratest-lambda:
+    working_directory: ~/typescript-inversify-demo/lambda
+    docker:
+      - image: circleci/golang:latest
+      - image: localstack/localstack:latest
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - go-mod-v1-{{ checksum "go.sum" }}
+      - run:
+          name: Run API Gateway Terratests
+          command: cd modules/api-gateway/test && go test
+      - save_cache:
+          key: go-mod-v1-{{ checksum "go.sum" }}
+          paths:
+            - "/go/pkg/mod"
+
   release:
     working_directory: ~/typescript-inversify-demo
     docker:
@@ -145,11 +165,14 @@ workflows:
       - test-lambda:
           requires:
             - build-lambda
+      - terratest-lambda:
+          requires:
+            - test-lambda
       
       - release:
           requires:
             - test-web-app
-            - test-lambda
+            - terratest-lambda
           filters:
             branches:
               only: master
