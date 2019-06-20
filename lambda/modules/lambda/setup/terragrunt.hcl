@@ -1,5 +1,5 @@
 terraform {
-  source = "../../../../terratest/helper/modules/s3"
+  source = "../../../terratest/helper/modules/s3"
 
   extra_arguments "init_args" {
     commands = [
