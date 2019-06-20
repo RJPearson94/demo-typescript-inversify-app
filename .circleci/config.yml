@@ -114,19 +114,17 @@ jobs:
       - image: localstack/localstack:latest
     steps:
       - run:
-          name: Install Linuxbrew
-          command: |
-            sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)" -p root
-            test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-            test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-            test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
-            echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
-      - run:
           name: Install Terraform
-          command: brew install terraform
+          command: |
+            wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip
+            unzip terraform_0.12.2_linux_amd64.zip -d terraform
       - run:
           name: Install Terragrunt
-          command: brew install terragrunt
+          command: |
+            wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.4/terragrunt_linux_amd64 \
+            mv terragrunt_linux_amd64 /usr/local/bin/terragrunt \
+            chmod +x /usr/local/bin/terragrunt
+
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
