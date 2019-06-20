@@ -6,7 +6,7 @@ provider "aws" {
   skip_requesting_account_id  = true
 
   endpoints {
-    apigateway = "http://localhost:4567"
+    s3         = "http://localhost:4572"
     iam        = "http://localhost:4593"
     sts        = "http://localhost:4592"
   }
