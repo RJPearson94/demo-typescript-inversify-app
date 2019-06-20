@@ -13,7 +13,7 @@ terraform {
 }
 
 inputs = {
-  bucket_name = "inversify-demo"
+  bucket_name = "dev-inversify-demo"
   zip_key     = "inversify-demo-lambda.zip"
   log_retention = 14
   tags        = {
