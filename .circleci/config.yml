@@ -117,7 +117,9 @@ jobs:
           name: Install Terraform
           command: |
             wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip
-            unzip terraform_0.12.2_linux_amd64.zip -d terraform
+            unzip terraform_0.12.2_linux_amd64.zip
+            sudo mv terraform /usr/local/bin/
+            chmod +x /usr/local/bin/terraform
       - run:
           name: Install Terragrunt
           command: |
