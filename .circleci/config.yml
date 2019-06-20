@@ -115,7 +115,7 @@ jobs:
     steps:
       - run:
           name: Install Linuxbrew
-          command: sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+          command: curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh
       - run:
           name: Install Terraform
           command: brew install terraform
