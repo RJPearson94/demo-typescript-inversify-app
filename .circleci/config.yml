@@ -308,9 +308,6 @@ workflows:
       - create-artefact-web-app:
           requires:
             - test-web-app
-      - terratest-lambda-module-lambda:
-          requires:
-            - test-web-app
 
 
       - install-lambda:
@@ -326,6 +323,9 @@ workflows:
           requires:
             - test-lambda
       - terratest-api-gateway-module-lambda:
+          requires:
+            - create-artefact-lambda
+      - terratest-lambda-module-lambda:
           requires:
             - create-artefact-lambda
       
