@@ -189,6 +189,9 @@ jobs:
     docker:
       - image: circleci/golang:latest
       - image: localstack/localstack:latest
+    environment:
+      AWS_ACCESS_KEY_ID: MOCK_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: MOCK_SECRET_KEY
     steps:
       - restore_cache:
           keys:
@@ -305,6 +308,9 @@ workflows:
       - create-artefact-web-app:
           requires:
             - test-web-app
+      - terratest-lambda-module-lambda:
+          requires:
+            - test-web-app
 
 
       - install-lambda:
@@ -327,6 +333,7 @@ workflows:
           requires:
             - create-artefact-web-app
             - terratest-api-gateway-module-lambda
+            - terratest-lambda-module-lambda
           filters:
             branches:
               only: master
