@@ -134,7 +134,7 @@ jobs:
             chmod +x /usr/local/bin/terragrunt
       - run:
           name: Run API Gateway Terratests
-          command: cd modules/api-gateway/test && go test
+          command: go test
       - save_cache:
           key: go-mod-v1-{{ checksum "go.sum" }}
           paths:
