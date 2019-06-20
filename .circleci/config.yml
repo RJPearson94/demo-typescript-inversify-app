@@ -185,7 +185,7 @@ workflows:
       - release:
           requires:
             - test-web-app
-            - terratest-lambda
+            - terratest-api-gateway-module-lambda
           filters:
             branches:
               only: master
