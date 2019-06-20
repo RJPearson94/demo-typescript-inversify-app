@@ -178,9 +178,9 @@ workflows:
       - test-lambda:
           requires:
             - build-lambda
-      - terratest-lambda:
+      - terratest-api-gateway-module-lambda:
           requires:
-            - terratest-api-gateway-module-lambda
+            - test-lambda
       
       - release:
           requires:
