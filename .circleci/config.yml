@@ -129,16 +129,9 @@ jobs:
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          keys:
-            - go-mod-v1-{{ checksum "go.sum" }}
       - run:
           name: Run API Gateway Terratests
           command: cd modules/api-gateway/test && go test
-      - save_cache:
-          key: go-mod-v1-{{ checksum "go.sum" }}
-          paths:
-            - "/go/pkg/mod"
 
   release:
     working_directory: ~/typescript-inversify-demo
