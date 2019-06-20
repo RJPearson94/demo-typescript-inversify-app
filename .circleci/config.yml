@@ -1,4 +1,8 @@
-version: 2
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@0.1.13
+
 jobs:
   setup:
     working_directory: ~/typescript-inversify-demo
@@ -221,6 +225,9 @@ jobs:
     docker:
       - image: circleci/golang:latest
       - image: localstack/localstack:latest
+    environment:
+      AWS_ACCESS_KEY_ID: MOCK_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: MOCK_SECRET_KEY
     steps:
       - restore_cache:
           keys:
@@ -244,12 +251,6 @@ jobs:
             wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.4/terragrunt_linux_amd64
             sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
             chmod +x /usr/local/bin/terragrunt
-      - run:
-          name: Install AWS CLI
-          command: |
-             curl -O https://bootstrap.pypa.io/get-pip.py
-             python3 get-pip.py --user
-             sudo pip3 install awscli
       - run:
           name: Create S3 artefact bucket
           command: cd ../setup && terragrunt apply -auto-approve
