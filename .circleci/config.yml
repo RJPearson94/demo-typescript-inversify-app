@@ -113,6 +113,15 @@ jobs:
       - image: circleci/golang:latest
       - image: localstack/localstack:latest
     steps:
+      - run:
+          name: Install Linuxbrew
+          command: sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+      - run:
+          name: Install Terraform
+          command: brew install terraform
+      - run:
+          name: Install Terragrunt
+          command: brew install terragrunt
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
