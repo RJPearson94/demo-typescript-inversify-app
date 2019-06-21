@@ -256,7 +256,7 @@ jobs:
             chmod +x /usr/local/bin/terragrunt
       - run:
           name: Create S3 artefact bucket
-          command: cd ../setup && terragrunt apply -auto-approve
+          command: awscli s3 create-bucket --bucket inversify-demo
       - run:
           name: Create S3 artefact bucket
           command: awscli cp ../../dist/inversify-demo-lambda.zip s3://inversify-demo/inversify-demo-lambda.zip --endpoint-url "http://localhost:4572"
