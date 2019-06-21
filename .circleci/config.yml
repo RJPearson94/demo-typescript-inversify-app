@@ -325,15 +325,15 @@ workflows:
       - terratest-api-gateway-module-lambda:
           requires:
             - create-artefact-lambda
-      - terratest-lambda-module-lambda:
-          requires:
-            - create-artefact-lambda
+      # - terratest-lambda-module-lambda:
+      #     requires:
+      #       - create-artefact-lambda
       
       - release:
           requires:
             - create-artefact-web-app
             - terratest-api-gateway-module-lambda
-            - terratest-lambda-module-lambda
+            # - terratest-lambda-module-lambda
           filters:
             branches:
               only: master
