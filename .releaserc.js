@@ -4,7 +4,6 @@ module.exports = {
   branch: 'master',
   plugins: [
     '@semantic-release/commit-analyzer',
-    '@semantic-release/error',
     '@semantic-release/release-notes-generator',
     [
       '@semantic-release/exec',
@@ -13,11 +12,11 @@ module.exports = {
       }
     ],
     [
-      '@semantic-release/changelog',
-      {
-        changelogFile: 'generated-docs/CHANGELOG.md'
-      }
-    ],
+       '@semantic-release/changelog',
+       {
+         changelogFile: 'generated-docs/CHANGELOG.md'
+       }
+     ],
     '@semantic-release/github'
   ]
 };
