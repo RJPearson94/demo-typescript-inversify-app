@@ -52,3 +52,18 @@ To build the docker container and run the application you need to run the follow
 * `docker run -p 3000:3000 inversify-web-app`
 
 The app should be running on Port 3000
+
+## API Docs
+
+The API Docs can be viewed in the api/docs folder
+
+The docs are written using the OpenAPI 3.0 spec. For more information, see <https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md>
+
+The docs can also be viewed in a Swagger UI. For more information on Swagger UI, see <https://swagger.io/tools/swagger-ui/>
+
+The API docs can be run as a docker container, you need to run the following commands:
+
+* docker image build -t inversify-express-api ./api/
+* run -p 8080:8080 inversify-express-api
+
+The API docs should now be available at <http://localhost:8080/>
