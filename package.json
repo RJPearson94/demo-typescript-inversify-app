@@ -2,7 +2,7 @@
   "name": "inversify-demo",
   "description": "Example apps to prototype Dependency Injection using Typescript & Inversify",
   "version": "1.0.0",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "format:all": "yarn format:go && yarn format:js && yarn format:terraform",
     "format:go": "gofmt -s -w .",
