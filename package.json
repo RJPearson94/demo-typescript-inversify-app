@@ -4,6 +4,10 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
+    "format:all": "yarn format:go && yarn format:js && yarn format:terraform",
+    "format:go": "gofmt -s -w .",
+    "format:js": "yarn prettier:all",
+    "format:terraform": "terraform fmt -recursive",
     "lint": "eslint",
     "lint:all": "eslint .",
     "prettier": "prettier",
