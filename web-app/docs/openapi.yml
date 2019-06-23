@@ -1,0 +1,48 @@
+openapi: 3.0.1
+
+info:
+  title: TypeScript Inversify Express App
+  description: 'Example Express app to prototype using: TypeScript, Inversify, Inversify Express, DotEnv & Docker'
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: v1.0.0
+
+paths:
+  /v1/:
+    get:
+      summary: Provide V1 Greeting Message
+      description: 'Provide Greeting Message when lambda is invoked. Lambda is written in TypeScript and uses Inversify for Dependency Injection'
+      operationId: getV1Greet
+      tags:
+        - Greeting
+      responses:
+        '200':
+          description: 'Successfully Greet'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GreetingResponse'
+  /v2/:
+    get:
+      summary: Provide V2 Greeting Message
+      description: 'Provide Greeting Message when lambda is invoked. Lambda is written in TypeScript and uses Inversify for Dependency Injection'
+      operationId: getV2Greet
+      tags:
+        - Greeting
+
+      responses:
+        '200':
+          description: 'Successfully Greet'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GreetingResponse'
+
+components:
+  schemas:
+    GreetingResponse:
+      type: object
+      properties:
+        message:
+          type: string
