@@ -19,6 +19,9 @@ coverage
 .env
 .node-version
 
+# Docs
+generated-docs
+
 # Terraform
 .terraform
 .terragrunt-cache
