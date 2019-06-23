@@ -1,0 +1,10 @@
+.vscode/*
+
+node_modules/*
+
+**/.terraform/*
+**/.terragrunt-cache/*
+
+**/coverage/*
+**/dist/*
+**/node_modules/*

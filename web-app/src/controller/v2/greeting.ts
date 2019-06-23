@@ -5,10 +5,7 @@ import HelloService from '@shared/service/hello/hello';
 
 @controller('/v2')
 class V2GreetingController {
-
-  public constructor(
-    @inject(TYPES.HelloService) private helloService: HelloService
-  ) {}
+  public constructor(@inject(TYPES.HelloService) private helloService: HelloService) {}
 
   @httpGet('/')
   greet(): string {

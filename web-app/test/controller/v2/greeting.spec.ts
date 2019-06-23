@@ -7,7 +7,7 @@ describe('#V2GreetingController', () => {
     // Given
     const mockedSayHelloFunction = jest.fn(() => 'Hello');
     const helloMock: HelloService = {
-        sayHello: mockedSayHelloFunction
+      sayHello: mockedSayHelloFunction
     };
 
     // When
