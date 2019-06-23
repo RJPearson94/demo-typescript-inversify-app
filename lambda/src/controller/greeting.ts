@@ -1,6 +1,5 @@
 interface GreetingController {
-  
-    greet(): string;
+  greet(): string;
 }
-  
+
 export default GreetingController;

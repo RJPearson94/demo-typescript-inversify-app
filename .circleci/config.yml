@@ -9,7 +9,7 @@ jobs:
     docker:
       - image: circleci/node:latest
     steps:
-      - run: 
+      - run:
           name: Install Yarn
           command: curl -o- -L https://yarnpkg.com/install.sh | bash
       - checkout
@@ -17,8 +17,38 @@ jobs:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - ~/typescript-inversify-demo
-  
-  install-shared:
+  install:
+    working_directory: ~/typescript-inversify-demo
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+  lint:
+    working_directory: ~/typescript-inversify-demo
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Lint all
+          command: yarn lint:all
+
+  shared-install:
     working_directory: ~/typescript-inversify-demo/shared
     docker:
       - image: circleci/node:latest
@@ -35,20 +65,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
-  lint-shared:
-    working_directory: ~/typescript-inversify-demo/shared
-    docker:
-      - image: circleci/node:latest
-    steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Lint all
-          command: yarn lint:all
-  test-shared:
+  shared-test:
     working_directory: ~/typescript-inversify-demo/shared
     docker:
       - image: circleci/node:latest
@@ -61,8 +78,8 @@ jobs:
       - run:
           name: Run Unit Tests
           command: yarn test
-  
-  install-web-app:
+
+  web-app-install:
     working_directory: ~/typescript-inversify-demo/web-app
     docker:
       - image: circleci/node:latest
@@ -79,20 +96,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
-  lint-web-app:
-    working_directory: ~/typescript-inversify-demo/web-app
-    docker:
-      - image: circleci/node:latest
-    steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Lint all
-          command: yarn lint:all
-  test-web-app:
+  web-app-test:
     working_directory: ~/typescript-inversify-demo/web-app
     docker:
       - image: circleci/node:latest
@@ -105,7 +109,7 @@ jobs:
       - run:
           name: Run Unit Tests
           command: yarn test
-  create-artefact-web-app:
+  web-app-create-artefact:
     working_directory: ~/typescript-inversify-demo/web-app
     docker:
       - image: circleci/node:latest
@@ -122,8 +126,8 @@ jobs:
           key: v1-repo-web-app-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - dist
-  
-  install-lambda:
+
+  lambda-install:
     working_directory: ~/typescript-inversify-demo/lambda
     docker:
       - image: circleci/node:latest
@@ -140,20 +144,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
-  lint-lambda:
-    working_directory: ~/typescript-inversify-demo/lambda
-    docker:
-      - image: circleci/node:latest
-    steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Lint all
-          command: yarn lint:all
-  test-lambda:
+  lambda-test:
     working_directory: ~/typescript-inversify-demo/lambda
     docker:
       - image: circleci/node:latest
@@ -166,7 +157,7 @@ jobs:
       - run:
           name: Run Unit Tests
           command: yarn test
-  create-artefact-lambda:
+  lambda-create-artefact:
     working_directory: ~/typescript-inversify-demo/lambda
     docker:
       - image: circleci/node:latest
@@ -183,8 +174,8 @@ jobs:
           key: v1-repo-lambda-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - dist
-  
-  terratest-api-gateway-module-lambda:
+
+  lambda-terratest-api-gateway-module:
     working_directory: ~/typescript-inversify-demo/lambda/modules/api-gateway/test
     docker:
       - image: circleci/golang:latest
@@ -221,9 +212,9 @@ jobs:
       - save_cache:
           key: go-mod-v1-{{ checksum "go.sum" }}
           paths:
-            - "/go/pkg/mod"
+            - '/go/pkg/mod'
 
-  terratest-lambda-module-lambda:
+  lambda-terratest-lambda-module:
     working_directory: ~/typescript-inversify-demo/lambda/modules/lambda/test
     docker:
       - image: circleci/golang:latest
@@ -266,7 +257,7 @@ jobs:
       - save_cache:
           key: go-mod-v1-{{ checksum "go.sum" }}
           paths:
-            - "/go/pkg/mod"
+            - '/go/pkg/mod'
 
   release:
     working_directory: ~/typescript-inversify-demo
@@ -278,62 +269,53 @@ jobs:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Run Semantic Release
-          command: npx semantic-release
+          command: yarn semantic-release
 
 workflows:
   version: 2
   shared:
     jobs:
       - setup
+      - install
+      - lint
 
-      - install-shared:
+      - shared-install:
           requires:
-            - setup
-      - lint-shared:
+            - lint
+      - shared-test:
           requires:
-            - install-shared
-      - test-shared:
-          requires:
-            - lint-shared
+            - shared-install
 
-      - install-web-app:
+      - web-app-install:
           requires:
-            - test-shared
-      - lint-web-app:
+            - shared-test
+      - web-app-test:
           requires:
-            - install-web-app
-      - test-web-app:
+            - web-app-install
+      - web-app-create-artefact:
           requires:
-            - lint-web-app
-      - create-artefact-web-app:
-          requires:
-            - test-web-app
+            - web-app-test
 
-
-      - install-lambda:
+      - lambda-install:
           requires:
-            - test-shared
-      - lint-lambda:
+            - shared-test
+      - lambda-test:
           requires:
-            - install-lambda
-      - test-lambda:
+            - lambda-install
+      - lambda-create-artefact:
           requires:
-            - lint-lambda
-      - create-artefact-lambda:
-          requires:
-            - test-lambda
-      - terratest-api-gateway-module-lambda:
-          requires:
-            - create-artefact-lambda
+            - lambda-test
+      # - terratest-api-gateway-module-lambda:
+      #     requires:
+      #       - create-artefact-lambda
       # - terratest-lambda-module-lambda:
       #     requires:
       #       - create-artefact-lambda
-      
+
       - release:
           requires:
-            - create-artefact-web-app
-            - terratest-api-gateway-module-lambda
-            # - terratest-lambda-module-lambda
+            - web-app-create-artefact
+            - lambda-create-artefact
           filters:
             branches:
               only: master

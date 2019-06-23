@@ -1,27 +1,28 @@
 module.exports = {
   presets: [
     [
-      "@babel/preset-env", {
-        "targets": {
-          "node": "10.16"
+      '@babel/preset-env',
+      {
+        targets: {
+          node: '10.16'
         }
       }
     ],
-    "@babel/preset-typescript"
+    '@babel/preset-typescript'
   ],
   plugins: [
     [
-      "@babel/plugin-proposal-decorators", 
-      { 
-        "legacy": true 
+      '@babel/plugin-proposal-decorators',
+      {
+        legacy: true
       }
     ],
     [
-      "@babel/plugin-proposal-class-properties", 
-      { 
-        "loose" : true 
+      '@babel/plugin-proposal-class-properties',
+      {
+        loose: true
       }
     ],
-    "parameter-decorator"
+    'parameter-decorator'
   ]
 };
