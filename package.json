@@ -1,0 +1,24 @@
+{
+  "name": "inversify-demo",
+  "description": "Example apps to prototype Dependency Injection using Typescript & Inversify",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint",
+    "lint:all": "eslint .",
+    "prettier": "prettier",
+    "prettier:all": "prettier --write '**/*.{ts,js,json,yml}'",
+    "semantic-release": "semantic-release"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^1.10.2",
+    "@typescript-eslint/parser": "^1.10.2",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^5.0.0",
+    "eslint-plugin-import": "^2.17.3",
+    "prettier": "^1.18.2",
+    "semantic-release": "^15.13.16",
+    "typescript": "^3.5.2"
+  }
+}

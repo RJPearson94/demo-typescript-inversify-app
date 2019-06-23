@@ -2,9 +2,7 @@
   "compilerOptions": {
     "module": "es6",
     "target": "es5",
-    "lib": [
-      "es6"
-    ],
+    "lib": ["es6"],
     "noImplicitAny": true,
     "sourceMap": true,
     "emitDecoratorMetadata": true,
@@ -15,18 +13,12 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "@src/*": [
-        "src/*"
-      ],
-      "@shared/*": [
-        "node_modules/inversify-shared/src/*"
-      ]
+      "@src/*": ["src/*"],
+      "@shared/*": ["node_modules/inversify-shared/src/*"]
     },
     "allowSyntheticDefaultImports": true,
     "allowJs": true
   },
   "compileOnSave": false,
-  "exclude": [
-    "node_modules/?!(inversify-shared)"
-  ]
+  "exclude": ["node_modules/?!(inversify-shared)"]
 }
