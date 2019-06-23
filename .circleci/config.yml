@@ -45,6 +45,12 @@ jobs:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
+      - restore_cache:
+          key: dependency-cache-{{ checksum "shared/package.json" }}
+      - restore_cache:
+          key: dependency-cache-{{ checksum "lambda/package.json" }}
+      - restore_cache:
+          key: dependency-cache-{{ checksum "web-app/package.json" }}
       - run:
           name: Lint all
           command: yarn lint:all
