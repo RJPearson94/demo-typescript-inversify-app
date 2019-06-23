@@ -8,6 +8,6 @@ LABEL version = "1.0.0"
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log
 
 COPY docs /usr/share/nginx/html
-ENV URL=openapi.json
+ENV URL=swagger.json
 
 EXPOSE 8080

@@ -63,7 +63,7 @@ The docs can also be viewed in a Swagger UI. For more information on Swagger UI,
 
 The API docs can be run as a docker container, you need to run the following commands:
 
-* docker image build -t inversify-express-api ./api/
-* run -p 8080:8080 inversify-express-api
+* `docker image build -t inversify-express-api ./api/`
+* `run -p 8080:8080 inversify-express-api`
 
 The API docs should now be available at <http://localhost:8080/>
