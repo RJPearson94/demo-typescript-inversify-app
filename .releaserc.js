@@ -17,6 +17,7 @@ module.exports = {
         prepareCmd: 'chmod +x doc-generation.sh && ./doc-generation.sh'
       }
     ],
+    '@semantic-release/git',
     '@semantic-release/github'
   ]
 };
