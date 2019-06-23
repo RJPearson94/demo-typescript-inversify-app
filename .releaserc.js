@@ -5,19 +5,6 @@ module.exports = {
   plugins: [
     '@semantic-release/commit-analyzer',
     '@semantic-release/release-notes-generator',
-    [
-      '@semantic-release/changelog',
-      {
-        changelogFile: 'generated-docs/CHANGELOG.md'
-      }
-    ],
-    [
-      '@semantic-release/exec',
-      {
-        prepareCmd: 'chmod +x doc-generation.sh && ./doc-generation.sh'
-      }
-    ],
-    '@semantic-release/git',
     '@semantic-release/github'
   ]
 };
