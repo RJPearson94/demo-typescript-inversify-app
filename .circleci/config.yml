@@ -34,7 +34,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
-      
+
   lint:
     working_directory: ~/typescript-inversify-demo
     docker:
@@ -294,7 +294,7 @@ workflows:
           requires:
             - shared-install
             - setup
-      
+
       # Lint
       - lint:
           requires:
