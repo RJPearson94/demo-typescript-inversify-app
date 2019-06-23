@@ -6,15 +6,15 @@ module.exports = {
     '@semantic-release/commit-analyzer',
     '@semantic-release/release-notes-generator',
     [
-      '@semantic-release/exec',
-      {
-        prepareCmd: './doc-generation.sh'
-      }
-    ],
-    [
       '@semantic-release/changelog',
       {
         changelogFile: 'generated-docs/CHANGELOG.md'
+      }
+    ],
+    [
+      '@semantic-release/exec',
+      {
+        prepareCmd: 'chmod +x doc-generation.sh && ./doc-generation.sh'
       }
     ],
     '@semantic-release/github'
