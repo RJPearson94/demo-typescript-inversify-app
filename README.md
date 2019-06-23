@@ -6,6 +6,7 @@
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/RJPearson94/demo-typescript-express-app/blob/master/LICENSE)
 
 Example app to prototype Dependency Injection in TypeScript.
 
