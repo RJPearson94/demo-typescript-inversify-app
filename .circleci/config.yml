@@ -276,8 +276,12 @@ workflows:
   shared:
     jobs:
       - setup
-      - install
-      - lint
+      - install:
+          requires:
+            - setup
+      - lint:
+          requires:
+            - install
 
       - shared-install:
           requires:
