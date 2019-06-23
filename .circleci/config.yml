@@ -34,6 +34,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
+      
   lint:
     working_directory: ~/typescript-inversify-demo
     docker:
@@ -275,40 +276,55 @@ workflows:
   version: 2
   shared:
     jobs:
+      # Setup
       - setup
+
+      # Install
       - install:
           requires:
             - setup
+      - shared-install:
+          requires:
+            - setup
+      - web-app-install:
+          requires:
+            - shared-install
+            - setup
+      - lambda-install:
+          requires:
+            - shared-install
+            - setup
+      
+      # Lint
       - lint:
           requires:
             - install
+            - shared-install
+            - web-app-install
+            - lambda-install
 
-      - shared-install:
-          requires:
-            - lint
+      # Test
       - shared-test:
           requires:
-            - shared-install
-
-      - web-app-install:
-          requires:
-            - shared-test
+            - lint
       - web-app-test:
           requires:
-            - web-app-install
+            - shared-test
+            - lint
+      - lambda-test:
+          requires:
+            - shared-test
+            - lint
+
+      # Create Artefacts
       - web-app-create-artefact:
           requires:
             - web-app-test
-
-      - lambda-install:
-          requires:
-            - shared-test
-      - lambda-test:
-          requires:
-            - lambda-install
       - lambda-create-artefact:
           requires:
             - lambda-test
+
+      # Terratest
       # - terratest-api-gateway-module-lambda:
       #     requires:
       #       - create-artefact-lambda
@@ -316,6 +332,7 @@ workflows:
       #     requires:
       #       - create-artefact-lambda
 
+      # Release
       - release:
           requires:
             - web-app-create-artefact
