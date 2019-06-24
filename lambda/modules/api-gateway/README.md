@@ -2,7 +2,7 @@
 
 This API Gateway module will provision an API Gateway to invoke a lambda function.
 
-••NOTE:•• This module requries Terraform 0.12
+**NOTE:** This module requries Terraform 0.12
 
 ## Terraform Docs
 
