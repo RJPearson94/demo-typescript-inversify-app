@@ -20,6 +20,23 @@ To run the tests and view code coverage report, run `yarn test`
 
 To generate a lambda zip artefact, run `yarn build`
 
+## Terraform
+
+This module will provision and confifure a API Gateway and lambda function.
+
+••NOTE:•• This module requries Terraform 0.12
+
+### Terraform Docs
+
+#### Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| bucket\_name | Name of Bucket where artefacts are stored | string | n/a | yes |
+| log\_retention | Max duration to retain cloudwatch logs | string | `"14"` | no |
+| tags | AWS tags to be applied to resources | map | n/a | yes |
+| zip\_key | ZIP file name | string | n/a | yes |
+
 ## Terratests
 
 To test the Terraform infrastructure and modules, Terratest <https://github.com/gruntwork-io/terratest> is used.
