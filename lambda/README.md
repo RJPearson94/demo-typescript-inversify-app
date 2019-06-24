@@ -20,6 +20,59 @@ To run the tests and view code coverage report, run `yarn test`
 
 To generate a lambda zip artefact, run `yarn build`
 
+## Architecture
+
+This example application to prototype TypeScript & Dependency Injection comprises of many programming languages, frameworks, etc. to build, test and deploy the application.
+
+### Diagram
+
+A high level architecture can be seen below
+
+![architecture diagram](./diagrams/Architecture.jpg)
+
+### Technology
+
+The application is written using:
+
+* TypeScript (<https://www.typescriptlang.org/>)
+
+#### Unit Testing
+
+The following testing frameworks were used for unit testing:
+
+* Jest (<https://jestjs.io/>)
+* TS-Jest (<https://github.com/kulshekhar/ts-jest>)
+
+#### Build Tools
+
+To create a artefact, the following build tools are used:
+
+* Babel (<https://babeljs.io/>)
+* Webpack (<https://webpack.js.org/>)
+
+#### Infrastructure
+
+The application is currently designed to run on Amazon Web Service (AWS). The application uses the following AWS services:
+
+* API Gateway (<https://aws.amazon.com/api-gateway/>)
+* Lambda (<https://aws.amazon.com/lambda/>)
+* Cloudwatch (<https://aws.amazon.com/cloudwatch/>)
+* IAM (<https://aws.amazon.com/iam/>)
+
+#### Infrastructure as Code
+
+To be able to deploy all of the AWS infrastrcture, the following IaC tools are used:
+
+* Terraform (<https://www.terraform.io/>)
+* Terragrunt (<https://github.com/gruntwork-io/terragrunt>)
+
+#### Infrastructure Testing
+
+To test the AWS infrastructure that is provisioned, the following programmming language and framework is used:
+
+* Golang (<https://golang.org/>)
+* Terratest (<https://github.com/gruntwork-io/terratest>)
+
 ## Terraform
 
 This module will provision and confifure a API Gateway and lambda function.
