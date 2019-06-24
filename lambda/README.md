@@ -24,7 +24,7 @@ To generate a lambda zip artefact, run `yarn build`
 
 This module will provision and confifure a API Gateway and lambda function.
 
-••NOTE:•• This module requries Terraform 0.12
+**NOTE:** This module requries Terraform 0.12
 
 ### Terraform Docs
 

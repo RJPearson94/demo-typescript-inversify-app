@@ -2,7 +2,7 @@
 
 This lambda module will provision and confifure a lambda function.
 
-••NOTE:•• This module requries Terraform 0.12
+**NOTE:** This module requries Terraform 0.12
 
 ## Terraform Docs
 
