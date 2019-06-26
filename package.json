@@ -27,7 +27,7 @@
     "eslint-plugin-import": "^2.17.3",
     "husky": "^2.5.0",
     "prettier": "^1.18.2",
-    "semantic-release": "^15.13.16",
+    "semantic-release": "^15.13.17",
     "typescript": "^3.5.2"
   },
   "config": {
