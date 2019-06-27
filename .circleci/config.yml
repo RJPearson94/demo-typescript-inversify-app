@@ -186,10 +186,6 @@ jobs:
     working_directory: ~/typescript-inversify-demo/lambda/modules/api-gateway/test
     docker:
       - image: circleci/golang:latest
-      - image: localstack/localstack:latest
-    environment:
-      AWS_ACCESS_KEY_ID: MOCK_ACCESS_KEY_ID
-      AWS_SECRET_ACCESS_KEY: MOCK_SECRET_KEY
     steps:
       - restore_cache:
           keys:
@@ -200,19 +196,6 @@ jobs:
       - restore_cache:
           keys:
             - go-mod-v1-{{ checksum "go.sum" }}
-      - run:
-          name: Install Terraform
-          command: |
-            wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip
-            unzip terraform_0.12.2_linux_amd64.zip
-            sudo mv terraform /usr/local/bin/
-            chmod +x /usr/local/bin/terraform
-      - run:
-          name: Install Terragrunt
-          command: |
-            wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.4/terragrunt_linux_amd64
-            sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
-            chmod +x /usr/local/bin/terragrunt
       - run:
           name: Run Terratests
           command: go test
@@ -225,10 +208,6 @@ jobs:
     working_directory: ~/typescript-inversify-demo/lambda/modules/lambda/test
     docker:
       - image: circleci/golang:latest
-      - image: localstack/localstack:latest
-    environment:
-      AWS_ACCESS_KEY_ID: MOCK_ACCESS_KEY_ID
-      AWS_SECRET_ACCESS_KEY: MOCK_SECRET_KEY
     steps:
       - restore_cache:
           keys:
@@ -240,24 +219,27 @@ jobs:
           keys:
             - go-mod-v1-{{ checksum "go.sum" }}
       - run:
-          name: Install Terraform
-          command: |
-            wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip
-            unzip terraform_0.12.2_linux_amd64.zip
-            sudo mv terraform /usr/local/bin/
-            chmod +x /usr/local/bin/terraform
-      - run:
-          name: Install Terragrunt
-          command: |
-            wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.4/terragrunt_linux_amd64
-            sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
-            chmod +x /usr/local/bin/terragrunt
-      - run:
-          name: Create S3 artefact bucket
-          command: aws-cli s3 create-bucket --bucket inversify-demo
-      - run:
-          name: Create S3 artefact bucket
-          command: aws-cli cp ../../dist/inversify-demo-lambda.zip s3://inversify-demo/inversify-demo-lambda.zip --endpoint-url "http://localhost:4572"
+          name: Run Terratests
+          command: go test
+      - save_cache:
+          key: go-mod-v1-{{ checksum "go.sum" }}
+          paths:
+            - '/go/pkg/mod'
+
+  lambda-terratest-module:
+    working_directory: ~/typescript-inversify-demo/lambda/terratest
+    docker:
+      - image: circleci/golang:latest
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - v1-repo-lambda-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - go-mod-v1-{{ checksum "go.sum" }}
       - run:
           name: Run Terratests
           command: go test
@@ -333,18 +315,23 @@ workflows:
             - lambda-test
 
       # Terratest
-      # - terratest-api-gateway-module-lambda:
-      #     requires:
-      #       - create-artefact-lambda
-      # - terratest-lambda-module-lambda:
-      #     requires:
-      #       - create-artefact-lambda
+      - lambda-terratest-api-gateway-module:
+          requires:
+            - create-artefact-lambda
+      - lambda-terratest-lambda-module:
+          requires:
+            - create-artefact-lambda
+      - lambda-terratest-module:
+          requires:
+            - create-artefact-lambda
 
       # Release
       - release:
           requires:
             - web-app-create-artefact
-            - lambda-create-artefact
+            - lambda-terratest-api-gateway-module
+            - lambda-terratest-lambda-module
+            - lambda-terratest-module
           filters:
             branches:
               only: master
