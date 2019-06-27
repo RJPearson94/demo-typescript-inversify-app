@@ -12,7 +12,7 @@ func Test_MainComponentTests(test *testing.T) {
 	test.Parallel()
 
 	// Setup
-	setup := "../setup"
+	setup := "../../../terratest/helper/setup"
 	defer helper.Destroy(test, setup)
 	helper.Apply(test, setup)
 

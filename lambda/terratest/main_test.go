@@ -9,6 +9,11 @@ import (
 func Test_MainComponentTests(test *testing.T) {
 	test.Parallel()
 
+	// Setup
+	setup := "./helper/setup"
+	defer helper.Destroy(test, setup)
+	helper.Apply(test, setup)
+
 	// Before
 	plan := helper.Plan(test, ".")
 
