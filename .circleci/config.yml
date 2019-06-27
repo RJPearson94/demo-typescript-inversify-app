@@ -327,8 +327,8 @@ workflows:
       - lambda-terratest-lambda-module:
           requires:
             - lambda-create-artefact
-      
-      # Terratest 
+
+      # Terratest
       - lambda-terratest-module:
           requires:
             - lambda-terratest-api-gateway-module
