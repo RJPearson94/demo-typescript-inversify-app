@@ -8,6 +8,16 @@ import (
 	"testing"
 )
 
+func Apply(test *testing.T, path string) {
+	tfOptions := setupTerraformOptions(path)
+	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "apply", "-auto-approve")...)
+}
+
+func Destroy(test *testing.T, path string) {
+	tfOptions := setupTerraformOptions(path)
+	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "destroy", "-auto-approve")...)
+}
+
 func Plan(test *testing.T, path string) *plans.Plan {
 	tfOptions := setupTerraformOptions(path)
 

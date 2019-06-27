@@ -10,10 +10,25 @@ terraform {
       "-upgrade=true",
     ]
   }
+
+  extra_arguments "set_region" {
+    commands = [
+      "apply",
+      "plan",
+      "destroy",
+      "import",
+      "push",
+      "refresh"
+    ]
+
+    env_vars = {
+        AWS_REGION = "eu-west-1"
+    }
+  }
 }
 
 inputs = {
-  bucket_name = "dev-inversify-demo"
+  bucket_name = "inversify-demo"
   zip_key     = "inversify-demo-lambda.zip"
   log_retention = 14
   tags        = {
