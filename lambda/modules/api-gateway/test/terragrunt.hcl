@@ -10,6 +10,21 @@ terraform {
       "-upgrade=true",
     ]
   }
+
+    extra_arguments "set_region" {
+    commands = [
+      "apply",
+      "plan",
+      "destroy",
+      "import",
+      "push",
+      "refresh"
+    ]
+
+    env_vars = {
+        AWS_REGION = "eu-west-1"
+    }
+  }
 }
 
 inputs = {

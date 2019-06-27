@@ -23,7 +23,7 @@ type LambdaFunction struct {
 	Runtime                      string            `cty:"runtime"`
 	S3Bucket                     string            `cty:"s3_bucket"`
 	S3Key                        string            `cty:"s3_key"`
-	S3ObjectVersion              cty.Value         `cty:"s3_object_version"`
+	S3ObjectVersion              string            `cty:"s3_object_version"`
 	SourceCodeHash               cty.Value         `cty:"source_code_hash"`
 	SourceCodeSize               cty.Value         `cty:"source_code_size"`
 	Tags                         map[string]string `cty:"tags"`
