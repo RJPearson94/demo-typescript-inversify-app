@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   aws-cli: circleci/aws-cli@0.1.13
-  terragrunt: kchultman/terragrunt@0.1.12
 
 jobs:
   setup:
@@ -10,10 +9,16 @@ jobs:
     docker:
       - image: circleci/node:latest
     steps:
+      - checkout
       - run:
           name: Install Yarn
           command: curl -o- -L https://yarnpkg.com/install.sh | bash
-      - checkout
+      - run:
+          name: Install Terraform
+          command: wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip	&& unzip terraform_0.12.2_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform && echo 'export PATH=/usr/local/bin/terraform:$PATH' >> $BASH_ENV
+      - run:
+          name: Install Terragrunt
+          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.4/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt && echo 'export PATH=/usr/local/bin/terragrunt:$PATH' >> $BASH_ENV
       - save_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
