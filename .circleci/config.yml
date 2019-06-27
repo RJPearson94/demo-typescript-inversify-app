@@ -320,23 +320,24 @@ workflows:
           requires:
             - lambda-test
 
-      # Terratest
+      # Terratest Modules
       - lambda-terratest-api-gateway-module:
           requires:
             - lambda-create-artefact
       - lambda-terratest-lambda-module:
           requires:
             - lambda-create-artefact
+      
+      # Terratest 
       - lambda-terratest-module:
           requires:
-            - lambda-create-artefact
+            - lambda-terratest-api-gateway-module
+            - lambda-terratest-lambda-module
 
       # Release
       - release:
           requires:
             - web-app-create-artefact
-            - lambda-terratest-api-gateway-module
-            - lambda-terratest-lambda-module
             - lambda-terratest-module
           filters:
             branches:
