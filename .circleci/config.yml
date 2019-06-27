@@ -317,13 +317,13 @@ workflows:
       # Terratest
       - lambda-terratest-api-gateway-module:
           requires:
-            - create-artefact-lambda
+            - lambda-create-artefact
       - lambda-terratest-lambda-module:
           requires:
-            - create-artefact-lambda
+            - lambda-create-artefact
       - lambda-terratest-module:
           requires:
-            - create-artefact-lambda
+            - lambda-create-artefact
 
       # Release
       - release:
