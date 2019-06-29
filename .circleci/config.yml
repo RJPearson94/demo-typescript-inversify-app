@@ -13,20 +13,11 @@ jobs:
       - run:
           name: Install Yarn
           command: curl -o- -L https://yarnpkg.com/install.sh | bash
-      - run:
-          name: Install Terraform
-          command: wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip	&& unzip terraform_0.12.2_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
-      - run:
-          name: Install Terragrunt
-          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.4/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
-      - run: export PATH="$PATH:/usr/local/bin/terraform:/usr/local/bin/terragrunt"
-      - run: source ~/.profile
       - save_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - ~/typescript-inversify-demo
-            - ~/.profile
-  
+
   install:
     working_directory: ~/typescript-inversify-demo
     docker:
@@ -206,6 +197,12 @@ jobs:
       - restore_cache:
           keys:
             - go-mod-v1-{{ checksum "go.sum" }}
+      - run:
+          name: Install Terraform
+          command: wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip	&& unzip terraform_0.12.2_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
+      - run:
+          name: Install Terragrunt
+          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.4/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
       - run: cd /usr/local/bin/ && ls -la
       - run:
           name: Run Terratests
@@ -229,6 +226,12 @@ jobs:
       - restore_cache:
           keys:
             - go-mod-v1-{{ checksum "go.sum" }}
+      - run:
+          name: Install Terraform
+          command: wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip	&& unzip terraform_0.12.2_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
+      - run:
+          name: Install Terragrunt
+          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.4/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
       - run: cd /usr/local/bin/ && ls -la
       - run:
           name: Run Terratests
@@ -252,6 +255,12 @@ jobs:
       - restore_cache:
           keys:
             - go-mod-v1-{{ checksum "go.sum" }}
+      - run:
+          name: Install Terraform
+          command: wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip	&& unzip terraform_0.12.2_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
+      - run:
+          name: Install Terragrunt
+          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.4/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
       - run:
           name: Run Terratests
           command: go test
