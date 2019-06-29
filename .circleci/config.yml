@@ -26,7 +26,7 @@ jobs:
           paths:
             - ~/typescript-inversify-demo
             - ~/.profile
-            - /usr/local/bin
+  
   install:
     working_directory: ~/typescript-inversify-demo
     docker:
@@ -206,6 +206,7 @@ jobs:
       - restore_cache:
           keys:
             - go-mod-v1-{{ checksum "go.sum" }}
+      - run: cd /usr/local/bin/ && ls -la
       - run:
           name: Run Terratests
           command: go test
@@ -228,6 +229,7 @@ jobs:
       - restore_cache:
           keys:
             - go-mod-v1-{{ checksum "go.sum" }}
+      - run: cd /usr/local/bin/ && ls -la
       - run:
           name: Run Terratests
           command: go test
