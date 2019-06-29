@@ -21,12 +21,12 @@ jobs:
           command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.4/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
       - run: export PATH="$PATH:/usr/local/bin/terraform:/usr/local/bin/terragrunt"
       - run: source ~/.profile
-      - run: export | grep PATH
-      - run: cd /usr/local/bin/ && ls -la
       - save_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - ~/typescript-inversify-demo
+            - ~/.profile
+            - /usr/local/bin
   install:
     working_directory: ~/typescript-inversify-demo
     docker:
