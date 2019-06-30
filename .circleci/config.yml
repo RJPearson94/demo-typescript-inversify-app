@@ -4,14 +4,10 @@ orbs:
   aws-cli: circleci/aws-cli@0.1.13
 
 references:
-  root_directory: &root_directory
-    '~/typescript-inversify-demo'
-  shared_directory: &shared_directory
-    '*root_directory/shared'
-  lambda_directory: &lambda_directory
-    '*root_directory/lambda'
-  web_app_directory: &web_app_directory
-    '*root_directory/web-app'
+  root_directory: &root_directory '~/typescript-inversify-demo'
+  shared_directory: &shared_directory '*root_directory/shared'
+  lambda_directory: &lambda_directory '*root_directory/lambda'
+  web_app_directory: &web_app_directory '*root_directory/web-app'
 
 executors:
   nodejs:
