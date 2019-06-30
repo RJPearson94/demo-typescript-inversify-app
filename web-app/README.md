@@ -67,3 +67,48 @@ The API docs can be run as a docker container, you need to run the following com
 * `run -p 8080:8080 inversify-express-api`
 
 The API docs should now be available at <http://localhost:8080/>
+
+## Postman Tests
+
+To test the end 2 end solution, Postman is used.
+
+The Postman Scripts can be seen in the postman-scripts folder
+
+### Running Postman Tests via GUI
+
+To run the postman scripts via the Postman GUI.
+
+#### Prerequisites
+
+In addition to the prerequistes above, you also need:
+
+* Postman <https://www.getpostman.com>
+
+Setup
+
+* Import the web-app collection (found within the postman-scripts folder)
+* Configure Environment to run the tests against (Add Variable URL and set the initial value as the Container URL)
+
+To run an individual script/ request
+
+* Click on script/ request you wan to run
+* Click Send Request
+* Verify Tests Results
+
+Alternatively you can use the Postman Collection Runner.
+
+* Open Collection Runner
+* Select the imported web-app collection
+* Select the environment
+* Click Start Run
+* Verify Tests Results
+
+### Running Postman Tests via CLI
+
+To run the postman scripts via the CLI, Newman test runner is used. To run the Newman tests, please run the following command
+
+`yarn newman run postman-scripts/web-app.collection.json --env-var "URL=<<CONTAINER_URL>>" -r cli`
+
+For more information on Postman, see <https://www.getpostman.com/>
+
+For more information on Newman, see <https://github.com/postmanlabs/newman>

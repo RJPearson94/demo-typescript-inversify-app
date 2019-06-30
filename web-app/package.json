@@ -15,7 +15,8 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "inversify-express-utils": "^6.3.2",
-    "inversify-shared": "file:../shared"
+    "inversify-shared": "file:../shared",
+    "newman": "newman"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -33,6 +34,7 @@
     "babel-jest": "^24.8.0",
     "babel-plugin-parameter-decorator": "^1.0.7",
     "jest": "^24.8.0",
+    "newman": "^4.5.1",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.2",
     "webpack": "^4.35.0",
