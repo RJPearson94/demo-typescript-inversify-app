@@ -6,6 +6,7 @@
   "scripts": {
     "babel": "babel",
     "build": "webpack",
+    "newman": "newman",
     "test": "jest",
     "webpack": "webpack-cli"
   },
@@ -29,6 +30,7 @@
     "babel-jest": "^24.8.0",
     "babel-plugin-parameter-decorator": "^1.0.7",
     "jest": "^24.8.0",
+    "newman": "^4.5.1",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.2",
     "webpack": "^4.35.0",

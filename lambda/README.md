@@ -14,8 +14,6 @@ You will need:
 
 To download all dependencies, run `yarn install`.
 
-To run linting on all of the code in the lambda folder, run `yarn lint:all`
-
 To run the tests and view code coverage report, run `yarn test`
 
 To generate a lambda zip artefact, run `yarn build`
@@ -90,18 +88,23 @@ This module will provision and confifure a API Gateway and lambda function.
 | tags | AWS tags to be applied to resources | map | n/a | yes |
 | zip\_key | ZIP file name | string | n/a | yes |
 
+### Outputs
+
+| Name | Description |
+|------|-------------|
+| invoke\_url | The URL to invoke an API stage |
+
 ## Terratests
 
 To test the Terraform infrastructure and modules, Terratest <https://github.com/gruntwork-io/terratest> is used.
 
 The tests are written in Go and can be seen in the test folder in each Terraform module directory.
 
-Terragrunt is run/ excute Terraform code and commands and localstack to provide mock AWS infrastructure
+Terragrunt is run/ excute Terraform code and commands against real AWS infrastructure
 
 The Terratest are designed to test the terraform modules and code on the following infrastructure
 
-* Localstack
-* AWS (Tests/ Provider coming soon)
+* AWS
 
 ### Terratest Prerequisites
 
@@ -109,25 +112,68 @@ In addition to the prerequistes above, you also need:
 
 * Terraform (v0.12.2 used) <https://www.terraform.io/>
 * Terragrunt (v0.19.2 used) <https://github.com/gruntwork-io/terragrunt>
-* Localstack <https://github.com/localstack/localstack>
 * Golang (v1.12.6 used) <https://golang.org/>
 * AWS CLI <https://aws.amazon.com/cli/>
-* AWSLocal CLI <https://github.com/localstack/awscli-local>
 
 ### Running Terratests
 
 To run the terratests for a given Terraform module, please run the following commands
 
-* Create S3 Bucket named **inversify-demo**
 * Create Lambda Artefact by running the script above
-* Copy Lambda Artefact into S3 Bucket. Run `awslocal s3 cp dist/inversify-demo-lambda.zip s3://inversify-demo/inversify-demo-lambda.zip`
 * Change into the desired module directory i.e. `cd modules/lambda/test`
 * Change into the test directory
 * Run `go test`
 
-**NOTE:** The terraform provider references Localstack endpoints, so if Localstack and/ or all mock services are not running then an error will occur
-
 **NOTE:** Go modules are being used. Running `go test` will download all of the necessary dependencies
+
+## Postman Tests
+
+To test the end 2 end solution, Postman is used.
+
+The Postman Scripts can be seen in the postman-scripts folder
+
+### Running Postman Tests via GUI
+
+To run the postman scripts via the Postman GUI.
+
+#### Prerequisites
+
+In addition to the prerequistes above, you also need:
+
+* Postman <https://www.getpostman.com>
+
+Setup
+
+* Import the lambda collection (found within the postman-scripts folder)
+* Configure Environment to run the tests against (Add Variable URL and set the initial value as the API Gateway URL)
+
+To run an individual script/ request
+
+* Click on script/ request you wan to run
+* Click Send Request
+* Verify Tests Results
+
+Alternatively you can use the Postman Collection Runner.
+
+* Open Collection Runner
+* Select the imported lambda collection
+* Select the environment
+* Click Start Run
+* Verify Tests Results
+
+### Running Postman Tests via CLI
+
+To run the postman scripts via the CLI, Newman test runner is used. To run the Newman tests, please run the following command
+
+`yarn newman run postman-scripts/lambda.collection.json --env-var "URL=<<API_GATEWAY_URL>>" -r cli`
+
+For more information on Postman, see <https://www.getpostman.com/>
+
+For more information on Newman, see <https://github.com/postmanlabs/newman>
+
+### Terratests & Newman
+
+Instructions coming soon
 
 ## Deploying to AWS
 
