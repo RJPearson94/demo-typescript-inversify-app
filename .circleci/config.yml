@@ -13,6 +13,9 @@ references:
   nodejs_cache: &nodejs_cache dependency-cache-{{ checksum "package.json" }}
   golang_cache: &golang_cache go-mod-{{ checksum "go.sum" }}
 
+  lambda: &lambda 'lambda'
+  web_app: &web_app 'web-app'
+
 executors:
   nodejs:
     docker:
@@ -155,34 +158,34 @@ jobs:
     executor: nodejs
     steps:
       - nodejs_build:
-          artefact-cache: 'web-app'
+          artefact-cache: *web_app
   lambda-create-artefact:
     working_directory: *lambda_directory
     executor: nodejs
     steps:
       - nodejs_build:
-          artefact-cache: 'lambda'
+          artefact-cache: *lambda
 
   lambda-terratest-api-gateway-module:
     working_directory: ~/typescript-inversify-demo/lambda/modules/api-gateway/test
     executor: golang
     steps:
       - golang_terratests:
-          artefact-cache: 'lambda'
+          artefact-cache: *lambda
 
   lambda-terratest-lambda-module:
     working_directory: ~/typescript-inversify-demo/lambda/modules/lambda/test
     executor: golang
     steps:
       - golang_terratests:
-          artefact-cache: 'lambda'
+          artefact-cache: *lambda
 
   lambda-terratest-module:
     working_directory: ~/typescript-inversify-demo/lambda/terratest
     executor: golang
     steps:
       - golang_terratests:
-          artefact-cache: 'lambda'
+          artefact-cache: *lambda
 
   release:
     working_directory: *root_directory
