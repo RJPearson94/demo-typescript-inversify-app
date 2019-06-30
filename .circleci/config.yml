@@ -105,9 +105,10 @@ jobs:
     working_directory: ~/typescript-inversify-demo
     executor: nodejs
     steps:
-      - nodejs_cache_restore
       - restore_cache:
           keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - dependency-cache-{{ checksum "package.json" }}
             - dependency-cache-{{ checksum "shared/package.json" }}
             - dependency-cache-{{ checksum "lambda/package.json" }}
             - dependency-cache-{{ checksum "web-app/package.json" }}
