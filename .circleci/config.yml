@@ -14,58 +14,58 @@ executors:
 commands:
   nodejs_cache_restore:
     steps:
-    - restore_cache:
-        keys:
-          - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-          - dependency-cache-{{ checksum "package.json" }}
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - dependency-cache-{{ checksum "package.json" }}
   nodejs_install:
     steps:
-    - nodejs_cache_restore
-    - run:
-        name: Install dependencies
-        command: yarn install
-    - save_cache:
-        key: dependency-cache-{{ checksum "package.json" }}
-        paths:
-          - node_modules
+      - nodejs_cache_restore
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
   nodejs_test:
     steps:
-    - nodejs_cache_restore
-    - run:
-        name: Run Unit Tests
-        command: yarn test
+      - nodejs_cache_restore
+      - run:
+          name: Run Unit Tests
+          command: yarn test
   nodejs_build:
     steps:
-    - nodejs_cache_restore
-    - run:
-        name: create artefact
-        command: yarn build
-    - save_cache:
-        key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-        paths:
-          - dist
+      - nodejs_cache_restore
+      - run:
+          name: create artefact
+          command: yarn build
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - dist
   golang_cache_restore:
     steps:
-    - restore_cache:
-        keys:
-          - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-          - go-mod-v1-{{ checksum "go.sum" }}
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - go-mod-v1-{{ checksum "go.sum" }}
   golang_terratests:
     steps:
-    - golang_cache_restore
-    - run:
-        name: Install Terraform
-        command: wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip	&& unzip terraform_0.12.2_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
-    - run:
-        name: Install Terragrunt
-        command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.4/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
-    - run:
-        name: Run Terratests
-        command: go test
-    - save_cache:
-        key: go-mod-v1-{{ checksum "go.sum" }}
-        paths:
-          - '/go/pkg/mod'
+      - golang_cache_restore
+      - run:
+          name: Install Terraform
+          command: wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip	&& unzip terraform_0.12.2_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
+      - run:
+          name: Install Terragrunt
+          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.4/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
+      - run:
+          name: Run Terratests
+          command: go test
+      - save_cache:
+          key: go-mod-v1-{{ checksum "go.sum" }}
+          paths:
+            - '/go/pkg/mod'
 jobs:
   setup:
     working_directory: ~/typescript-inversify-demo
@@ -114,7 +114,7 @@ jobs:
       - run:
           name: Lint all
           command: yarn lint:all
-  
+
   shared-test:
     working_directory: ~/typescript-inversify-demo/shared
     executor: nodejs
