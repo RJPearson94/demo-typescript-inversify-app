@@ -3,11 +3,73 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@0.1.13
 
+executors:
+  nodejs:
+    docker:
+      - image: circleci/node:latest
+  golang:
+    docker:
+      - image: circleci/golang:latest
+
+commands:
+  nodejs_cache_restore:
+    steps:
+    - restore_cache:
+        keys:
+          - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          - dependency-cache-{{ checksum "package.json" }}
+  nodejs_install:
+    steps:
+    - nodejs_cache_restore
+    - run:
+        name: Install dependencies
+        command: yarn install
+    - save_cache:
+        key: dependency-cache-{{ checksum "package.json" }}
+        paths:
+          - node_modules
+  nodejs_test:
+    steps:
+    - nodejs_cache_restore
+    - run:
+        name: Run Unit Tests
+        command: yarn test
+  nodejs_build:
+    steps:
+    - nodejs_cache_restore
+    - run:
+        name: create artefact
+        command: yarn build
+    - save_cache:
+        key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+        paths:
+          - dist
+  golang_cache_restore:
+    steps:
+    - restore_cache:
+        keys:
+          - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          - go-mod-v1-{{ checksum "go.sum" }}
+  golang_terratests:
+    steps:
+    - golang_cache_restore
+    - run:
+        name: Install Terraform
+        command: wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip	&& unzip terraform_0.12.2_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
+    - run:
+        name: Install Terragrunt
+        command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.4/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
+    - run:
+        name: Run Terratests
+        command: go test
+    - save_cache:
+        key: go-mod-v1-{{ checksum "go.sum" }}
+        paths:
+          - '/go/pkg/mod'
 jobs:
   setup:
     working_directory: ~/typescript-inversify-demo
-    docker:
-      - image: circleci/node:latest
+    executor: nodejs
     steps:
       - checkout
       - run:
@@ -20,265 +82,89 @@ jobs:
 
   install:
     working_directory: ~/typescript-inversify-demo
-    docker:
-      - image: circleci/node:latest
+    executor: nodejs
     steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Install dependencies
-          command: yarn install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - node_modules
+      - nodejs_install
+  shared-install:
+    working_directory: ~/typescript-inversify-demo/shared
+    executor: nodejs
+    steps:
+      - nodejs_install
+  web-app-install:
+    working_directory: ~/typescript-inversify-demo/web-app
+    executor: nodejs
+    steps:
+      - nodejs_install
+  lambda-install:
+    working_directory: ~/typescript-inversify-demo/lambda
+    executor: nodejs
+    steps:
+      - nodejs_install
 
   lint:
     working_directory: ~/typescript-inversify-demo
-    docker:
-      - image: circleci/node:latest
+    executor: nodejs
     steps:
+      - nodejs_cache_restore
       - restore_cache:
           keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - restore_cache:
-          key: dependency-cache-{{ checksum "shared/package.json" }}
-      - restore_cache:
-          key: dependency-cache-{{ checksum "lambda/package.json" }}
-      - restore_cache:
-          key: dependency-cache-{{ checksum "web-app/package.json" }}
+            - dependency-cache-{{ checksum "shared/package.json" }}
+            - dependency-cache-{{ checksum "lambda/package.json" }}
+            - dependency-cache-{{ checksum "web-app/package.json" }}
       - run:
           name: Lint all
           command: yarn lint:all
-
-  shared-install:
-    working_directory: ~/typescript-inversify-demo/shared
-    docker:
-      - image: circleci/node:latest
-    steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Install dependencies
-          command: yarn install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - node_modules
+  
   shared-test:
     working_directory: ~/typescript-inversify-demo/shared
-    docker:
-      - image: circleci/node:latest
+    executor: nodejs
     steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Run Unit Tests
-          command: yarn test
-
-  web-app-install:
-    working_directory: ~/typescript-inversify-demo/web-app
-    docker:
-      - image: circleci/node:latest
-    steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Install dependencies
-          command: yarn install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - node_modules
+      - nodejs_test
   web-app-test:
     working_directory: ~/typescript-inversify-demo/web-app
-    docker:
-      - image: circleci/node:latest
+    executor: nodejs
     steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Run Unit Tests
-          command: yarn test
-  web-app-create-artefact:
-    working_directory: ~/typescript-inversify-demo/web-app
-    docker:
-      - image: circleci/node:latest
-    steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: create artefact
-          command: yarn build
-      - save_cache:
-          key: v1-repo-web-app-{{ .Environment.CIRCLE_SHA1 }}
-          paths:
-            - dist
-
-  lambda-install:
-    working_directory: ~/typescript-inversify-demo/lambda
-    docker:
-      - image: circleci/node:latest
-    steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Install dependencies
-          command: yarn install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - node_modules
+      - nodejs_test
   lambda-test:
     working_directory: ~/typescript-inversify-demo/lambda
-    docker:
-      - image: circleci/node:latest
+    executor: nodejs
     steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Run Unit Tests
-          command: yarn test
+      - nodejs_test
+
+  web-app-create-artefact:
+    working_directory: ~/typescript-inversify-demo/web-app
+    executor: nodejs
+    steps:
+      - nodejs_build
   lambda-create-artefact:
     working_directory: ~/typescript-inversify-demo/lambda
-    docker:
-      - image: circleci/node:latest
+    executor: nodejs
     steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: create artefact
-          command: yarn build
-      - save_cache:
-          key: v1-repo-lambda-{{ .Environment.CIRCLE_SHA1 }}
-          paths:
-            - dist
+      - nodejs_build
 
   lambda-terratest-api-gateway-module:
     working_directory: ~/typescript-inversify-demo/lambda/modules/api-gateway/test
-    docker:
-      - image: circleci/golang:latest
+    executor: golang
     steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          keys:
-            - v1-repo-lambda-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          keys:
-            - go-mod-v1-{{ checksum "go.sum" }}
-      - run:
-          name: Install Terraform
-          command: wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip	&& unzip terraform_0.12.2_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
-      - run:
-          name: Install Terragrunt
-          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.4/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
-      - run: cd /usr/local/bin/ && ls -la
-      - run:
-          name: Run Terratests
-          command: go test
-      - save_cache:
-          key: go-mod-v1-{{ checksum "go.sum" }}
-          paths:
-            - '/go/pkg/mod'
+      - golang_terratests
 
   lambda-terratest-lambda-module:
     working_directory: ~/typescript-inversify-demo/lambda/modules/lambda/test
-    docker:
-      - image: circleci/golang:latest
+    executor: golang
     steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          keys:
-            - v1-repo-lambda-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          keys:
-            - go-mod-v1-{{ checksum "go.sum" }}
-      - run:
-          name: Install Terraform
-          command: wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip	&& unzip terraform_0.12.2_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
-      - run:
-          name: Install Terragrunt
-          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.4/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
-      - run: cd /usr/local/bin/ && ls -la
-      - run:
-          name: Run Terratests
-          command: go test
-      - save_cache:
-          key: go-mod-v1-{{ checksum "go.sum" }}
-          paths:
-            - '/go/pkg/mod'
+      - golang_terratests
 
   lambda-terratest-module:
     working_directory: ~/typescript-inversify-demo/lambda/terratest
-    docker:
-      - image: circleci/golang:latest
+    executor: golang
     steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          keys:
-            - v1-repo-lambda-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          keys:
-            - go-mod-v1-{{ checksum "go.sum" }}
-      - run:
-          name: Install Terraform
-          command: wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip	&& unzip terraform_0.12.2_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
-      - run:
-          name: Install Terragrunt
-          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.4/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
-      - run:
-          name: Run Terratests
-          command: go test
-      - save_cache:
-          key: go-mod-v1-{{ checksum "go.sum" }}
-          paths:
-            - '/go/pkg/mod'
+      - golang_terratests
 
   release:
     working_directory: ~/typescript-inversify-demo
-    docker:
-      - image: circleci/node:latest
+    executor: nodejs
     steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+      - nodejs_cache_restore
       - run:
           name: Run Semantic Release
           command: yarn semantic-release
