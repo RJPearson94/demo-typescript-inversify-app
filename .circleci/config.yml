@@ -84,6 +84,10 @@ commands:
           key: *golang_cache
           paths:
             - ~/go/pkg/mod
+  lambda_terratests:
+    steps:
+      - golang_terratests:
+          artefact-cache: *lambda
 jobs:
   setup:
     working_directory: *root_directory
@@ -170,22 +174,19 @@ jobs:
     working_directory: ~/typescript-inversify-demo/lambda/modules/api-gateway/test
     executor: golang
     steps:
-      - golang_terratests:
-          artefact-cache: *lambda
+      - lambda_terratests
 
   lambda-terratest-lambda-module:
     working_directory: ~/typescript-inversify-demo/lambda/modules/lambda/test
     executor: golang
     steps:
-      - golang_terratests:
-          artefact-cache: *lambda
+      - lambda_terratests
 
   lambda-terratest-module:
     working_directory: ~/typescript-inversify-demo/lambda/terratest
     executor: golang
     steps:
-      - golang_terratests:
-          artefact-cache: *lambda
+      - lambda_terratests
 
   release:
     working_directory: *root_directory
