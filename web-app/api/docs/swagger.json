@@ -19,16 +19,17 @@
     "/v1/": {
       "get": {
         "summary": "Provide V1 Greeting Message",
-        "description": "Provide Greeting Message when lambda is invoked. Lambda is written in TypeScript and uses Inversify for Dependency Injection",
+        "description": "Provide string Greeting Message when Web App is called. Web App is written in TypeScript and uses Express & Inversify for Dependency Injection",
         "operationId": "getV1Greet",
         "tags": ["Greeting"],
         "responses": {
           "200": {
             "description": "Successfully Greet",
             "content": {
-              "application/json": {
+              "text/html": {
                 "schema": {
-                  "$ref": "#/components/schemas/GreetingResponse"
+                  "type": "string",
+                  "example": "Hello"
                 }
               }
             }
@@ -39,7 +40,7 @@
     "/v2/": {
       "get": {
         "summary": "Provide V2 Greeting Message",
-        "description": "Provide Greeting Message when lambda is invoked. Lambda is written in TypeScript and uses Inversify for Dependency Injection",
+        "description": "Provide JSON Greeting Message when Web App is called. Web App is written in TypeScript and uses Express & Inversify for Dependency Injection",
         "operationId": "getV2Greet",
         "tags": ["Greeting"],
         "responses": {

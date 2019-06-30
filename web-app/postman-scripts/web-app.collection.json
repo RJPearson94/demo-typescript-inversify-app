@@ -1,0 +1,90 @@
+{
+  "info": {
+    "_postman_id": "1777bf9e-2d3c-4ece-916c-9f88887a15ca",
+    "name": "Web-App",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "V1 Greeting",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "81e7b6c0-3b2e-4821-aa35-59bcef1863d5",
+            "exec": [
+              "pm.test('Valid response', () => {",
+              "  pm.response.to.be.ok;",
+              "});",
+              "",
+              "pm.test('response message is Hello', () => {",
+              "  const textBody = pm.response.text();",
+              "  pm.expect(textBody).to.eql('Hello')",
+              "})"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}/v1",
+          "host": ["{{URL}}"],
+          "path": ["v1"]
+        },
+        "description": "Verify V1 Greeting Response"
+      },
+      "response": []
+    },
+    {
+      "name": "V2 Greeting",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "81e7b6c0-3b2e-4821-aa35-59bcef1863d5",
+            "exec": [
+              "const Ajv = require('ajv');",
+              "const ajv = new Ajv({ logger: console });",
+              "",
+              "pm.test('Valid response with JSON body', () => {",
+              "  pm.response.to.be.ok;",
+              "  pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test('Verify response body matches schema', () => {",
+              "  const schema = {",
+              "    \"properties\": {",
+              "      \"message\": {",
+              "        \"type\": \"string\"",
+              "      }",
+              "    }",
+              "  };",
+              "  pm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
+              "})",
+              "",
+              "pm.test('response message is SayHello', () => {",
+              "  const jsonBody = pm.response.json();",
+              "  pm.expect(jsonBody.message).to.eql('SayHello')",
+              "})"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}/v2",
+          "host": ["{{URL}}"],
+          "path": ["v2"]
+        },
+        "description": "Verify V2 Greeting Response"
+      },
+      "response": []
+    }
+  ]
+}
