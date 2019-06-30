@@ -70,7 +70,7 @@ commands:
       - save_cache:
           key: go-mod-v1-{{ checksum "go.sum" }}
           paths:
-            - '/go/pkg/mod'
+            - ~/go/pkg/mod
 jobs:
   setup:
     working_directory: ~/typescript-inversify-demo
