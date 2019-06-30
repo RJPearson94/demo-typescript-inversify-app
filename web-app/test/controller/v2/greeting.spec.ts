@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import HelloService from '@shared/service/hello/hello';
 import V2GreetingController from '@src/controller/v2/greeting';
+import GreetingResponse from '@src/controller/v2/model/greeting-response';
 
 describe('#V2GreetingController', () => {
   test('should return SayHello when greet is called', () => {
@@ -12,10 +13,11 @@ describe('#V2GreetingController', () => {
 
     // When
     const testSubject: V2GreetingController = new V2GreetingController(helloMock);
-    const response: string = testSubject.greet();
+    const response: GreetingResponse = testSubject.greet();
 
     // Then
     expect(mockedSayHelloFunction).toBeCalled();
-    expect(response).toEqual('SayHello');
+    expect(response).toBeDefined();
+    expect(response.message).toEqual('SayHello');
   });
 });
