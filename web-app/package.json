@@ -6,6 +6,7 @@
   "scripts": {
     "babel": "babel",
     "build": "webpack",
+    "newman": "newman",
     "start": "yarn build && node dist/main.js",
     "test": "jest",
     "webpack": "webpack-cli"
@@ -15,8 +16,7 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "inversify-express-utils": "^6.3.2",
-    "inversify-shared": "file:../shared",
-    "newman": "newman"
+    "inversify-shared": "file:../shared"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
