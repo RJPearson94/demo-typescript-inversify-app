@@ -9,6 +9,10 @@ references:
   lambda_directory: &lambda_directory ~/typescript-inversify-demo/lambda
   web_app_directory: &web_app_directory ~/typescript-inversify-demo/web-app
 
+  repo_cache: &repo_cache v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+  nodejs_cache: &nodejs_cache dependency-cache-{{ checksum "package.json" }}
+  golang_cache: &golang_cache go-mod-{{ checksum "go.sum" }}
+
 executors:
   nodejs:
     docker:
@@ -21,9 +25,9 @@ commands:
   nodejs_cache_restore:
     steps:
       - restore_cache:
-          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          key: *repo_cache
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: *nodejs_cache
   nodejs_install:
     steps:
       - nodejs_cache_restore
@@ -31,7 +35,7 @@ commands:
           name: Install dependencies
           command: yarn install
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: *nodejs_cache
           paths:
             - node_modules
   nodejs_test:
@@ -59,11 +63,11 @@ commands:
         type: string
     steps:
       - restore_cache:
-          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          key: *repo_cache
       - restore_cache:
           key: v1-repo-<<parameters.artefact-cache>>-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
-          key: go-mod-{{ checksum "go.sum" }}
+          key: *golang_cache
       - run:
           name: Install Terraform
           command: wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip	&& unzip terraform_0.12.2_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
@@ -74,7 +78,7 @@ commands:
           name: Run Terratests
           command: go test
       - save_cache:
-          key: go-mod-{{ checksum "go.sum" }}
+          key: *golang_cache
           paths:
             - ~/go/pkg/mod
 jobs:
@@ -87,7 +91,7 @@ jobs:
           name: Install Yarn
           command: curl -o- -L https://yarnpkg.com/install.sh | bash
       - save_cache:
-          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          key: *repo_cache
           paths:
             - *root_directory
 
@@ -117,9 +121,9 @@ jobs:
     executor: nodejs
     steps:
       - restore_cache:
-          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          key: *repo_cache
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: *nodejs_cache
       - restore_cache:
           key: dependency-cache-{{ checksum "shared/package.json" }}
       - restore_cache:
@@ -160,21 +164,21 @@ jobs:
           artefact-cache: 'lambda'
 
   lambda-terratest-api-gateway-module:
-    working_directory: '*lambda_directory/modules/api-gateway/test'
+    working_directory: ~/typescript-inversify-demo/lambda/modules/api-gateway/test
     executor: golang
     steps:
       - golang_terratests:
           artefact-cache: 'lambda'
 
   lambda-terratest-lambda-module:
-    working_directory: '*lambda_directory/modules/lambda/test'
+    working_directory: ~/typescript-inversify-demo/lambda/modules/lambda/test
     executor: golang
     steps:
       - golang_terratests:
           artefact-cache: 'lambda'
 
   lambda-terratest-module:
-    working_directory: '*lambda_directory/terratest'
+    working_directory: ~/typescript-inversify-demo/lambda/terratest
     executor: golang
     steps:
       - golang_terratests:
