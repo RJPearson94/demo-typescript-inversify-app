@@ -73,10 +73,10 @@ commands:
           key: *golang_cache
       - run:
           name: Install Terraform
-          command: wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip	&& unzip terraform_0.12.2_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
+          command: wget https://releases.hashicorp.com/terraform/0.12.3/terraform_0.12.3_linux_amd64.zip	&& unzip terraform_0.12.3_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
       - run:
           name: Install Terragrunt
-          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.4/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
+          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.6/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
       - run:
           name: Run Terratests
           command: go test
