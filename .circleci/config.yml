@@ -3,6 +3,16 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@0.1.13
 
+references:
+  root_directory: &root_directory
+    '~/typescript-inversify-demo'
+  shared_directory: &shared_directory
+    '*root_directory/shared'
+  lambda_directory: &lambda_directory
+    '*root_directory/lambda'
+  web_app_directory: &web_app_directory
+    '*root_directory/web-app'
+
 executors:
   nodejs:
     docker:
@@ -57,7 +67,7 @@ commands:
       - restore_cache:
           key: v1-repo-<<parameters.artefact-cache>>-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
-          key: go-mod-v1-{{ checksum "go.sum" }}
+          key: go-mod-{{ checksum "go.sum" }}
       - run:
           name: Install Terraform
           command: wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip	&& unzip terraform_0.12.2_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
@@ -68,12 +78,12 @@ commands:
           name: Run Terratests
           command: go test
       - save_cache:
-          key: go-mod-v1-{{ checksum "go.sum" }}
+          key: go-mod-{{ checksum "go.sum" }}
           paths:
             - ~/go/pkg/mod
 jobs:
   setup:
-    working_directory: ~/typescript-inversify-demo
+    working_directory: *root_directory
     executor: nodejs
     steps:
       - checkout
@@ -83,31 +93,31 @@ jobs:
       - save_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
-            - ~/typescript-inversify-demo
+            - *root_directory
 
   install:
-    working_directory: ~/typescript-inversify-demo
+    working_directory: *root_directory
     executor: nodejs
     steps:
       - nodejs_install
   shared-install:
-    working_directory: ~/typescript-inversify-demo/shared
+    working_directory: *shared_directory
     executor: nodejs
     steps:
       - nodejs_install
   web-app-install:
-    working_directory: ~/typescript-inversify-demo/web-app
+    working_directory: *web_app_directory
     executor: nodejs
     steps:
       - nodejs_install
   lambda-install:
-    working_directory: ~/typescript-inversify-demo/lambda
+    working_directory: *lambda_directory
     executor: nodejs
     steps:
       - nodejs_install
 
   lint:
-    working_directory: ~/typescript-inversify-demo
+    working_directory: *root_directory
     executor: nodejs
     steps:
       - restore_cache:
@@ -125,57 +135,57 @@ jobs:
           command: yarn lint:all
 
   shared-test:
-    working_directory: ~/typescript-inversify-demo/shared
+    working_directory: *shared_directory
     executor: nodejs
     steps:
       - nodejs_test
   web-app-test:
-    working_directory: ~/typescript-inversify-demo/web-app
+    working_directory: *web_app_directory
     executor: nodejs
     steps:
       - nodejs_test
   lambda-test:
-    working_directory: ~/typescript-inversify-demo/lambda
+    working_directory: *lambda_directory
     executor: nodejs
     steps:
       - nodejs_test
 
   web-app-create-artefact:
-    working_directory: ~/typescript-inversify-demo/web-app
+    working_directory: *web_app_directory
     executor: nodejs
     steps:
       - nodejs_build:
           artefact-cache: 'web-app'
   lambda-create-artefact:
-    working_directory: ~/typescript-inversify-demo/lambda
+    working_directory: *lambda_directory
     executor: nodejs
     steps:
       - nodejs_build:
           artefact-cache: 'lambda'
 
   lambda-terratest-api-gateway-module:
-    working_directory: ~/typescript-inversify-demo/lambda/modules/api-gateway/test
+    working_directory: '*lambda_directory/modules/api-gateway/test'
     executor: golang
     steps:
       - golang_terratests:
           artefact-cache: 'lambda'
 
   lambda-terratest-lambda-module:
-    working_directory: ~/typescript-inversify-demo/lambda/modules/lambda/test
+    working_directory: '*lambda_directory/modules/lambda/test'
     executor: golang
     steps:
       - golang_terratests:
           artefact-cache: 'lambda'
 
   lambda-terratest-module:
-    working_directory: ~/typescript-inversify-demo/lambda/terratest
+    working_directory: '*lambda_directory/terratest'
     executor: golang
     steps:
       - golang_terratests:
           artefact-cache: 'lambda'
 
   release:
-    working_directory: ~/typescript-inversify-demo
+    working_directory: *root_directory
     executor: nodejs
     steps:
       - nodejs_cache_restore
