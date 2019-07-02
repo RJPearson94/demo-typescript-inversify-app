@@ -37,7 +37,7 @@
     "newman": "^4.5.1",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.2",
-    "webpack": "^4.35.0",
+    "webpack": "^4.35.2",
     "webpack-cli": "^3.3.5"
   }
 }
