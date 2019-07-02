@@ -16,7 +16,7 @@ describe('#V2GreetingController', () => {
     const response: GreetingResponse = testSubject.greet();
 
     // Then
-    expect(mockedSayHelloFunction).toBeCalled();
+    expect(mockedSayHelloFunction).toHaveBeenCalled();
     expect(response).toBeDefined();
     expect(response.message).toEqual('SayHello');
   });

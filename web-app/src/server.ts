@@ -11,7 +11,7 @@ const serverPort: string = process.env.PORT || '3000';
 // start the server
 const server = new InversifyExpressServer(container);
 
-server.setConfig(app => {
+server.setConfig((app): void => {
   app.use(
     urlencoded({
       extended: true
@@ -20,4 +20,4 @@ server.setConfig(app => {
   app.use(json());
 });
 
-server.build().listen(serverPort, () => console.info(`Server running at http://localhost:${serverPort}/`));
+server.build().listen(serverPort, (): void => console.info(`Server running at http://localhost:${serverPort}/`));

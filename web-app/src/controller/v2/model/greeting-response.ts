@@ -1,5 +1,3 @@
-interface GreetingResponse {
+export default interface GreetingResponse {
   message: string;
 }
-
-export default GreetingResponse;

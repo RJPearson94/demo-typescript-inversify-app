@@ -139,7 +139,7 @@ jobs:
           key: dependency-cache-{{ checksum "web-app/package.json" }}
       - run:
           name: Lint all
-          command: yarn lint .
+          command: yarn lint:all
 
   shared-test:
     working_directory: *shared_directory
