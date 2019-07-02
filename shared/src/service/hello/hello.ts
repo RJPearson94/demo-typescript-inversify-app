@@ -1,5 +1,3 @@
-interface HelloService {
+export default interface HelloService {
   sayHello(): string;
 }
-
-export default HelloService;

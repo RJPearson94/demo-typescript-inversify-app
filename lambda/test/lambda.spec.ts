@@ -12,37 +12,39 @@ describe('#Lambda', () => {
     container.restore();
   });
 
-  test('Should return HelloTest when lambda is invoked', done => {
-    // Setup
-    const mockGreetFunction = jest.fn().mockReturnValue('HelloTest');
-    const greetingController: GreetingController = {
-      greet: mockGreetFunction
-    };
+  test('Should return HelloTest when lambda is invoked', () => {
+    return new Promise(done => {
+      // Setup
+      const mockGreetFunction = jest.fn().mockReturnValue('HelloTest');
+      const greetingController: GreetingController = {
+        greet: mockGreetFunction
+      };
 
-    container.unbind(TYPES.GreetingController);
-    container.bind<GreetingController>(TYPES.GreetingController).toConstantValue(greetingController);
+      container.unbind(TYPES.GreetingController);
+      container.bind<GreetingController>(TYPES.GreetingController).toConstantValue(greetingController);
 
-    // Given
-    const event: any = {};
-    const context: any = {};
+      // Given
+      const event: any = {};
+      const context: any = {};
 
-    // When
-    const lambda = require('@src/lambda');
-    lambda.handler(event, context, (error: any, response: any) => {
-      expect(error).toBeNull();
-      expect(response).toBeDefined();
+      // When
+      const lambda = require('@src/lambda');
+      lambda.handler(event, context, (error: any, response: any) => {
+        expect(error).toBeNull();
+        expect(response).toBeDefined();
 
-      expect(mockGreetFunction).toBeCalled();
+        expect(mockGreetFunction).toHaveBeenCalled();
 
-      expect(response.statusCode).toEqual(200);
-      expect(JSON.parse(response.body)).toEqual({
-        message: 'HelloTest'
+        expect(response.statusCode).toEqual(200);
+        expect(JSON.parse(response.body)).toEqual({
+          message: 'HelloTest'
+        });
+
+        done();
       });
 
-      done();
+      // Then
+      // The callback should assert
     });
-
-    // Then
-    // The callback should assert
   });
 });
