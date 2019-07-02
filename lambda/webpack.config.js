@@ -8,7 +8,7 @@ const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 module.exports = {
   mode: 'production',
   entry: 'src/lambda',
-  devtool: 'source-map',
+  devtool: '(none)',
   target: 'node',
 
   output: {
