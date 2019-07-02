@@ -4,10 +4,10 @@ Example app to prototype Dependency Injection in TypeScript.
 
 Dependencies used include:
 
-* Typescript
-* Typescript Aliases
-* Inversify
-* Inversify Express Utils
+- Typescript
+- Typescript Aliases
+- Inversify
+- Inversify Express Utils
 
 For the full list see `package.json`
 
@@ -15,10 +15,10 @@ For the full list see `package.json`
 
 You will need:
 
-* Create .env file `Run cp .env.example .env`
-* Populate .env with all the necessary values
-* Yarn (code written using v1.16.0)
-* Command Prompt
+- Create .env file `Run cp .env.example .env`
+- Populate .env with all the necessary values
+- Yarn (code written using v1.16.0)
+- Command Prompt
 
 Yarn can be downloaded from <https://yarnpkg.com>
 
@@ -37,19 +37,19 @@ The application can be run as a standalone app or within a Docker container
 
 For both you will need:
 
-* To open a command prompt in the web-app directory
-* Run `yarn build`
+- To open a command prompt in the web-app directory
+- Run `yarn build`
 
 For a standalone deployment run the following command:
 
-* `node dist/main.js`
+- `node dist/main.js`
 
 or both commands can be run using `yarn start`
 
 To build the docker container and run the application you need to run the following commands:
 
-* `docker image build -t inversify-web-app .`
-* `docker run -p 3000:3000 inversify-web-app`
+- `docker image build -t inversify-web-app .`
+- `docker run -p 3000:3000 inversify-web-app`
 
 The app should be running on Port 3000
 
@@ -63,8 +63,8 @@ The docs can also be viewed in a Swagger UI. For more information on Swagger UI,
 
 The API docs can be run as a docker container, you need to run the following commands:
 
-* `docker image build -t inversify-express-api ./api/`
-* `run -p 8080:8080 inversify-express-api`
+- `docker image build -t inversify-express-api ./api/`
+- `run -p 8080:8080 inversify-express-api`
 
 The API docs should now be available at <http://localhost:8080/>
 
@@ -82,26 +82,26 @@ To run the postman scripts via the Postman GUI.
 
 In addition to the prerequistes above, you also need:
 
-* Postman <https://www.getpostman.com>
+- Postman <https://www.getpostman.com>
 
 Setup
 
-* Import the web-app collection (found within the postman-scripts folder)
-* Configure Environment to run the tests against (Add Variable URL and set the initial value as the Container URL)
+- Import the web-app collection (found within the postman-scripts folder)
+- Configure Environment to run the tests against (Add Variable URL and set the initial value as the Container URL)
 
 To run an individual script/ request
 
-* Click on script/ request you wan to run
-* Click Send Request
-* Verify Tests Results
+- Click on script/ request you wan to run
+- Click Send Request
+- Verify Tests Results
 
 Alternatively you can use the Postman Collection Runner.
 
-* Open Collection Runner
-* Select the imported web-app collection
-* Select the environment
-* Click Start Run
-* Verify Tests Results
+- Open Collection Runner
+- Select the imported web-app collection
+- Select the environment
+- Click Start Run
+- Verify Tests Results
 
 ### Running Postman Tests via CLI
 

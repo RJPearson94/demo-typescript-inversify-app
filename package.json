@@ -4,14 +4,8 @@
   "version": "1.0.0",
   "license": "Apache-2.0",
   "scripts": {
-    "format:all": "yarn format:go && yarn format:js && yarn format:terraform",
-    "format:go": "gofmt -s -w .",
-    "format:js": "yarn prettier:all",
-    "format:terraform": "terraform fmt -recursive",
     "lint": "eslint",
-    "lint:all": "eslint .",
     "prettier": "prettier",
-    "prettier:all": "prettier --write '**/*.{ts,js,json,yml}'",
     "semantic-release": "semantic-release"
   },
   "devDependencies": {
@@ -26,6 +20,7 @@
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-import": "^2.18.0",
     "husky": "^2.7.0",
+    "lint-staged": "^9.0.1",
     "prettier": "^1.18.2",
     "semantic-release": "^15.13.18",
     "typescript": "^3.5.2"

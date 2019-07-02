@@ -6,8 +6,8 @@ This is the shared code for an example app to prototype Dependency Injection in 
 
 You will need:
 
-* Yarn (code written using v1.16.0)
-* Command Prompt
+- Yarn (code written using v1.16.0)
+- Command Prompt
 
 Yarn can be downloaded from <https://yarnpkg.com>
 
