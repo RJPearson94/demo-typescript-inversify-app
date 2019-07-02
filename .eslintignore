@@ -1,10 +1,14 @@
-.vscode/*
+.vscode
 
-node_modules/*
+node_modules
+dist
 
-**/.terraform/*
-**/.terragrunt-cache/*
+coverage
+newman
 
-**/coverage/*
-**/dist/*
-**/node_modules/*
+.terraform
+.terragrunt-cache
+
+.eslintignore
+.prettierignore
+yarn.lock
