@@ -15,7 +15,7 @@ describe('#V1GreetingController', () => {
     const response = testSubject.greet();
 
     // Then
-    expect(mockedSayHelloFunction).toBeCalled();
+    expect(mockedSayHelloFunction).toHaveBeenCalled();
     expect(response).toEqual('Hello');
   });
 });
