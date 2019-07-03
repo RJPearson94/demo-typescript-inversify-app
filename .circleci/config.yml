@@ -127,10 +127,7 @@ jobs:
     working_directory: *root_directory
     executor: nodejs
     steps:
-      - restore_cache:
-          key: *repo_cache
-      - restore_cache:
-          key: *nodejs_cache
+      - nodejs_cache_restore
       - restore_cache:
           key: dependency-cache-{{ checksum "shared/package.json" }}
       - restore_cache:
