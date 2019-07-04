@@ -17,7 +17,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['lambda/test/**/*.ts', 'shared/test/**/*.ts', 'web-app/test/**/*.ts'],
+      files: ['**/test/**/*.ts'],
       env: {
         'jest/globals': true
       },
