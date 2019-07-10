@@ -23,8 +23,21 @@ executors:
   golang:
     docker:
       - image: circleci/golang:latest
+  golang-node:
+    docker:
+      - image: circleci/golang:latest-node
 
 commands:
+  install-yarn:
+    steps:
+      - run:
+          name: Install Yarn
+          command: curl -o- -L https://yarnpkg.com/install.sh | bash
+  install-dependencies:
+    steps:
+      - run:
+          name: Install dependencies
+          command: yarn install
   nodejs_cache_restore:
     steps:
       - restore_cache:
@@ -34,9 +47,7 @@ commands:
   nodejs_install:
     steps:
       - nodejs_cache_restore
-      - run:
-          name: Install dependencies
-          command: yarn install
+      - install-dependencies
       - save_cache:
           key: *nodejs_cache
           paths:
@@ -64,6 +75,8 @@ commands:
     parameters:
       artefact-cache:
         type: string
+      test-directory:
+        type: string
     steps:
       - restore_cache:
           key: *repo_cache
@@ -79,7 +92,7 @@ commands:
           command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.6/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
       - run:
           name: Run Terratests
-          command: go test
+          command: cd <<parameters.test-directory>> && go test
       - save_cache:
           key: *golang_cache
           paths:
@@ -88,15 +101,14 @@ commands:
     steps:
       - golang_terratests:
           artefact-cache: *lambda
+          test-directory: '.'
 jobs:
   setup:
     working_directory: *root_directory
     executor: nodejs
     steps:
       - checkout
-      - run:
-          name: Install Yarn
-          command: curl -o- -L https://yarnpkg.com/install.sh | bash
+      - install-yarn
       - save_cache:
           key: *repo_cache
           paths:
@@ -127,10 +139,7 @@ jobs:
     working_directory: *root_directory
     executor: nodejs
     steps:
-      - restore_cache:
-          key: *repo_cache
-      - restore_cache:
-          key: *nodejs_cache
+      - nodejs_cache_restore
       - restore_cache:
           key: dependency-cache-{{ checksum "shared/package.json" }}
       - restore_cache:
@@ -187,6 +196,18 @@ jobs:
     executor: golang
     steps:
       - lambda_terratests
+
+  lambda-e2e:
+    working_directory: ~/typescript-inversify-demo/lambda
+    executor: golang-node
+    steps:
+      - restore_cache:
+          key: *repo_cache
+      - install-yarn
+      - install-dependencies
+      - golang_terratests:
+          artefact-cache: *lambda
+          test-directory: 'e2e'
 
   release:
     working_directory: *root_directory
@@ -263,11 +284,16 @@ workflows:
             - lambda-terratest-api-gateway-module
             - lambda-terratest-lambda-module
 
+      # E2E
+      - lambda-e2e:
+          requires:
+            - lambda-terratest-module
+
       # Release
       - release:
           requires:
             - web-app-create-artefact
-            - lambda-terratest-module
+            - lambda-e2e
           filters:
             branches:
               only: master
