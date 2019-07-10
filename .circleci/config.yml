@@ -101,7 +101,7 @@ commands:
     steps:
       - golang_terratests:
           artefact-cache: *lambda
-          test-directory: .
+          test-directory: '.'
 jobs:
   setup:
     working_directory: *root_directory
@@ -207,7 +207,7 @@ jobs:
       - install-dependencies
       - golang_terratests:
           artefact-cache: *lambda
-          test-directory: e2e
+          test-directory: 'e2e'
 
   release:
     working_directory: *root_directory
