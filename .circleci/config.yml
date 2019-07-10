@@ -23,6 +23,9 @@ executors:
   golang:
     docker:
       - image: circleci/golang:latest
+  golang-node:
+    docker:
+      - image: circleci/golang:latest-node
 
 commands:
   install-yarn:
@@ -30,6 +33,11 @@ commands:
       - run:
           name: Install Yarn
           command: curl -o- -L https://yarnpkg.com/install.sh | bash
+  install-dependencies:
+    steps:
+      - run:
+          name: Install dependencies
+          command: yarn install
   nodejs_cache_restore:
     steps:
       - restore_cache:
@@ -39,9 +47,7 @@ commands:
   nodejs_install:
     steps:
       - nodejs_cache_restore
-      - run:
-          name: Install dependencies
-          command: yarn install
+      - install-dependencies
       - save_cache:
           key: *nodejs_cache
           paths:
@@ -190,9 +196,12 @@ jobs:
 
   lambda-e2e:
     working_directory: ~/typescript-inversify-demo/lambda/e2e
-    executor: golang
+    executor: golang-node
     steps:
       - install-yarn
+      - restore_cache:
+          key: *nodejs_cache
+      - install-dependencies
       - lambda_terratests
 
   release:
