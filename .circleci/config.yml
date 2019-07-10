@@ -25,6 +25,11 @@ executors:
       - image: circleci/golang:latest
 
 commands:
+  install-yarn:
+    steps:
+      - run:
+          name: Install Yarn
+          command: curl -o- -L https://yarnpkg.com/install.sh | bash
   nodejs_cache_restore:
     steps:
       - restore_cache:
@@ -94,9 +99,7 @@ jobs:
     executor: nodejs
     steps:
       - checkout
-      - run:
-          name: Install Yarn
-          command: curl -o- -L https://yarnpkg.com/install.sh | bash
+      - install-yarn
       - save_cache:
           key: *repo_cache
           paths:
@@ -189,6 +192,7 @@ jobs:
     working_directory: ~/typescript-inversify-demo/lambda/e2e
     executor: golang
     steps:
+      - install-yarn
       - lambda_terratests
 
   release:
