@@ -33,9 +33,6 @@ commands:
       - run:
           name: Install Yarn
           command: curl -o- -L https://yarnpkg.com/install.sh | bash
-  install-terragrunt:
-    steps:
-      -
   install-dependencies:
     steps:
       - run:
