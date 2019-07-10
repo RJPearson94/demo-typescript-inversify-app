@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const path = require('path');
-const webpack = require('webpack');
-const ZipPlugin = require('zip-webpack-plugin');
-const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
-/* @typescript-eslint/no-var-requires */
+import path from 'path';
+import webpack from 'webpack';
+import ZipPlugin from 'zip-webpack-plugin';
+import { TsConfigPathsPlugin } from 'awesome-typescript-loader';
 
 module.exports = {
   mode: 'production',
