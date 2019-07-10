@@ -9,7 +9,6 @@ module.exports = {
   rules: {
     'prettier/prettier': 'error',
     '@typescript-eslint/no-parameter-properties': 'off',
-    '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/no-explicit-any': 'off'
   },
   parserOptions: {
@@ -18,7 +17,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['lambda/test/**/*.ts', 'shared/test/**/*.ts', 'web-app/test/**/*.ts'],
+      files: ['**/test/**/*.ts'],
       env: {
         'jest/globals': true
       },
