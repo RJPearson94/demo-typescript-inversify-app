@@ -95,7 +95,7 @@ commands:
           command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.6/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
       - run:
           name: Run Terratests
-          command: go test
+          command: cd <<test-directory>> && go test
       - save_cache:
           key: *golang_cache
           paths:
