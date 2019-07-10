@@ -119,7 +119,6 @@ In addition to the prerequistes above, you also need:
 
 To run the terratests for a given Terraform module, please run the following commands
 
-- Create Lambda Artefact by running the script above
 - Change into the desired module directory i.e. `cd modules/lambda/test`
 - Change into the test directory
 - Run `go test`
@@ -171,9 +170,16 @@ For more information on Postman, see <https://www.getpostman.com/>
 
 For more information on Newman, see <https://github.com/postmanlabs/newman>
 
-### Terratests & Newman
+### E2E Tests
 
-Instructions coming soon
+To run E2E tests a combination of Terratests (to provision AWS infrastructure) and Newman (to run the postman scripts) is used.
+
+To run the E2E tests
+
+- Change into the e2e directory
+- Run `go test`
+
+**NOTE:** Go modules are being used. Running `go test` will download all of the necessary dependencies
 
 ## Deploying to AWS
 

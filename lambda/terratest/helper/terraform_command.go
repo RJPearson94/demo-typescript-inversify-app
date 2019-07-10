@@ -13,6 +13,11 @@ func Apply(test *testing.T, path string) {
 	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "apply", "-auto-approve")...)
 }
 
+func Output(test *testing.T, path string, key string) string {
+	tfOptions := setupTerraformOptions(path)
+	return terraform.Output(test, tfOptions, key)
+}
+
 func Destroy(test *testing.T, path string) {
 	tfOptions := setupTerraformOptions(path)
 	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "destroy", "-auto-approve")...)

@@ -185,6 +185,12 @@ jobs:
     steps:
       - lambda_terratests
 
+  lambda-e2e:
+    working_directory: ~/typescript-inversify-demo/lambda/e2e
+    executor: golang
+    steps:
+      - lambda_terratests
+
   release:
     working_directory: *root_directory
     executor: nodejs
@@ -260,11 +266,16 @@ workflows:
             - lambda-terratest-api-gateway-module
             - lambda-terratest-lambda-module
 
+      # E2E
+      - lambda-e2e:
+          requires:
+            - lambda-terratest-module
+
       # Release
       - release:
           requires:
             - web-app-create-artefact
-            - lambda-terratest-module
+            - lambda-e2e
           filters:
             branches:
               only: master
