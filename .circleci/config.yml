@@ -201,9 +201,9 @@ jobs:
     working_directory: ~/typescript-inversify-demo/lambda
     executor: golang-node
     steps:
-      - install-yarn
       - restore_cache:
-          key: *nodejs_cache
+          key: *repo_cache
+      - install-yarn
       - install-dependencies
       - golang_terratests:
           artefact-cache: *lambda
