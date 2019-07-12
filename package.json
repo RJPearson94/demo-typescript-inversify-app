@@ -1,5 +1,5 @@
 {
-  "name": "inversify-demo",
+  "name": "demo-typescript-inversify-app",
   "description": "Example apps to prototype Dependency Injection using Typescript & Inversify",
   "version": "1.0.0",
   "license": "Apache-2.0",

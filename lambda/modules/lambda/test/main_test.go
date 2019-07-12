@@ -8,8 +8,11 @@ import (
 	"testing"
 )
 
-func Test_MainComponentTests(test *testing.T) {
+func TestLambdaModule(test *testing.T) {
 	test.Parallel()
+
+	environmentTag := "Environment"
+	environmentTagResult := "Testing"
 
 	// Setup
 	setup := "../../../terratest/helper/setup"
@@ -39,7 +42,7 @@ func Test_MainComponentTests(test *testing.T) {
 		assert.Equal(test, 14, afterCloudwatchLogGroupChange.Retention)
 		tags := afterCloudwatchLogGroupChange.Tags
 		assert.NotEmpty(test, tags)
-		assert.Equal(test, tags["Environment"], "Localstack")
+		assert.Equal(test, tags[environmentTag], environmentTagResult)
 	})
 
 	test.Run("Should verify lambda Function", func(test *testing.T) {
@@ -71,7 +74,7 @@ func Test_MainComponentTests(test *testing.T) {
 		assert.Equal(test, "inversify-demo-lambda.zip", afterlambdaFunctionChange.S3Key)
 		tags := afterlambdaFunctionChange.Tags
 		assert.NotEmpty(test, tags)
-		assert.Equal(test, tags["Environment"], "Localstack")
+		assert.Equal(test, tags[environmentTag], environmentTagResult)
 		assert.Equal(test, 30, afterlambdaFunctionChange.Timeout)
 		assert.Empty(test, afterlambdaFunctionChange.VPCConfig)
 	})
@@ -122,7 +125,7 @@ func Test_MainComponentTests(test *testing.T) {
 		assert.Equal(test, "/", afterIAMRoleChange.Path)
 		tags := afterIAMRoleChange.Tags
 		assert.NotEmpty(test, tags)
-		assert.Equal(test, tags["Environment"], "Localstack")
+		assert.Equal(test, tags[environmentTag], environmentTagResult)
 	})
 
 	test.Run("Should verify lambda iam role policy attachment", func(test *testing.T) {

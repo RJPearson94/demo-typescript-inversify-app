@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func Test_MainComponentTests(test *testing.T) {
+func TestRootModule(test *testing.T) {
 	test.Parallel()
 
 	// Setup
@@ -21,10 +21,10 @@ func Test_MainComponentTests(test *testing.T) {
 		// Given
 
 		// When
-		apiGatewayDeploymentChange := helper.GetResourceInstanceChange(test, plan, "module.inversify_api_gateway.aws_api_gateway_deployment.greeting_deployment")
-		apiGatewayRestAPIChange := helper.GetResourceInstanceChange(test, plan, "module.inversify_api_gateway.aws_api_gateway_rest_api.greeting_rest_api")
-		apiGatewayStageChange := helper.GetResourceInstanceChange(test, plan, "module.inversify_api_gateway.aws_api_gateway_stage.greeting_stage")
-		lambdaPermissionChange := helper.GetResourceInstanceChange(test, plan, "module.inversify_api_gateway.aws_lambda_permission.api_gateway_lambda")
+		apiGatewayDeploymentChange := helper.GetResourceInstanceChange(plan, "module.inversify_api_gateway.aws_api_gateway_deployment.greeting_deployment")
+		apiGatewayRestAPIChange := helper.GetResourceInstanceChange(plan, "module.inversify_api_gateway.aws_api_gateway_rest_api.greeting_rest_api")
+		apiGatewayStageChange := helper.GetResourceInstanceChange(plan, "module.inversify_api_gateway.aws_api_gateway_stage.greeting_stage")
+		lambdaPermissionChange := helper.GetResourceInstanceChange(plan, "module.inversify_api_gateway.aws_lambda_permission.api_gateway_lambda")
 
 		// Then
 		assert.NotNil(test, apiGatewayDeploymentChange)
@@ -37,11 +37,11 @@ func Test_MainComponentTests(test *testing.T) {
 		// Given
 
 		// When
-		lambdaLogGroupChange := helper.GetResourceInstanceChange(test, plan, "module.inversify_lambda.aws_cloudwatch_log_group.inversify_demo_log_group")
-		lambdaIAMPolicyChange := helper.GetResourceInstanceChange(test, plan, "module.inversify_lambda.aws_iam_policy.inversify_demo_lambda_policy")
-		lambdaIAMRoleChange := helper.GetResourceInstanceChange(test, plan, "module.inversify_lambda.aws_iam_role.inversify_demo_iam")
-		lambdaIAMRolePolicyChange := helper.GetResourceInstanceChange(test, plan, "module.inversify_lambda.aws_iam_role_policy_attachment.lambda_logs")
-		lambdaFunctionChange := helper.GetResourceInstanceChange(test, plan, "module.inversify_lambda.aws_lambda_function.inversify_demo_function")
+		lambdaLogGroupChange := helper.GetResourceInstanceChange(plan, "module.inversify_lambda.aws_cloudwatch_log_group.inversify_demo_log_group")
+		lambdaIAMPolicyChange := helper.GetResourceInstanceChange(plan, "module.inversify_lambda.aws_iam_policy.inversify_demo_lambda_policy")
+		lambdaIAMRoleChange := helper.GetResourceInstanceChange(plan, "module.inversify_lambda.aws_iam_role.inversify_demo_iam")
+		lambdaIAMRolePolicyChange := helper.GetResourceInstanceChange(plan, "module.inversify_lambda.aws_iam_role_policy_attachment.lambda_logs")
+		lambdaFunctionChange := helper.GetResourceInstanceChange(plan, "module.inversify_lambda.aws_lambda_function.inversify_demo_function")
 
 		// Then
 		assert.NotNil(test, lambdaLogGroupChange)

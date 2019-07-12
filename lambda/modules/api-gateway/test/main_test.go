@@ -8,8 +8,11 @@ import (
 	"testing"
 )
 
-func Test_MainComponentTests(test *testing.T) {
+func TestAPIGatewayModule(test *testing.T) {
 	test.Parallel()
+
+	environmentTag := "Environment"
+	environmentTagResult := "Testing"
 
 	// Before
 	plan := helper.Plan(test, ".")
@@ -77,7 +80,7 @@ func Test_MainComponentTests(test *testing.T) {
 		assert.Equal(test, "dev", afterAPIGatewayStageChange.StageName)
 		tags := afterAPIGatewayStageChange.Tags
 		assert.NotEmpty(test, tags)
-		assert.Equal(test, tags["Environment"], "Localstack")
+		assert.Equal(test, tags[environmentTag], environmentTagResult)
 	})
 
 	test.Run("Should verify lambda permission", func(test *testing.T) {
