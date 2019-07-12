@@ -29,3 +29,6 @@ generated-docs
 
 # Test Reports
 newman
+
+# Code Analysis
+.scannerwork

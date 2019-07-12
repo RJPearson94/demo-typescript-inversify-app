@@ -32,6 +32,6 @@ inputs = {
   zip_key     = "inversify-demo-lambda.zip"
   log_retention = 14
   tags        = {
-      Environment = "Localstack"
+      Environment = "Testing"
   }
 }
