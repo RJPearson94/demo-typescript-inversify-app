@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func Test_MainE2ETests(test *testing.T) {
+func TestServiceEndToEnd(test *testing.T) {
 	test.Parallel()
 
 	// Setup
