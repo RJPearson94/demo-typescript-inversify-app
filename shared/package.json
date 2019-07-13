@@ -4,7 +4,8 @@
   "license": "Apache-2.0",
   "scripts": {
     "babel": "babel",
-    "test": "jest"
+    "test:all": "yarn test:unit",
+    "test:unit": "jest ./test"
   },
   "dependencies": {
     "inversify": "^5.0.1",

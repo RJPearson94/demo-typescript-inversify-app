@@ -20,4 +20,4 @@ server.setConfig((app): void => {
   app.use(json());
 });
 
-server.build().listen(serverPort, (): void => console.info(`Server running at http://localhost:${serverPort}/`));
+export default server.build().listen(serverPort, (): void => console.info(`Server running at http://localhost:${serverPort}/`));
