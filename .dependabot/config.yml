@@ -45,3 +45,6 @@ update_configs:
   - package_manager: 'go:modules'
     directory: '/lambda/modules/lambda/test'
     update_schedule: 'daily'
+  - package_manager: 'go:modules'
+    directory: '/lambda/e2e'
+    update_schedule: 'daily'

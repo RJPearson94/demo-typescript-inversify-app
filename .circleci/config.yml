@@ -221,7 +221,7 @@ jobs:
           artefact-cache: *web_app
           test-directory: 'e2e'
   lambda-e2e:
-    working_directory: ~/typescript-inversify-demo/lambda
+    working_directory: *lambda_directory
     executor: golang-node
     steps:
       - restore_cache:
