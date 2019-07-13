@@ -17,13 +17,14 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/test/**/*.ts'],
+      files: ['**/test/**/*.ts', '**/integration-test/**/*.ts'],
       env: {
         'jest/globals': true
       },
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/no-var-requires': 'off',
+        'no-async-promise-executor': 'off',
         'jest/no-disabled-tests': 'warn',
         'jest/no-focused-tests': 'error',
         'jest/no-alias-methods': 'error',

@@ -52,12 +52,18 @@ commands:
           key: *nodejs_cache
           paths:
             - node_modules
-  nodejs_test:
+  nodejs_unit_test:
     steps:
       - nodejs_cache_restore
       - run:
           name: Run Unit Tests
-          command: yarn test
+          command: yarn test:unit
+  nodejs_integration_test:
+    steps:
+      - nodejs_cache_restore
+      - run:
+          name: Run Unit Tests
+          command: yarn test:integration
   nodejs_build:
     parameters:
       artefact-cache:
@@ -154,17 +160,23 @@ jobs:
     working_directory: *shared_directory
     executor: nodejs
     steps:
-      - nodejs_test
+      - nodejs_unit_test
   web-app-test:
     working_directory: *web_app_directory
     executor: nodejs
     steps:
-      - nodejs_test
+      - nodejs_unit_test
   lambda-test:
     working_directory: *lambda_directory
     executor: nodejs
     steps:
-      - nodejs_test
+      - nodejs_unit_test
+
+  web-app-integration-test:
+    working_directory: *web_app_directory
+    executor: nodejs
+    steps:
+      - nodejs_integration_test
 
   web-app-create-artefact:
     working_directory: *web_app_directory
@@ -249,7 +261,7 @@ workflows:
             - web-app-install
             - lambda-install
 
-      # Test
+      # Unit Test
       - shared-test:
           requires:
             - lint
@@ -262,10 +274,15 @@ workflows:
             - shared-test
             - lint
 
+      # Integration Test
+      - web-app-integration-test:
+          requires:
+            - web-app-test
+
       # Create Artefacts
       - web-app-create-artefact:
           requires:
-            - web-app-test
+            - web-app-integration-test
       - lambda-create-artefact:
           requires:
             - lambda-test
