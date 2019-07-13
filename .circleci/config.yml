@@ -209,6 +209,17 @@ jobs:
     steps:
       - lambda_terratests
 
+  web-app-e2e:
+    working_directory: *web_app_directory
+    executor: golang-node
+    steps:
+      - restore_cache:
+          key: *repo_cache
+      - install-yarn
+      - install-dependencies
+      - golang_terratests:
+          artefact-cache: *web_app
+          test-directory: 'e2e'
   lambda-e2e:
     working_directory: ~/typescript-inversify-demo/lambda
     executor: golang-node
@@ -302,6 +313,9 @@ workflows:
             - lambda-terratest-lambda-module
 
       # E2E
+      - web-app-e2e:
+          requires:
+            - web-app-create-artefact
       - lambda-e2e:
           requires:
             - lambda-terratest-module
@@ -309,7 +323,7 @@ workflows:
       # Release
       - release:
           requires:
-            - web-app-create-artefact
+            - web-app-e2e
             - lambda-e2e
           filters:
             branches:

@@ -112,3 +112,14 @@ To run the postman scripts via the CLI, Newman test runner is used. To run the N
 For more information on Postman, see <https://www.getpostman.com/>
 
 For more information on Newman, see <https://github.com/postmanlabs/newman>
+
+### E2E Tests
+
+To run E2E tests a combination of Terratests (to run Docker Compose Commands) and Newman (to run the postman scripts) is used.
+
+To run the E2E tests
+
+- Change into the e2e directory
+- Run `go test`
+
+**NOTE:** Go modules are being used. Running `go test` will download all of the necessary dependencies
