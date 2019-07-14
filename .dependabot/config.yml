@@ -17,6 +17,9 @@ update_configs:
   - package_manager: 'docker'
     directory: '/web-app/api'
     update_schedule: 'daily'
+  - package_manager: 'go:modules'
+    directory: '/web-app/e2e'
+    update_schedule: 'daily'
 
   - package_manager: 'javascript'
     directory: '/lambda'
@@ -41,4 +44,7 @@ update_configs:
     update_schedule: 'daily'
   - package_manager: 'go:modules'
     directory: '/lambda/modules/lambda/test'
+    update_schedule: 'daily'
+  - package_manager: 'go:modules'
+    directory: '/lambda/e2e'
     update_schedule: 'daily'

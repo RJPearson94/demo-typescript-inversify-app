@@ -9,137 +9,82 @@ references:
   lambda_directory: &lambda_directory ~/typescript-inversify-demo/lambda
   web_app_directory: &web_app_directory ~/typescript-inversify-demo/web-app
 
-  repo_cache: &repo_cache v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-  nodejs_cache: &nodejs_cache dependency-cache-{{ checksum "package.json" }}
-  golang_cache: &golang_cache go-mod-{{ checksum "go.sum" }}
+  repo_cache: &repo_cache repo-v1-{{ .Environment.CIRCLE_SHA1 }}
+  nodejs_cache: &nodejs_cache yarn-packages-{{ checksum "yarn.lock" }}
 
-  lambda: &lambda 'lambda'
-  web_app: &web_app 'web-app'
+  lambda: &lambda lambda
+  web_app: &web_app web-app
 
 executors:
   nodejs:
     docker:
-      - image: circleci/node:latest
-  golang:
-    docker:
-      - image: circleci/golang:latest
-  golang-node:
-    docker:
-      - image: circleci/golang:latest-node
+      - image: circleci/node:12.6.0-stretch
 
 commands:
-  install-yarn:
+  install_yarn:
     steps:
-      - run:
-          name: Install Yarn
-          command: curl -o- -L https://yarnpkg.com/install.sh | bash
-  install-dependencies:
+      - run: curl -o- -L https://yarnpkg.com/install.sh | bash
+
+  install_nodejs_dependencies:
     steps:
-      - run:
-          name: Install dependencies
-          command: yarn install
+      - run: yarn install --frozen-lockfile
+
   nodejs_cache_restore:
     steps:
       - restore_cache:
           key: *repo_cache
       - restore_cache:
           key: *nodejs_cache
-  nodejs_install:
-    steps:
-      - nodejs_cache_restore
-      - install-dependencies
-      - save_cache:
-          key: *nodejs_cache
-          paths:
-            - node_modules
-  nodejs_unit_test:
-    steps:
-      - nodejs_cache_restore
-      - run:
-          name: Run Unit Tests
-          command: yarn test:unit
-  nodejs_integration_test:
-    steps:
-      - nodejs_cache_restore
-      - run:
-          name: Run Unit Tests
-          command: yarn test:integration
-  nodejs_build:
-    parameters:
-      artefact-cache:
-        type: string
-    steps:
-      - nodejs_cache_restore
-      - run:
-          name: create artefact
-          command: yarn build
-      - save_cache:
-          key: v1-repo-<<parameters.artefact-cache>>-{{ .Environment.CIRCLE_SHA1 }}
-          paths:
-            - dist
+
   golang_terratests:
     parameters:
-      artefact-cache:
+      artefact_cache:
         type: string
-      test-directory:
+      test_directory:
+        default: '.'
         type: string
     steps:
       - restore_cache:
           key: *repo_cache
       - restore_cache:
-          key: v1-repo-<<parameters.artefact-cache>>-{{ .Environment.CIRCLE_SHA1 }}
+          key: repo-v1-<<parameters.artefact_cache>>-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
-          key: *golang_cache
-      - run:
-          name: Install Terraform
-          command: wget https://releases.hashicorp.com/terraform/0.12.4/terraform_0.12.4_linux_amd64.zip	&& unzip terraform_0.12.4_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
-      - run:
-          name: Install Terragrunt
-          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.6/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
+          key: go-mod-v1-{{ checksum "<<parameters.test_directory>>/go.sum" }}
+      - run: wget https://releases.hashicorp.com/terraform/0.12.4/terraform_0.12.4_linux_amd64.zip	&& unzip terraform_0.12.4_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
+      - run: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.6/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
       - run:
           name: Run Terratests
-          command: cd <<parameters.test-directory>> && go test
+          command: cd <<parameters.test_directory>> && go test
       - save_cache:
-          key: *golang_cache
+          key: go-mod-v1-{{ checksum "<<parameters.test_directory>>/go.sum" }}
           paths:
-            - ~/go/pkg/mod
-  lambda_terratests:
-    steps:
-      - golang_terratests:
-          artefact-cache: *lambda
-          test-directory: '.'
+            - /go/pkg/mod
 jobs:
   setup:
     working_directory: *root_directory
     executor: nodejs
     steps:
       - checkout
-      - install-yarn
+      - install_yarn
       - save_cache:
           key: *repo_cache
           paths:
             - *root_directory
 
   install:
-    working_directory: *root_directory
+    parameters:
+      directory:
+        type: string
+    working_directory: <<parameters.directory>>
     executor: nodejs
     steps:
-      - nodejs_install
-  shared-install:
-    working_directory: *shared_directory
-    executor: nodejs
-    steps:
-      - nodejs_install
-  web-app-install:
-    working_directory: *web_app_directory
-    executor: nodejs
-    steps:
-      - nodejs_install
-  lambda-install:
-    working_directory: *lambda_directory
-    executor: nodejs
-    steps:
-      - nodejs_install
+      - nodejs_cache_restore
+      - install_nodejs_dependencies
+      - save_cache:
+          key: *nodejs_cache
+          paths:
+            - node_modules
+            - ~/.cache/yarn
 
   lint:
     working_directory: *root_directory
@@ -147,79 +92,77 @@ jobs:
     steps:
       - nodejs_cache_restore
       - restore_cache:
-          key: dependency-cache-{{ checksum "shared/package.json" }}
+          key: node-v1-{{ checksum "shared/package.json" }}
       - restore_cache:
-          key: dependency-cache-{{ checksum "lambda/package.json" }}
+          key: node-v1-{{ checksum "lambda/package.json" }}
       - restore_cache:
-          key: dependency-cache-{{ checksum "web-app/package.json" }}
-      - run:
-          name: Lint all
-          command: yarn lint:all
+          key: node-v1-{{ checksum "web-app/package.json" }}
+      - run: yarn lint:all
 
-  shared-test:
-    working_directory: *shared_directory
+  unit_test:
+    parameters:
+      directory:
+        type: string
+    working_directory: <<parameters.directory>>
     executor: nodejs
     steps:
-      - nodejs_unit_test
-  web-app-test:
-    working_directory: *web_app_directory
+      - nodejs_cache_restore
+      - run: yarn test:unit
+
+  integration_test:
+    parameters:
+      directory:
+        type: string
+    working_directory: <<parameters.directory>>
     executor: nodejs
     steps:
-      - nodejs_unit_test
-  lambda-test:
-    working_directory: *lambda_directory
+      - nodejs_cache_restore
+      - run: yarn test:integration
+
+  build_artefact:
+    parameters:
+      directory:
+        type: string
+      artefact_cache:
+        type: string
+    working_directory: <<parameters.directory>>
     executor: nodejs
     steps:
-      - nodejs_unit_test
+      - nodejs_cache_restore
+      - run: yarn build
+      - save_cache:
+          key: repo-v1-<<parameters.artefact_cache>>-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - dist
 
-  web-app-integration-test:
-    working_directory: *web_app_directory
-    executor: nodejs
+  terratest:
+    parameters:
+      directory:
+        type: string
+    working_directory: <<parameters.directory>>
+    docker:
+      - image: circleci/golang:1.12.7-stretch
     steps:
-      - nodejs_integration_test
+      - golang_terratests:
+          artefact_cache: *lambda
 
-  web-app-create-artefact:
-    working_directory: *web_app_directory
-    executor: nodejs
-    steps:
-      - nodejs_build:
-          artefact-cache: *web_app
-  lambda-create-artefact:
-    working_directory: *lambda_directory
-    executor: nodejs
-    steps:
-      - nodejs_build:
-          artefact-cache: *lambda
-
-  lambda-terratest-api-gateway-module:
-    working_directory: ~/typescript-inversify-demo/lambda/modules/api-gateway/test
-    executor: golang
-    steps:
-      - lambda_terratests
-
-  lambda-terratest-lambda-module:
-    working_directory: ~/typescript-inversify-demo/lambda/modules/lambda/test
-    executor: golang
-    steps:
-      - lambda_terratests
-
-  lambda-terratest-module:
-    working_directory: ~/typescript-inversify-demo/lambda/terratest
-    executor: golang
-    steps:
-      - lambda_terratests
-
-  lambda-e2e:
-    working_directory: ~/typescript-inversify-demo/lambda
-    executor: golang-node
+  e2e:
+    parameters:
+      directory:
+        type: string
+      artefact_cache:
+        type: string
+    working_directory: <<parameters.directory>>
+    docker:
+      - image: circleci/golang:1.12.7-stretch-node
     steps:
       - restore_cache:
           key: *repo_cache
-      - install-yarn
-      - install-dependencies
+      - install_yarn
+      - install_nodejs_dependencies
       - golang_terratests:
-          artefact-cache: *lambda
-          test-directory: 'e2e'
+          artefact_cache: <<parameters.artefact_cache>>
+          test_directory: e2e
 
   release:
     working_directory: *root_directory
@@ -234,83 +177,101 @@ workflows:
   version: 2
   shared:
     jobs:
-      # Setup
       - setup
 
-      # Install
       - install:
+          name: root_install
+          directory: *root_directory
           requires:
             - setup
-      - shared-install:
+      - install:
+          name: shared_install
+          directory: *shared_directory
           requires:
             - setup
-      - web-app-install:
+      - install:
+          name: web_app_install
+          directory: *web_app_directory
           requires:
-            - shared-install
+            - shared_install
             - setup
-      - lambda-install:
+      - install:
+          name: lambda_install
+          directory: *lambda_directory
           requires:
-            - shared-install
+            - shared_install
             - setup
 
-      # Lint
       - lint:
           requires:
-            - install
-            - shared-install
-            - web-app-install
-            - lambda-install
+            - root_install
+            - shared_install
+            - web_app_install
+            - lambda_install
 
-      # Unit Test
-      - shared-test:
+      - unit_test:
+          name: shared_unit_test
+          directory: *shared_directory
           requires:
             - lint
-      - web-app-test:
+      - unit_test:
+          name: web_app_unit_test
+          directory: *web_app_directory
           requires:
-            - shared-test
-            - lint
-      - lambda-test:
+            - shared_unit_test
+      - unit_test:
+          name: lambda_unit_test
+          directory: *lambda_directory
           requires:
-            - shared-test
-            - lint
+            - shared_unit_test
 
-      # Integration Test
-      - web-app-integration-test:
+      - integration_test:
+          name: web_app_integration_test
+          directory: *web_app_directory
           requires:
-            - web-app-test
+            - web_app_unit_test
 
-      # Create Artefacts
-      - web-app-create-artefact:
+      - build_artefact:
+          name: build_web_app_artefact
+          directory: *web_app_directory
+          artefact_cache: *web_app
           requires:
-            - web-app-integration-test
-      - lambda-create-artefact:
+            - web_app_integration_test
+      - build_artefact:
+          name: build_lambda_artefact
+          directory: *lambda_directory
+          artefact_cache: *lambda
           requires:
-            - lambda-test
+            - lambda_unit_test
 
-      # Terratest Modules
-      - lambda-terratest-api-gateway-module:
+      - terratest:
+          name: lambda_terratest_api_gateway_module
+          directory: ~/typescript-inversify-demo/lambda/modules/api-gateway/test
           requires:
-            - lambda-create-artefact
-      - lambda-terratest-lambda-module:
+            - build_lambda_artefact
+      - terratest:
+          name: lambda_terratest_lambda_module
+          directory: ~/typescript-inversify-demo/lambda/modules/lambda/test
           requires:
-            - lambda-create-artefact
+            - build_lambda_artefact
+      - terratest:
+          name: lambda_terratest_root_module
+          directory: ~/typescript-inversify-demo/lambda/terratest
+          requires:
+            - lambda_terratest_api_gateway_module
+            - lambda_terratest_lambda_module
 
-      # Terratest
-      - lambda-terratest-module:
+      - e2e:
+          name: lambda_e2e
+          directory: *lambda_directory
+          artefact_cache: *lambda
           requires:
-            - lambda-terratest-api-gateway-module
-            - lambda-terratest-lambda-module
+            - lambda_terratest_root_module
 
-      # E2E
-      - lambda-e2e:
-          requires:
-            - lambda-terratest-module
-
-      # Release
       - release:
           requires:
-            - web-app-create-artefact
-            - lambda-e2e
+            - build_web_app_artefact
+            - lambda_e2e
           filters:
             branches:
               only: master
