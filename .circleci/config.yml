@@ -262,12 +262,6 @@ workflows:
             - lambda_terratest_lambda_module
 
       - e2e:
-          name: web_app_e2e
-          directory: *web_app_directory
-          artefact_cache: *web_app
-          requires:
-            - build_web_app_artefact
-      - e2e:
           name: lambda_e2e
           directory: *lambda_directory
           artefact_cache: *lambda
@@ -276,7 +270,7 @@ workflows:
 
       - release:
           requires:
-            - web_app_e2e
+            - build_web_app_artefact
             - lambda_e2e
           filters:
             branches:
