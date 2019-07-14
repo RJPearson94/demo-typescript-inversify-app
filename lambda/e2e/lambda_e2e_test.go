@@ -1,26 +1,21 @@
-package terratests
+package e2e
 
 import (
 	"fmt"
 	"os"
 	"os/exec"
-	"terratest-helper"
+	"terratest_utility/terraform"
 	"testing"
 )
 
 func TestServiceEndToEnd(test *testing.T) {
 	test.Parallel()
 
-	// Setup
-	setup := "../terratest/helper/setup"
-	defer helper.Destroy(test, setup)
-	helper.Apply(test, setup)
-
 	// Given
 	service := "."
-	defer helper.Destroy(test, service)
-	helper.Apply(test, service)
-	invokeURL := helper.Output(test, service, "invoke_url")
+	defer terraform.Destroy(test, service)
+	terraform.Apply(test, service)
+	invokeURL := terraform.Output(test, service, "invoke_url")
 
 	// When
 	envVariables := fmt.Sprintf("URL=%s", invokeURL)

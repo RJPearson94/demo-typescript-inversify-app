@@ -1,4 +1,4 @@
-package helper
+package docker
 
 import (
 	"github.com/gruntwork-io/terratest/modules/docker"
