@@ -28,10 +28,8 @@ terraform {
 }
 
 inputs = {
-  bucket_name = "inversify-demo"
-  zip_key     = "inversify-demo-lambda.zip"
   log_retention = 14
-  tags        = {
+  tags          = {
       Environment = "Testing"
   }
 }

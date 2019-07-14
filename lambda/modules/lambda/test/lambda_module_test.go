@@ -1,10 +1,10 @@
-package terratests
+package lambda_module
 
 import (
 	"github.com/stretchr/testify/assert"
 	"github.com/zclconf/go-cty/cty/gocty"
-	"lambda-module-test/resources"
-	"terratest-helper"
+	"terratest_utility/terraform"
+	"terratest_utility/helper"
 	"testing"
 )
 
@@ -14,24 +14,19 @@ func TestLambdaModule(test *testing.T) {
 	environmentTag := "Environment"
 	environmentTagResult := "Testing"
 
-	// Setup
-	setup := "../../../terratest/helper/setup"
-	defer helper.Destroy(test, setup)
-	helper.Apply(test, setup)
-
 	// Before
-	plan := helper.Plan(test, ".")
+	plan := terraform.Plan(test, ".")
 
 	test.Run("Should verify cloudwatch log group", func(test *testing.T) {
 		// Given
 
 		// When
-		cloudwatchLogGroupChange := helper.GetResource(test, plan, "aws_cloudwatch_log_group.inversify_demo_log_group", &resources.CloudwatchLogGroup{})
+		cloudwatchLogGroupChange := terraform.GetResource(test, plan, "aws_cloudwatch_log_group.inversify_demo_log_group", &terraform.CloudwatchLogGroup{})
 
 		// Then
 		assert.NotNil(test, cloudwatchLogGroupChange)
 
-		var afterCloudwatchLogGroupChange resources.CloudwatchLogGroup
+		var afterCloudwatchLogGroupChange terraform.CloudwatchLogGroup
 		err := gocty.FromCtyValue(cloudwatchLogGroupChange.After, &afterCloudwatchLogGroupChange)
 		if err != nil {
 			test.Fatal(err)
@@ -49,12 +44,12 @@ func TestLambdaModule(test *testing.T) {
 		// Given
 
 		// When
-		lambdaFunctionChange := helper.GetResource(test, plan, "aws_lambda_function.inversify_demo_function", &resources.LambdaFunction{})
+		lambdaFunctionChange := terraform.GetResource(test, plan, "aws_lambda_function.inversify_demo_function", &terraform.LambdaFunction{})
 
 		// Then
 		assert.NotNil(test, lambdaFunctionChange)
 
-		var afterlambdaFunctionChange resources.LambdaFunction
+		var afterlambdaFunctionChange terraform.LambdaFunction
 		err := gocty.FromCtyValue(lambdaFunctionChange.After, &afterlambdaFunctionChange)
 		if err != nil {
 			test.Fatal(err)
@@ -70,8 +65,8 @@ func TestLambdaModule(test *testing.T) {
 		assert.Equal(test, false, afterlambdaFunctionChange.Publish)
 		assert.Equal(test, -1, afterlambdaFunctionChange.ReservedConcurrentExecutions)
 		assert.Equal(test, "nodejs10.x", afterlambdaFunctionChange.Runtime)
-		assert.Equal(test, "inversify-demo", afterlambdaFunctionChange.S3Bucket)
-		assert.Equal(test, "inversify-demo-lambda.zip", afterlambdaFunctionChange.S3Key)
+		assert.Equal(test, "./dist/inversify-demo-lambda.zip", afterlambdaFunctionChange.Filename)
+		assert.NotNil(test, afterlambdaFunctionChange.SourceCodeHash)
 		tags := afterlambdaFunctionChange.Tags
 		assert.NotEmpty(test, tags)
 		assert.Equal(test, tags[environmentTag], environmentTagResult)
@@ -83,12 +78,12 @@ func TestLambdaModule(test *testing.T) {
 		// Given
 
 		// When
-		iamPolicyChange := helper.GetResource(test, plan, "aws_iam_policy.inversify_demo_lambda_policy", &resources.IAMPolicy{})
+		iamPolicyChange := terraform.GetResource(test, plan, "aws_iam_policy.inversify_demo_lambda_policy", &terraform.IAMPolicy{})
 
 		// Then
 		assert.NotNil(test, iamPolicyChange)
 
-		var afterIAMPolicyChange resources.IAMPolicy
+		var afterIAMPolicyChange terraform.IAMPolicy
 		err := gocty.FromCtyValue(iamPolicyChange.After, &afterIAMPolicyChange)
 		if err != nil {
 			test.Fatal(err)
@@ -105,12 +100,12 @@ func TestLambdaModule(test *testing.T) {
 		// Given
 
 		// When
-		iamRoleChange := helper.GetResource(test, plan, "aws_iam_role.inversify_demo_iam", &resources.IAMRole{})
+		iamRoleChange := terraform.GetResource(test, plan, "aws_iam_role.inversify_demo_iam", &terraform.IAMRole{})
 
 		// Then
 		assert.NotNil(test, iamRoleChange)
 
-		var afterIAMRoleChange resources.IAMRole
+		var afterIAMRoleChange terraform.IAMRole
 		err := gocty.FromCtyValue(iamRoleChange.After, &afterIAMRoleChange)
 		if err != nil {
 			test.Fatal(err)
@@ -132,12 +127,12 @@ func TestLambdaModule(test *testing.T) {
 		// Given
 
 		// When
-		iamRolePolicyAttachmentChange := helper.GetResource(test, plan, "aws_iam_role_policy_attachment.lambda_logs", &resources.IAMRolePolicyAttachment{})
+		iamRolePolicyAttachmentChange := terraform.GetResource(test, plan, "aws_iam_role_policy_attachment.lambda_logs", &terraform.IAMRolePolicyAttachment{})
 
 		// Then
 		assert.NotNil(test, iamRolePolicyAttachmentChange)
 
-		var afterIAMRolePolicyAttachmentChange resources.IAMRolePolicyAttachment
+		var afterIAMRolePolicyAttachmentChange terraform.IAMRolePolicyAttachment
 		err := gocty.FromCtyValue(iamRolePolicyAttachmentChange.After, &afterIAMRolePolicyAttachmentChange)
 		if err != nil {
 			test.Fatal(err)

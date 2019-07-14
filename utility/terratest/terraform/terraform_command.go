@@ -1,10 +1,11 @@
-package helper
+package terraform
 
 import (
 	"fmt"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/hashicorp/terraform/plans"
 	"github.com/hashicorp/terraform/plans/planfile"
+	"terratest_utility/helper"
 	"testing"
 )
 
@@ -26,8 +27,8 @@ func Destroy(test *testing.T, path string) {
 func Plan(test *testing.T, path string) *plans.Plan {
 	tfOptions := setupTerraformOptions(path)
 
-	workingDirectory := GetCurrentWorkingDirectory(test)
-	uuid := GenerateUUID(test)
+	workingDirectory := helper.GetCurrentWorkingDirectory(test)
+	uuid := helper.GenerateUUID(test)
 	planFilePath := fmt.Sprintf("%s/main-%s.tfplan", workingDirectory, uuid)
 
 	runTerragruntPlan(test, tfOptions, planFilePath)

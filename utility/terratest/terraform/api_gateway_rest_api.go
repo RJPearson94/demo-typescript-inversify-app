@@ -1,4 +1,4 @@
-package resources
+package terraform
 
 import "github.com/zclconf/go-cty/cty"
 

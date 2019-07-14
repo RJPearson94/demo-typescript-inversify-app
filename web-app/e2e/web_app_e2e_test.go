@@ -1,10 +1,10 @@
-package terratests
+package e2e
 
 import (
 	"fmt"
 	"os/exec"
 	"os"
-	"web-app-e2e/helper"
+	"terratest-utility/docker"
 	"testing"
 )
 
@@ -13,8 +13,8 @@ func TestDockerizedWebAppEndToEnd(test *testing.T) {
 
 	// Setup
 	setup := "."
-	defer helper.Down(test, setup)
-	helper.Up(test, setup)
+	defer docker.Down(test, setup)
+	docker.Up(test, setup)
 
 	// Given
 	invokeURL := "http://localhost:3000"

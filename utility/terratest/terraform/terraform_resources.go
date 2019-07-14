@@ -1,4 +1,4 @@
-package helper
+package terraform
 
 import (
 	"github.com/hashicorp/terraform/plans"

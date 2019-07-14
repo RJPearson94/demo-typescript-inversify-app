@@ -1,11 +1,11 @@
 locals {
   function_name = "inversify_demo_function"
+  zip_file      = "${path.module}/dist/inversify-demo-lambda.zip"
 }
 
 resource "aws_lambda_function" "inversify_demo_function" {
-  s3_bucket         = data.aws_s3_bucket_object.lambda_zip.bucket
-  s3_key            = data.aws_s3_bucket_object.lambda_zip.key
-  s3_object_version = data.aws_s3_bucket_object.lambda_zip.version_id
+  filename         = local.zip_file
+  source_code_hash = filebase64sha256(local.zip_file)
 
   function_name = local.function_name
   role          = aws_iam_role.inversify_demo_iam.arn

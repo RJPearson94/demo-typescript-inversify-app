@@ -49,14 +49,14 @@ commands:
       - restore_cache:
           key: repo-v1-<<parameters.artefact_cache>>-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
-          key: go-mod-v1-{{ checksum "<<parameters.test_directory>>/go.sum" }}
+          key: go-mod-v1-<<parameters.artefact_cache>>-{{ .Environment.CIRCLE_SHA1 }}
       - run: wget https://releases.hashicorp.com/terraform/0.12.4/terraform_0.12.4_linux_amd64.zip	&& unzip terraform_0.12.4_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
       - run: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.6/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
       - run:
           name: Run Terratests
           command: cd <<parameters.test_directory>> && go test
       - save_cache:
-          key: go-mod-v1-{{ checksum "<<parameters.test_directory>>/go.sum" }}
+          key: go-mod-v1-<<parameters.artefact_cache>>-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - /go/pkg/mod
 jobs:
@@ -84,7 +84,6 @@ jobs:
           key: *nodejs_cache
           paths:
             - node_modules
-            - ~/.cache/yarn
 
   lint:
     working_directory: *root_directory
@@ -125,6 +124,9 @@ jobs:
         type: string
       artefact_cache:
         type: string
+      cache_path:
+        default: dist
+        type: string
     working_directory: <<parameters.directory>>
     executor: nodejs
     steps:
@@ -133,18 +135,23 @@ jobs:
       - save_cache:
           key: repo-v1-<<parameters.artefact_cache>>-{{ .Environment.CIRCLE_SHA1 }}
           paths:
-            - dist
+            - <<parameters.cache_path>>
 
   terratest:
     parameters:
       directory:
+        type: string
+      artefact_cache:
+        type: string
+      test_directory:
         type: string
     working_directory: <<parameters.directory>>
     docker:
       - image: circleci/golang:1.12.7-stretch
     steps:
       - golang_terratests:
-          artefact_cache: *lambda
+          artefact_cache: <<parameters.artefact_cache>>
+          test_directory: <<parameters.test_directory>>
 
   e2e:
     parameters:
@@ -241,22 +248,29 @@ workflows:
           name: build_lambda_artefact
           directory: *lambda_directory
           artefact_cache: *lambda
+          cache_path: modules/lambda/dist
           requires:
             - lambda_unit_test
 
       - terratest:
           name: lambda_terratest_api_gateway_module
-          directory: ~/typescript-inversify-demo/lambda/modules/api-gateway/test
+          directory: *lambda_directory
+          artefact_cache: *lambda
+          test_directory: modules/api-gateway/test
           requires:
             - build_lambda_artefact
       - terratest:
           name: lambda_terratest_lambda_module
-          directory: ~/typescript-inversify-demo/lambda/modules/lambda/test
+          directory: *lambda_directory
+          artefact_cache: *lambda
+          test_directory: modules/lambda/test
           requires:
             - build_lambda_artefact
       - terratest:
           name: lambda_terratest_root_module
-          directory: ~/typescript-inversify-demo/lambda/terratest
+          directory: *lambda_directory
+          artefact_cache: *lambda
+          test_directory: terratest
           requires:
             - lambda_terratest_api_gateway_module
             - lambda_terratest_lambda_module

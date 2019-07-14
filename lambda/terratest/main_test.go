@@ -1,30 +1,25 @@
-package terratests
+package terratest
 
 import (
 	"github.com/stretchr/testify/assert"
-	"terratest-helper"
+	"terratest_utility/terraform"
 	"testing"
 )
 
 func TestRootModule(test *testing.T) {
 	test.Parallel()
 
-	// Setup
-	setup := "./helper/setup"
-	defer helper.Destroy(test, setup)
-	helper.Apply(test, setup)
-
 	// Before
-	plan := helper.Plan(test, ".")
+	plan := terraform.Plan(test, ".")
 
 	test.Run("Should verify api gateway resources", func(test *testing.T) {
 		// Given
 
 		// When
-		apiGatewayDeploymentChange := helper.GetResourceInstanceChange(plan, "module.inversify_api_gateway.aws_api_gateway_deployment.greeting_deployment")
-		apiGatewayRestAPIChange := helper.GetResourceInstanceChange(plan, "module.inversify_api_gateway.aws_api_gateway_rest_api.greeting_rest_api")
-		apiGatewayStageChange := helper.GetResourceInstanceChange(plan, "module.inversify_api_gateway.aws_api_gateway_stage.greeting_stage")
-		lambdaPermissionChange := helper.GetResourceInstanceChange(plan, "module.inversify_api_gateway.aws_lambda_permission.api_gateway_lambda")
+		apiGatewayDeploymentChange := terraform.GetResourceInstanceChange(plan, "module.inversify_api_gateway.aws_api_gateway_deployment.greeting_deployment")
+		apiGatewayRestAPIChange := terraform.GetResourceInstanceChange(plan, "module.inversify_api_gateway.aws_api_gateway_rest_api.greeting_rest_api")
+		apiGatewayStageChange := terraform.GetResourceInstanceChange(plan, "module.inversify_api_gateway.aws_api_gateway_stage.greeting_stage")
+		lambdaPermissionChange := terraform.GetResourceInstanceChange(plan, "module.inversify_api_gateway.aws_lambda_permission.api_gateway_lambda")
 
 		// Then
 		assert.NotNil(test, apiGatewayDeploymentChange)
@@ -37,11 +32,11 @@ func TestRootModule(test *testing.T) {
 		// Given
 
 		// When
-		lambdaLogGroupChange := helper.GetResourceInstanceChange(plan, "module.inversify_lambda.aws_cloudwatch_log_group.inversify_demo_log_group")
-		lambdaIAMPolicyChange := helper.GetResourceInstanceChange(plan, "module.inversify_lambda.aws_iam_policy.inversify_demo_lambda_policy")
-		lambdaIAMRoleChange := helper.GetResourceInstanceChange(plan, "module.inversify_lambda.aws_iam_role.inversify_demo_iam")
-		lambdaIAMRolePolicyChange := helper.GetResourceInstanceChange(plan, "module.inversify_lambda.aws_iam_role_policy_attachment.lambda_logs")
-		lambdaFunctionChange := helper.GetResourceInstanceChange(plan, "module.inversify_lambda.aws_lambda_function.inversify_demo_function")
+		lambdaLogGroupChange := terraform.GetResourceInstanceChange(plan, "module.inversify_lambda.aws_cloudwatch_log_group.inversify_demo_log_group")
+		lambdaIAMPolicyChange := terraform.GetResourceInstanceChange(plan, "module.inversify_lambda.aws_iam_policy.inversify_demo_lambda_policy")
+		lambdaIAMRoleChange := terraform.GetResourceInstanceChange(plan, "module.inversify_lambda.aws_iam_role.inversify_demo_iam")
+		lambdaIAMRolePolicyChange := terraform.GetResourceInstanceChange(plan, "module.inversify_lambda.aws_iam_role_policy_attachment.lambda_logs")
+		lambdaFunctionChange := terraform.GetResourceInstanceChange(plan, "module.inversify_lambda.aws_lambda_function.inversify_demo_function")
 
 		// Then
 		assert.NotNil(test, lambdaLogGroupChange)

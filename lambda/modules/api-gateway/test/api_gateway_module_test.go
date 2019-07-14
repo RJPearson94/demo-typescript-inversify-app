@@ -1,10 +1,10 @@
-package terratests
+package api_gateway_module
 
 import (
-	"api-gateway-module-test/resources"
 	"github.com/stretchr/testify/assert"
 	"github.com/zclconf/go-cty/cty/gocty"
-	"terratest-helper"
+	"terratest_utility/terraform"
+	"terratest_utility/helper"
 	"testing"
 )
 
@@ -15,18 +15,18 @@ func TestAPIGatewayModule(test *testing.T) {
 	environmentTagResult := "Testing"
 
 	// Before
-	plan := helper.Plan(test, ".")
+	plan := terraform.Plan(test, ".")
 
 	test.Run("Should verify api gateway deployment", func(test *testing.T) {
 		// Given
 
 		// When
-		apiGatewayDeploymentChange := helper.GetResource(test, plan, "aws_api_gateway_deployment.greeting_deployment", &resources.APIGatewayDeployment{})
+		apiGatewayDeploymentChange := terraform.GetResource(test, plan, "aws_api_gateway_deployment.greeting_deployment", &terraform.APIGatewayDeployment{})
 
 		// Then
 		assert.NotNil(test, apiGatewayDeploymentChange)
 
-		var afterAPIGatewayDeploymentChange resources.APIGatewayDeployment
+		var afterAPIGatewayDeploymentChange terraform.APIGatewayDeployment
 		err := gocty.FromCtyValue(apiGatewayDeploymentChange.After, &afterAPIGatewayDeploymentChange)
 		if err != nil {
 			test.Fatal(err)
@@ -41,12 +41,12 @@ func TestAPIGatewayModule(test *testing.T) {
 		// Given
 
 		// When
-		apiGatewayRestAPIChange := helper.GetResource(test, plan, "aws_api_gateway_rest_api.greeting_rest_api", &resources.APIGatewayRestAPI{})
+		apiGatewayRestAPIChange := terraform.GetResource(test, plan, "aws_api_gateway_rest_api.greeting_rest_api", &terraform.APIGatewayRestAPI{})
 
 		// Then
 		assert.NotNil(test, apiGatewayRestAPIChange)
 
-		var afterAPGatewayRestAPIChange resources.APIGatewayRestAPI
+		var afterAPGatewayRestAPIChange terraform.APIGatewayRestAPI
 		err := gocty.FromCtyValue(apiGatewayRestAPIChange.After, &afterAPGatewayRestAPIChange)
 		if err != nil {
 			test.Fatal(err)
@@ -64,12 +64,12 @@ func TestAPIGatewayModule(test *testing.T) {
 		// Given
 
 		// When
-		apiGatewayStageChange := helper.GetResource(test, plan, "aws_api_gateway_stage.greeting_stage", &resources.APIGatewayStage{})
+		apiGatewayStageChange := terraform.GetResource(test, plan, "aws_api_gateway_stage.greeting_stage", &terraform.APIGatewayStage{})
 
 		// Then
 		assert.NotNil(test, apiGatewayStageChange)
 
-		var afterAPIGatewayStageChange resources.APIGatewayStage
+		var afterAPIGatewayStageChange terraform.APIGatewayStage
 		err := gocty.FromCtyValue(apiGatewayStageChange.After, &afterAPIGatewayStageChange)
 		if err != nil {
 			test.Fatal(err)
@@ -87,12 +87,12 @@ func TestAPIGatewayModule(test *testing.T) {
 		// Given
 
 		// When
-		lambdaPermissionChange := helper.GetResource(test, plan, "aws_lambda_permission.api_gateway_lambda", &resources.LambdaPermission{})
+		lambdaPermissionChange := terraform.GetResource(test, plan, "aws_lambda_permission.api_gateway_lambda", &terraform.LambdaPermission{})
 
 		// Then
 		assert.NotNil(test, lambdaPermissionChange)
 
-		var afterLambdaPermissionChange resources.LambdaPermission
+		var afterLambdaPermissionChange terraform.LambdaPermission
 		err := gocty.FromCtyValue(lambdaPermissionChange.After, &afterLambdaPermissionChange)
 		if err != nil {
 			test.Fatal(err)
