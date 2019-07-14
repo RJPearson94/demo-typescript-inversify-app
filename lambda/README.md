@@ -81,12 +81,10 @@ This module will provision and confifure a API Gateway and lambda function.
 
 #### Inputs
 
-| Name          | Description                               |  Type  | Default | Required |
-| ------------- | ----------------------------------------- | :----: | :-----: | :------: |
-| bucket_name   | Name of Bucket where artefacts are stored | string |   n/a   |   yes    |
-| log_retention | Max duration to retain cloudwatch logs    | string | `"14"`  |    no    |
-| tags          | AWS tags to be applied to resources       |  map   |   n/a   |   yes    |
-| zip_key       | ZIP file name                             | string |   n/a   |   yes    |
+| Name          | Description                            |  Type  | Default | Required |
+| ------------- | -------------------------------------- | :----: | :-----: | :------: |
+| log_retention | Max duration to retain cloudwatch logs | string | `"14"`  |    no    |
+| tags          | AWS tags to be applied to resources    |  map   |   n/a   |   yes    |
 
 ### Outputs
 

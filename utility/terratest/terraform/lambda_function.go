@@ -1,4 +1,4 @@
-package resources
+package terraform
 
 import "github.com/zclconf/go-cty/cty"
 
@@ -7,7 +7,7 @@ type LambdaFunction struct {
 	DeadLetterConfig             []string          `cty:"dead_letter_config"`
 	Description                  string            `cty:"description"`
 	EnvironmentVariables         []string          `cty:"environment"`
-	Filename                     cty.Value         `cty:"filename"`
+	Filename                     string        	   `cty:"filename"`
 	FunctionName                 string            `cty:"function_name"`
 	Handler                      string            `cty:"handler"`
 	ID                           cty.Value         `cty:"id"`
@@ -21,10 +21,10 @@ type LambdaFunction struct {
 	ReservedConcurrentExecutions int               `cty:"reserved_concurrent_executions"`
 	Role                         cty.Value         `cty:"role"`
 	Runtime                      string            `cty:"runtime"`
-	S3Bucket                     string            `cty:"s3_bucket"`
-	S3Key                        string            `cty:"s3_key"`
-	S3ObjectVersion              string            `cty:"s3_object_version"`
-	SourceCodeHash               cty.Value         `cty:"source_code_hash"`
+	S3Bucket                     cty.Value         `cty:"s3_bucket"`
+	S3Key                        cty.Value         `cty:"s3_key"`
+	S3ObjectVersion              cty.Value         `cty:"s3_object_version"`
+	SourceCodeHash               string            `cty:"source_code_hash"`
 	SourceCodeSize               cty.Value         `cty:"source_code_size"`
 	Tags                         map[string]string `cty:"tags"`
 	TracingConfig                cty.Value         `cty:"tracing_config"`

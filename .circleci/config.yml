@@ -125,6 +125,9 @@ jobs:
         type: string
       artefact_cache:
         type: string
+      cache_path:
+        default: dist
+        type: string
     working_directory: <<parameters.directory>>
     executor: nodejs
     steps:
@@ -133,7 +136,7 @@ jobs:
       - save_cache:
           key: repo-v1-<<parameters.artefact_cache>>-{{ .Environment.CIRCLE_SHA1 }}
           paths:
-            - dist
+            - <<parameters.cache_path>>
 
   terratest:
     parameters:
@@ -241,6 +244,7 @@ workflows:
           name: build_lambda_artefact
           directory: *lambda_directory
           artefact_cache: *lambda
+          cache_path: modules/lambda/dist
           requires:
             - lambda_unit_test
 
