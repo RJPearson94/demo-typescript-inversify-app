@@ -84,7 +84,6 @@ jobs:
           key: *nodejs_cache
           paths:
             - node_modules
-            - ~/.cache/yarn
 
   lint:
     working_directory: *root_directory
