@@ -10,7 +10,7 @@ references:
   web_app_directory: &web_app_directory ~/typescript-inversify-demo/web-app
 
   repo_cache: &repo_cache repo-v1-{{ .Environment.CIRCLE_SHA1 }}
-  nodejs_cache: &nodejs_cache node-v1{{ checksum "package.json" }}
+  nodejs_cache: &nodejs_cache yarn-packages-{{ checksum "yarn.lock" }}
 
   lambda: &lambda lambda
   web_app: &web_app web-app
@@ -27,7 +27,7 @@ commands:
 
   install_nodejs_dependencies:
     steps:
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
 
   nodejs_cache_restore:
     steps:
@@ -84,6 +84,7 @@ jobs:
           key: *nodejs_cache
           paths:
             - node_modules
+            - ~/.cache/yarn
 
   lint:
     working_directory: *root_directory
@@ -159,7 +160,8 @@ jobs:
           key: *repo_cache
       - install_yarn
       - install_nodejs_dependencies
-      - setup_remote_docker
+      - setup_remote_docker:
+          docker_layer_caching: true
       - golang_terratests:
           artefact_cache: <<parameters.artefact_cache>>
           test_directory: e2e
