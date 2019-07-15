@@ -1,4 +1,4 @@
-package api_gateway_module
+package api_gateway_module_ctest
 
 import (
 	"github.com/stretchr/testify/assert"

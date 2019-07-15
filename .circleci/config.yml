@@ -257,34 +257,49 @@ workflows:
             - lambda_unit_test
 
       - terratest:
-          name: lambda_terratest_api_gateway_module
+          name: api_gateway_module_component_test
           directory: *lambda_directory
           artefact_cache: *lambda
-          test_directory: modules/api-gateway/test
+          test_directory: modules/api-gateway/component-test
           requires:
             - build_lambda_artefact
       - terratest:
-          name: lambda_terratest_lambda_module
+          name: lambda_module_component_test
           directory: *lambda_directory
           artefact_cache: *lambda
-          test_directory: modules/lambda/test
+          test_directory: modules/lambda/component-test
           requires:
             - build_lambda_artefact
       - terratest:
-          name: lambda_terratest_root_module
+          name: lambda_module_integration_test
           directory: *lambda_directory
           artefact_cache: *lambda
-          test_directory: terratest
+          test_directory: modules/lambda/integration-test
           requires:
-            - lambda_terratest_api_gateway_module
-            - lambda_terratest_lambda_module
+            - lambda_module_component_test
+
+      - terratest:
+          name: root_module_component_test
+          directory: *lambda_directory
+          artefact_cache: *lambda
+          test_directory: component-test
+          requires:
+            - api_gateway_module_component_test
+            - lambda_module_integration_test
+      - terratest:
+          name: root_module_integration_test
+          directory: *lambda_directory
+          artefact_cache: *lambda
+          test_directory: integration-test
+          requires:
+            - root_module_component_test
 
       - e2e:
           name: lambda_e2e
           directory: *lambda_directory
           artefact_cache: *lambda
           requires:
-            - lambda_terratest_root_module
+            - root_module_integration_test
 
       - release:
           requires:
