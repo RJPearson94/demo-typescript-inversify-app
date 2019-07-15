@@ -286,13 +286,20 @@ workflows:
           requires:
             - api_gateway_module_component_test
             - lambda_module_integration_test
+      - terratest:
+          name: root_module_integration_test
+          directory: *lambda_directory
+          artefact_cache: *lambda
+          test_directory: integration-test
+          requires:
+            - root_module_component_test
 
       - e2e:
           name: lambda_e2e
           directory: *lambda_directory
           artefact_cache: *lambda
           requires:
-            - root_module_component_test
+            - root_module_integration_test
 
       - release:
           requires:
