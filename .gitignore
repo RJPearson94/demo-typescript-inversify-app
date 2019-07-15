@@ -5,9 +5,10 @@
 node_modules
 yarn-error.log
 
-# Bundled Code
+# Artefacts
 lib
 dist
+release
 
 # Code Coverage
 coverage
