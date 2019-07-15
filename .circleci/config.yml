@@ -271,13 +271,21 @@ workflows:
           requires:
             - build_lambda_artefact
       - terratest:
+          name: lambda_module_integration_test
+          directory: *lambda_directory
+          artefact_cache: *lambda
+          test_directory: modules/lambda/integration-test
+          requires:
+            - lambda_module_component_test
+
+      - terratest:
           name: root_module_component_test
           directory: *lambda_directory
           artefact_cache: *lambda
           test_directory: component-test
           requires:
             - api_gateway_module_component_test
-            - lambda_module_component_test
+            - lambda_module_integration_test
 
       - e2e:
           name: lambda_e2e

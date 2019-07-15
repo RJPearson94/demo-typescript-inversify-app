@@ -1,4 +1,4 @@
-package lambda_module
+package lambda_module_ctest
 
 import (
 	"github.com/stretchr/testify/assert"
