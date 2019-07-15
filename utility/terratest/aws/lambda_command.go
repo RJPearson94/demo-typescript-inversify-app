@@ -13,7 +13,7 @@ func NewLambdaClient() *lambda.Lambda {
 		SharedConfigState: session.SharedConfigEnable,
 	}))
 	
-	return lambda.New(sess)
+	return lambda.New(sess, aws.NewConfig().WithRegion("eu-west-1"))
 }
 
 func InvokeAndMarshallLambdaResponse(test *testing.T, lambdaClient *lambda.Lambda, functionName string) LambdaResponse {
