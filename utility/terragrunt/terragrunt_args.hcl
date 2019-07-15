@@ -1,6 +1,4 @@
 terraform {
-  source = "../"
-
   extra_arguments "init_args" {
     commands = [
       "init"
@@ -24,13 +22,5 @@ terraform {
     env_vars = {
         AWS_REGION = "eu-west-1"
     }
-  }
-}
-
-inputs = {
-  bucket_name = "inversify-demo"
-  zip_key     = "inversify-demo-lambda.zip"
-  tags        = {
-      Environment = "Testing"
   }
 }

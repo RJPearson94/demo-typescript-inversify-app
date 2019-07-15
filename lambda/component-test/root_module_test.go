@@ -1,4 +1,4 @@
-package terratest
+package root_module_ctest
 
 import (
 	"github.com/stretchr/testify/assert"

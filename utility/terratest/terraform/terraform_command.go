@@ -19,6 +19,11 @@ func Output(test *testing.T, path string, key string) string {
 	return terraform.Output(test, tfOptions, key)
 }
 
+func OutputAll(test *testing.T, path string) map[string]interface{} {
+	tfOptions := setupTerraformOptions(path)
+	return terraform.OutputAll(test, tfOptions)
+}
+
 func Destroy(test *testing.T, path string) {
 	tfOptions := setupTerraformOptions(path)
 	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "destroy", "-auto-approve")...)

@@ -7,7 +7,7 @@ include {
 }
 
 inputs = {
-  tags = {
+  tags        = {
       Environment = "Testing"
   }
 }
