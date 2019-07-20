@@ -9,7 +9,7 @@
     "newman": "newman",
     "start": "yarn build && pm2 start ecosystem.json",
     "stop": "pm2 stop ecosystem.json",
-    "test:all": "yarn test:integration && yarn test:unit",
+    "test": "yarn test:unit && yarn test:integration",
     "test:integration": "jest ./integration-test",
     "test:unit": "jest ./test",
     "webpack": "webpack-cli"

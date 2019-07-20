@@ -26,7 +26,11 @@ Once you have Yarn installed, open a command prompt and run `yarn install`. This
 
 ## Scripts
 
-The tests and code coverage report can be run from the command line by opening the command prompt in the project folder and running the following command `yarn test`
+The tests and code coverage report can be run from the command line by opening the command prompt in the project folder and running the following command `yarn test`.
+This command will run both unit & integration tests
+
+- To run unit tests only, please run `yarn test:unit`
+- To run integration tests only, please run `yarn test:integration`
 
 The app can be run from the command line by opening the command prompt in the project folder and running the following command `yarn start`
 **Please note:** if another application is already running on the port specified in the .env then an error will appear

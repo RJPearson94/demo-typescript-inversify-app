@@ -7,7 +7,7 @@
     "babel": "babel",
     "build": "webpack",
     "newman": "newman",
-    "test:all": "yarn test:unit",
+    "test": "yarn test:unit",
     "test:unit": "jest ./test",
     "webpack": "webpack-cli"
   },
