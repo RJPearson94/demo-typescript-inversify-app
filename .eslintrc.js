@@ -17,7 +17,13 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/test/**/*.ts', '**/integration-test/**/*.ts'],
+      files: ['*.js'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off'
+      }
+    },
+    {
+      files: ['*.spec.ts'],
       env: {
         'jest/globals': true
       },
@@ -31,7 +37,6 @@ module.exports = {
         'jest/no-identical-title': 'error',
         'jest/no-jest-import': 'error',
         'jest/no-test-prefixes': 'error',
-        'jest/no-test-callback': 'error',
         'jest/prefer-to-have-length': 'warn',
         'jest/prefer-spy-on': 'error',
         'jest/valid-expect': 'error'
