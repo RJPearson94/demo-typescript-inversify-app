@@ -18,13 +18,9 @@ references:
 executors:
   nodejs:
     docker:
-      - image: circleci/node:12.6.0-stretch
+      - image: circleci/node:12.6.0
 
 commands:
-  install_yarn:
-    steps:
-      - run: curl -o- -L https://yarnpkg.com/install.sh | bash
-
   install_nodejs_dependencies:
     steps:
       - run: yarn install --frozen-lockfile
@@ -65,7 +61,6 @@ jobs:
     executor: nodejs
     steps:
       - checkout
-      - install_yarn
       - save_cache:
           key: *repo_cache
           paths:
@@ -96,7 +91,7 @@ jobs:
           key: node-v1-{{ checksum "lambda/package.json" }}
       - restore_cache:
           key: node-v1-{{ checksum "web-app/package.json" }}
-      - run: yarn lint:all
+      - run: yarn lint
 
   unit_test:
     parameters:
@@ -165,7 +160,6 @@ jobs:
     steps:
       - restore_cache:
           key: *repo_cache
-      - install_yarn
       - install_nodejs_dependencies
       - golang_terratests:
           artefact_cache: <<parameters.artefact_cache>>
