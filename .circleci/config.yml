@@ -18,7 +18,7 @@ references:
 executors:
   nodejs:
     docker:
-      - image: circleci/node:12.6.0-stretch
+      - image: circleci/node:12.6.0
 
 commands:
   install_yarn:
