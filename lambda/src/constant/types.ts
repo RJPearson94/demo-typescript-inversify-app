@@ -1,5 +1,5 @@
 const TYPES = {
-  GreetingController: Symbol.for('GreetingController')
+  GreetingController: 'GreetingController'
 };
 
 export default TYPES;
