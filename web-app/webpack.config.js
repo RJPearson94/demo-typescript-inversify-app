@@ -1,25 +1,19 @@
-import path from 'path';
-import webpack from 'webpack';
-import ZipPlugin from 'zip-webpack-plugin';
-import { TsConfigPathsPlugin } from 'awesome-typescript-loader';
+const path = require('path');
+const webpack = require('webpack');
+const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 
 module.exports = {
-  mode: 'production',
-  entry: 'src/lambda',
-  devtool: '(none)',
+  mode: 'development',
+  entry: './src/server.ts',
+  devtool: 'source-map',
   target: 'node',
 
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'modules', 'lambda', 'dist')
+    path: path.resolve(__dirname, 'dist')
   },
 
-  plugins: [
-    new webpack.ProgressPlugin(),
-    new ZipPlugin({
-      filename: 'inversify-demo-lambda.zip'
-    })
-  ],
+  plugins: [new webpack.ProgressPlugin()],
 
   module: {
     rules: [
@@ -50,9 +44,7 @@ module.exports = {
   resolve: {
     plugins: [
       new TsConfigPathsPlugin({
-        configFileName: 'tsconfig.json',
-        useBabel: true,
-        babelCore: '@babel/core'
+        configFileName: 'tsconfig.json'
       })
     ],
     extensions: ['.tsx', '.ts', '.js']

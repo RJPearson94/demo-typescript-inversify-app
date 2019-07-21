@@ -17,7 +17,13 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/test/**/*.ts', '**/integration-test/**/*.ts'],
+      files: ['*.js'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off'
+      }
+    },
+    {
+      files: ['*.spec.ts'],
       env: {
         'jest/globals': true
       },
