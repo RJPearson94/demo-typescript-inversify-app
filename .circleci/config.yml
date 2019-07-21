@@ -96,7 +96,7 @@ jobs:
           key: node-v1-{{ checksum "lambda/package.json" }}
       - restore_cache:
           key: node-v1-{{ checksum "web-app/package.json" }}
-      - run: yarn lint:all
+      - run: yarn lint
 
   unit_test:
     parameters:
