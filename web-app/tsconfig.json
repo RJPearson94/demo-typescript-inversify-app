@@ -8,5 +8,5 @@
       "@shared/*": ["node_modules/inversify-shared/src/*"]
     }
   },
-  "include": ["src", "node_modules/inversify-shared"]
+  "include": ["src", "test", "integration-test", "node_modules/inversify-shared"]
 }
