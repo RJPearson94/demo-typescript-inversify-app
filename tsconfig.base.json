@@ -13,6 +13,5 @@
     "allowSyntheticDefaultImports": true,
     "allowJs": true
   },
-  "compileOnSave": false,
-  "include": ["src", "node_modules/inversify-shared"]
+  "compileOnSave": false
 }

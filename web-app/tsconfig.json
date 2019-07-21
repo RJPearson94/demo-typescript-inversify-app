@@ -7,5 +7,6 @@
       "@src/*": ["src/*"],
       "@shared/*": ["node_modules/inversify-shared/src/*"]
     }
-  }
+  },
+  "include": ["src", "node_modules/inversify-shared"]
 }
