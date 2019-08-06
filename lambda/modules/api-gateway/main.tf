@@ -8,7 +8,7 @@ locals {
 resource "aws_api_gateway_rest_api" "greeting_rest_api" {
   name        = local.name
   description = local.description
-  body = templatefile("${path.module}/template/openapi.tpl", {
+  body = templatefile("${path.module}/template/openapi.tpl.json", {
     title               = local.name
     description         = local.description
     version             = local.version
