@@ -5,7 +5,15 @@
   "scripts": {
     "build": "webpack",
     "newman": "newman",
-    "test": "yarn test:unit",
+    "test": "yarn test:unit && yarn test:component && yarn test:integration && yarn test:e2e",
+    "test:component": "yarn test:component:api-gateway && yarn test:component:lambda && yarn test:component:root",
+    "test:component:api-gateway": "go test ./modules/api-gateway/component-test",
+    "test:component:lambda": "go test ./modules/lambda/component-test",
+    "test:component:root": "go test ./component-test",
+    "test:e2e": "go test ./e2e",
+    "test:integration": "yarn test:integration:lambda && yarn test:integration:root",
+    "test:integration:lambda": "go test ./modules/lambda/integration-test",
+    "test:integration:root": "go test ./integration-test",
     "test:unit": "jest ./test",
     "webpack": "webpack-cli"
   },
