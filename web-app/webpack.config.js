@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 
 module.exports = {
@@ -13,14 +12,12 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
 
-  plugins: [new webpack.ProgressPlugin()],
-
   module: {
     rules: [
       {
         test: /.(ts|tsx)?$/,
         loader: 'awesome-typescript-loader',
-        exclude: /node_modules\/(?!(inversify-shared)\/).*/
+        exclude: /node_modules\/(?!(@rjpearson94)\/).*/
       }
     ]
   },

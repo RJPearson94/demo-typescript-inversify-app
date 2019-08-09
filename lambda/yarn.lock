@@ -292,6 +292,12 @@
   dependencies:
     safe-buffer "^5.0.1"
 
+"@rjpearson94/core@file:../core":
+  version "1.0.0"
+  dependencies:
+    inversify "^5.0.1"
+    reflect-metadata "^0.1.13"
+
 "@types/babel__core@^7.1.0":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.2.tgz#608c74f55928033fce18b99b213c16be4b3d114f"
@@ -2418,12 +2424,6 @@ invariant@^2.2.4:
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
   dependencies:
     loose-envify "^1.0.0"
-
-"inversify-shared@file:../shared":
-  version "1.0.0"
-  dependencies:
-    inversify "^5.0.1"
-    reflect-metadata "^0.1.13"
 
 inversify@^5.0.1:
   version "5.0.1"

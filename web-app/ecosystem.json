@@ -1,5 +1,5 @@
 {
-  "name": "inversify-web-app",
+  "name": "@rjpearson94/web-app",
   "script": "./dist/main.js",
   "instances": 4,
   "autorestart": true,

@@ -1,8 +1,7 @@
 {
-  "name": "inversify-web-app",
+  "name": "@rjpearson94/web-app",
   "description": "An example app to prototype Dependency Injection using Typescript & Inversify",
   "version": "1.0.0",
-  "license": "Apache-2.0",
   "scripts": {
     "build": "webpack",
     "newman": "newman",
@@ -14,11 +13,11 @@
     "webpack": "webpack-cli"
   },
   "dependencies": {
+    "@rjpearson94/core": "file:../core",
     "body-parser": "^1.19.0",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
-    "inversify-express-utils": "^6.3.2",
-    "inversify-shared": "file:../shared"
+    "inversify-express-utils": "^6.3.2"
   },
   "devDependencies": {
     "@types/dotenv": "^6.1.1",
