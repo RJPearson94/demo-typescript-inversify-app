@@ -2,7 +2,9 @@
   "name": "demo-typescript-inversify-app",
   "description": "Example apps to prototype Dependency Injection using Typescript & Inversify",
   "version": "1.0.0",
-  "license": "Apache-2.0",
+  "repository": {
+    "url": "https://github.com/RJPearson94/demo-typescript-inversify-app.git"
+  },
   "scripts": {
     "lint": "yarn lint:js && yarn lint:ts",
     "lint:js": "yarn eslint '**/*.{js,jsx}'",
@@ -16,8 +18,6 @@
     "@semantic-release/exec": "^3.3.5",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
-    "commitizen": "^4.0.3",
-    "cz-conventional-changelog": "^3.0.2",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-jest": "^22.13.6",
@@ -27,10 +27,5 @@
     "prettier": "^1.18.2",
     "semantic-release": "^15.13.18",
     "typescript": "^3.5.3"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   }
 }
