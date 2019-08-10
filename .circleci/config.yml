@@ -47,7 +47,9 @@ jobs:
           key: *nodejs_cache
           paths:
             - node_modules
-            - packages/*/node_modules
+            - packages/core/node_modules
+            - packages/lambda/node_modules
+            - packages/web-app/node_modules
 
   lint:
     working_directory: *root_directory
@@ -72,7 +74,8 @@ jobs:
       - save_cache:
           key: *artefact_cache
           paths:
-            - packages/*/dist
+            - packages/lambda/dist
+            - packages/web-app/dist
 
   release:
     working_directory: *root_directory
