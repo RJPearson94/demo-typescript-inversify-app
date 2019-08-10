@@ -3,7 +3,8 @@
   "description": "An example app to prototype Dependency Injection using Typescript & Inversify",
   "version": "1.0.0",
   "scripts": {
-    "build": "webpack",
+    "build": "yarn clean && webpack",
+    "clean": "rm -rf ./dist",
     "newman": "newman",
     "start": "yarn build && pm2 start ecosystem.json",
     "stop": "pm2 stop ecosystem.json",
