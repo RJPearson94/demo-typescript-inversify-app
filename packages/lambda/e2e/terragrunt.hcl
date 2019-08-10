@@ -3,7 +3,7 @@ terraform {
 }
 
 include {
-  path = "../../../åutility/terragrunt/terragrunt_args.hcl"
+  path = "../../../utility/terragrunt/terragrunt_args.hcl"
 }
 
 inputs = {

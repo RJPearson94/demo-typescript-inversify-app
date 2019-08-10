@@ -12,8 +12,8 @@ references:
   artefact_cache: &artefact_cache repo-v1-artefact-{{ .Environment.CIRCLE_SHA1 }}
 
   e2e_test: &e2e_test test:e2e
-  component_test: &component_test test:component-test
-  integration_test: &integration_test test:integration-test
+  component_test: &component_test test:component
+  integration_test: &integration_test test:integration
 
   lambda: &lambda lambda
   web_app: &web_app web-app
