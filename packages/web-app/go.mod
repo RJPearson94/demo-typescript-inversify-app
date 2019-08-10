@@ -7,4 +7,4 @@ require (
 	terratest-utility v0.0.0
 )
 
-replace terratest-utility v0.0.0 => ../utility/terratest
+replace terratest-utility v0.0.0 => ../../utility/terratest

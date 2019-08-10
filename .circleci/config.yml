@@ -5,15 +5,10 @@ orbs:
 
 references:
   root_directory: &root_directory ~/typescript-inversify-demo
-  shared_directory: &shared_directory ~/typescript-inversify-demo/shared
-  lambda_directory: &lambda_directory ~/typescript-inversify-demo/lambda
-  web_app_directory: &web_app_directory ~/typescript-inversify-demo/web-app
 
   repo_cache: &repo_cache repo-v1-{{ .Environment.CIRCLE_SHA1 }}
-  nodejs_cache: &nodejs_cache yarn-packages-{{ checksum "yarn.lock" }}
-
-  lambda: &lambda lambda
-  web_app: &web_app web-app
+  nodejs_cache: &nodejs_cache yarn-packages-{{ .Environment.CIRCLE_SHA1 }}
+  artefact_cache: &artefact_cache repo-v1-artefact-{{ .Environment.CIRCLE_SHA1 }}
 
 executors:
   nodejs:
@@ -21,40 +16,15 @@ executors:
       - image: circleci/node:12.6.0
 
 commands:
-  install_nodejs_dependencies:
-    steps:
-      - run: yarn install --frozen-lockfile
-
   nodejs_cache_restore:
     steps:
       - restore_cache:
           key: *repo_cache
       - restore_cache:
           key: *nodejs_cache
+      - restore_cache:
+          key: *artefact_cache
 
-  golang_terratests:
-    parameters:
-      artefact_cache:
-        type: string
-      test_directory:
-        default: '.'
-        type: string
-    steps:
-      - restore_cache:
-          key: *repo_cache
-      - restore_cache:
-          key: repo-v1-<<parameters.artefact_cache>>-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: go-mod-v1-<<parameters.artefact_cache>>-{{ .Environment.CIRCLE_SHA1 }}
-      - run: wget https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip	&& unzip terraform_0.12.6_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
-      - run: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.16/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
-      - run:
-          name: Run Terratests
-          command: cd <<parameters.test_directory>> && go test
-      - save_cache:
-          key: go-mod-v1-<<parameters.artefact_cache>>-{{ .Environment.CIRCLE_SHA1 }}
-          paths:
-            - /go/pkg/mod
 jobs:
   setup:
     working_directory: *root_directory
@@ -66,239 +36,70 @@ jobs:
           paths:
             - *root_directory
 
-  install:
-    parameters:
-      directory:
-        type: string
-    working_directory: <<parameters.directory>>
+  bootstrap:
+    working_directory: *root_directory
     executor: nodejs
     steps:
       - nodejs_cache_restore
-      - install_nodejs_dependencies
+      - run: yarn lerna bootstrap
       - save_cache:
           key: *nodejs_cache
           paths:
             - node_modules
+            - packages/*/node_modules
 
   lint:
     working_directory: *root_directory
     executor: nodejs
     steps:
       - nodejs_cache_restore
-      - restore_cache:
-          key: node-v1-{{ checksum "shared/package.json" }}
-      - restore_cache:
-          key: node-v1-{{ checksum "lambda/package.json" }}
-      - restore_cache:
-          key: node-v1-{{ checksum "web-app/package.json" }}
       - run: yarn lint
 
   unit_test:
-    parameters:
-      directory:
-        type: string
-    working_directory: <<parameters.directory>>
+    working_directory: *root_directory
     executor: nodejs
     steps:
       - nodejs_cache_restore
-      - run: yarn test:unit
-
-  integration_test:
-    parameters:
-      directory:
-        type: string
-    working_directory: <<parameters.directory>>
-    executor: nodejs
-    steps:
-      - nodejs_cache_restore
-      - run: yarn test:integration
+      - run: yarn lerna run test:unit
 
   build_artefact:
-    parameters:
-      directory:
-        type: string
-      artefact_cache:
-        type: string
-      cache_path:
-        default: dist
-        type: string
-    working_directory: <<parameters.directory>>
+    working_directory: *root_directory
     executor: nodejs
     steps:
       - nodejs_cache_restore
       - run: yarn build
       - save_cache:
-          key: repo-v1-<<parameters.artefact_cache>>-{{ .Environment.CIRCLE_SHA1 }}
+          key: *artefact_cache
           paths:
-            - <<parameters.cache_path>>
-
-  terratest:
-    parameters:
-      directory:
-        type: string
-      artefact_cache:
-        type: string
-      test_directory:
-        type: string
-    working_directory: <<parameters.directory>>
-    docker:
-      - image: circleci/golang:1.12.7-stretch
-    steps:
-      - golang_terratests:
-          artefact_cache: <<parameters.artefact_cache>>
-          test_directory: <<parameters.test_directory>>
-
-  e2e:
-    parameters:
-      directory:
-        type: string
-      artefact_cache:
-        type: string
-    working_directory: <<parameters.directory>>
-    docker:
-      - image: circleci/golang:1.12.7-stretch-node
-    steps:
-      - restore_cache:
-          key: *repo_cache
-      - install_nodejs_dependencies
-      - golang_terratests:
-          artefact_cache: <<parameters.artefact_cache>>
-          test_directory: e2e
+            - packages/*/dist
 
   release:
     working_directory: *root_directory
     executor: nodejs
     steps:
       - nodejs_cache_restore
-      - restore_cache:
-          key: repo-v1-lambda-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: repo-v1-web-app-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          name: Run Semantic Release
-          command: yarn semantic-release
+      - run: yarn semantic-release
 
 workflows:
   version: 2
   shared:
     jobs:
       - setup
-
-      - install:
-          name: root_install
-          directory: *root_directory
+      - bootstrap:
           requires:
             - setup
-      - install:
-          name: shared_install
-          directory: *shared_directory
-          requires:
-            - setup
-      - install:
-          name: web_app_install
-          directory: *web_app_directory
-          requires:
-            - shared_install
-            - setup
-      - install:
-          name: lambda_install
-          directory: *lambda_directory
-          requires:
-            - shared_install
-            - setup
-
       - lint:
           requires:
-            - root_install
-            - shared_install
-            - web_app_install
-            - lambda_install
-
+            - bootstrap
       - unit_test:
-          name: shared_unit_test
-          directory: *shared_directory
           requires:
             - lint
-      - unit_test:
-          name: web_app_unit_test
-          directory: *web_app_directory
-          requires:
-            - shared_unit_test
-      - unit_test:
-          name: lambda_unit_test
-          directory: *lambda_directory
-          requires:
-            - shared_unit_test
-
-      - integration_test:
-          name: web_app_integration_test
-          directory: *web_app_directory
-          requires:
-            - web_app_unit_test
-
       - build_artefact:
-          name: build_web_app_artefact
-          directory: *web_app_directory
-          artefact_cache: *web_app
           requires:
-            - web_app_integration_test
-      - build_artefact:
-          name: build_lambda_artefact
-          directory: *lambda_directory
-          artefact_cache: *lambda
-          cache_path: modules/lambda/dist
-          requires:
-            - lambda_unit_test
-
-      - terratest:
-          name: api_gateway_module_component_test
-          directory: *lambda_directory
-          artefact_cache: *lambda
-          test_directory: modules/api-gateway/component-test
-          requires:
-            - build_lambda_artefact
-      - terratest:
-          name: lambda_module_component_test
-          directory: *lambda_directory
-          artefact_cache: *lambda
-          test_directory: modules/lambda/component-test
-          requires:
-            - build_lambda_artefact
-      - terratest:
-          name: lambda_module_integration_test
-          directory: *lambda_directory
-          artefact_cache: *lambda
-          test_directory: modules/lambda/integration-test
-          requires:
-            - lambda_module_component_test
-
-      - terratest:
-          name: root_module_component_test
-          directory: *lambda_directory
-          artefact_cache: *lambda
-          test_directory: component-test
-          requires:
-            - api_gateway_module_component_test
-            - lambda_module_integration_test
-      - terratest:
-          name: root_module_integration_test
-          directory: *lambda_directory
-          artefact_cache: *lambda
-          test_directory: integration-test
-          requires:
-            - root_module_component_test
-
-      - e2e:
-          name: lambda_e2e
-          directory: *lambda_directory
-          artefact_cache: *lambda
-          requires:
-            - root_module_integration_test
-
+            - unit_test
       - release:
           requires:
-            - build_web_app_artefact
-            - lambda_e2e
+            - build_artefact
           filters:
             branches:
               only: master

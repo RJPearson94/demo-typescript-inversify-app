@@ -6,6 +6,7 @@
     "url": "https://github.com/RJPearson94/demo-typescript-inversify-app.git"
   },
   "scripts": {
+    "lerna": "lerna",
     "lint": "yarn lint:js && yarn lint:ts",
     "lint:js": "yarn eslint '**/*.{js,jsx}'",
     "lint:ts": "yarn eslint '**/*.{ts,tsx}'",
@@ -23,6 +24,7 @@
     "eslint-plugin-jest": "^22.15.0",
     "eslint-plugin-prettier": "^3.1.0",
     "husky": "^3.0.3",
+    "lerna": "^3.16.4",
     "lint-staged": "^9.2.1",
     "prettier": "^1.18.2",
     "semantic-release": "^15.13.19",

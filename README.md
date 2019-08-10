@@ -6,10 +6,4 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/RJPearson94/demo-typescript-express-app/blob/master/LICENSE)
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-
-Example app to prototype Dependency Injection in TypeScript.
-
-The App can be run in the following forms:
-
-- Web App (/web-app)
-- Lambda (/lambda)
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
