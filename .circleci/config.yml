@@ -98,7 +98,7 @@ jobs:
     executor: nodejs
     steps:
       - nodejs_cache_restore
-      - run: yarn lerna run --scope <<parameters.scope>> <<parameters.command>>
+      - run: yarn lerna run --scope @rjpearson94/<<parameters.scope>> <<parameters.command>>
 
   terratest_executor:
     parameters:
@@ -114,7 +114,7 @@ jobs:
           key: *repo_cache
       - run: wget https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip	&& unzip terraform_0.12.6_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
       - run: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.16/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
-      - run: yarn lerna run --scope <<parameters.scope>> <<parameters.command>>
+      - run: yarn lerna run --scope @rjpearson94/<<parameters.scope>> <<parameters.command>>
       - save_cache:
           key: *go_cache
           paths:
