@@ -7,13 +7,24 @@ references:
   root_directory: &root_directory ~/typescript-inversify-demo
 
   repo_cache: &repo_cache repo-v1-{{ .Environment.CIRCLE_SHA1 }}
-  nodejs_cache: &nodejs_cache epo-v1-packages-{{ .Environment.CIRCLE_SHA1 }}
+  nodejs_cache: &nodejs_cache repo-v1-packages-{{ .Environment.CIRCLE_SHA1 }}
+  go_cache: &go_cache repo-v1-go-{{ .Environment.CIRCLE_SHA1 }}
   artefact_cache: &artefact_cache repo-v1-artefact-{{ .Environment.CIRCLE_SHA1 }}
+
+  e2e_test: &e2e_test test:e2e
+  component_test: &component_test test:component-test
+  integration_test: &integration_test test:integration-test
+
+  lambda: &lambda lambda
+  web_app: &web_app web-app
 
 executors:
   nodejs:
     docker:
       - image: circleci/node:12.6.0
+  nodejs-golang:
+    docker:
+      - image: circleci/golang:1.12.7-stretch
 
 commands:
   nodejs_cache_restore:
@@ -77,6 +88,38 @@ jobs:
             - packages/lambda/dist
             - packages/web-app/dist
 
+  test_executor:
+    parameters:
+      command:
+        type: string
+      scope:
+        type: string
+    working_directory: *root_directory
+    executor: nodejs
+    steps:
+      - nodejs_cache_restore
+      - run: yarn lerna run --scope <<parameters.scope>> <<parameters.command>>
+
+  terratest_executor:
+    parameters:
+      command:
+        type: string
+      scope:
+        type: string
+    working_directory: *root_directory
+    executor: nodejs-golang
+    steps:
+      - nodejs_cache_restore
+      - restore_cache:
+          key: *repo_cache
+      - run: wget https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip	&& unzip terraform_0.12.6_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
+      - run: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.16/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
+      - run: yarn lerna run --scope <<parameters.scope>> <<parameters.command>>
+      - save_cache:
+          key: *go_cache
+          paths:
+            - /go/pkg/mod
+
   release:
     working_directory: *root_directory
     executor: nodejs
@@ -89,18 +132,45 @@ workflows:
   shared:
     jobs:
       - setup
+
       - bootstrap:
           requires:
             - setup
+
       - lint:
           requires:
             - bootstrap
+
       - unit_test:
           requires:
             - lint
+
       - build_artefact:
           requires:
             - unit_test
+
+      # Component Test
+      - terratest_executor:
+          name: lambda-component-test
+          command: *component_test
+          scope: *lambda
+
+      # Integration Test
+      - test_executor:
+          name: web-app-integration-test
+          command: *integration_test
+          scope: *web_app
+      - terratest_executor:
+          name: lambda-integration-test
+          command: *integration_test
+          scope: *lambda
+
+      # E2E
+      - terratest_executor:
+          name: lambda-e2e
+          command: *e2e_test
+          scope: *lambda
+
       - release:
           requires:
             - build_artefact
