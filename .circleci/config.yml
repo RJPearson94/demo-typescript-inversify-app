@@ -7,7 +7,7 @@ references:
   root_directory: &root_directory ~/typescript-inversify-demo
 
   repo_cache: &repo_cache repo-v1-{{ .Environment.CIRCLE_SHA1 }}
-  nodejs_cache: &nodejs_cache yarn-packages-{{ .Environment.CIRCLE_SHA1 }}
+  nodejs_cache: &nodejs_cache epo-v1-packages-{{ .Environment.CIRCLE_SHA1 }}
   artefact_cache: &artefact_cache repo-v1-artefact-{{ .Environment.CIRCLE_SHA1 }}
 
 executors:
@@ -41,6 +41,7 @@ jobs:
     executor: nodejs
     steps:
       - nodejs_cache_restore
+      - run: yarn install
       - run: yarn lerna bootstrap
       - save_cache:
           key: *nodejs_cache
