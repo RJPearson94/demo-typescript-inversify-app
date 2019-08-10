@@ -151,29 +151,38 @@ workflows:
 
       # Component Test
       - terratest_executor:
-          name: lambda-component-test
+          name: lambda_component_test
           command: *component_test
           scope: *lambda
+          requires:
+            - build_artefact
 
       # Integration Test
       - test_executor:
-          name: web-app-integration-test
+          name: web_app_integration_test
           command: *integration_test
           scope: *web_app
+          requires:
+            - build_artefact
       - terratest_executor:
-          name: lambda-integration-test
+          name: lambda_integration_test
           command: *integration_test
           scope: *lambda
+          requires:
+            - lambda_component_test
 
       # E2E
       - terratest_executor:
-          name: lambda-e2e
+          name: lambda_e2e
           command: *e2e_test
           scope: *lambda
+          requires:
+            - lambda_integration_test
 
       - release:
           requires:
-            - build_artefact
+            - web_app_integration_test
+            - lambda_e2e
           filters:
             branches:
               only: master
