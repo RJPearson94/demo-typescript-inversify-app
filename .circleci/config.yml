@@ -24,7 +24,7 @@ executors:
       - image: circleci/node:12.6.0
   nodejs-golang:
     docker:
-      - image: circleci/golang:1.12.7-stretch
+      - image: circleci/golang:1.12.7-node
 
 commands:
   nodejs_cache_restore:
