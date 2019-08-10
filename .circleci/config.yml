@@ -85,7 +85,7 @@ jobs:
       - save_cache:
           key: *artefact_cache
           paths:
-            - packages/lambda/dist
+            - packages/lambda/modules/lambda/dist
             - packages/web-app/dist
 
   test_executor:
