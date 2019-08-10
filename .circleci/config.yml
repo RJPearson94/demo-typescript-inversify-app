@@ -70,7 +70,7 @@ jobs:
     executor: nodejs
     steps:
       - nodejs_cache_restore
-      - run: yarn build
+      - run: yarn lerna run build
       - save_cache:
           key: *artefact_cache
           paths:
