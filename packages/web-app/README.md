@@ -1,39 +1,58 @@
-# Example Typescript Inversify Express App
+# @rjpearson94/web-app
 
-Example app to prototype Dependency Injection in TypeScript.
+This example application to prototype TypeScript & Dependency Injection comprises of many programming languages, frameworks, etc. to build, test and deploy the application.
 
-Dependencies used include:
+The express web application can be run standalone or within a docker container. **NOTE:** E2E tests are performed on the docker container
 
-- Typescript
-- Typescript Aliases
-- Inversify
-- Inversify Express Utils
+To build and test the docker container, the following programming language and framework is used:
 
-For the full list see `package.json`
+- [Golang](https://golang.org/)
+- [Terratest](https://github.com/gruntwork-io/terratest)
 
-## Prerequisites
+## Getting Started
 
-You will need:
+To be able to build, test and run the dockerized web-app you need the following:
 
-- Create .env file `Run cp .env.example .env`
-- Populate .env with all the necessary values
-- Yarn (code written using v1.16.0)
-- Command Prompt
+- [Docker](https://www.docker.com/) (installed & running)
 
-Yarn can be downloaded from <https://yarnpkg.com>
+To be able to run the E2E tests you also need the following:
 
-Once you have Yarn installed, open a command prompt and run `yarn install`. This command will download all the necessary dependencies.
+- [Golang](https://golang.org/) (v1.12 or above)
 
 ## Scripts
 
-The tests and code coverage report can be run from the command line by opening the command prompt in the project folder and running the following command `yarn test`.
-This command will run both unit & integration tests
+- test (Run all tests)
+- test:unit (Run unit tests & generate coverage report)
+- test:integration (Run integration tests & generate coverage report)
+- test:e2e (Run e2e tests)
+- build (build web-app artefact)
+- start (start the standalone web application)
 
-- To run unit tests only, please run `yarn test:unit`
-- To run integration tests only, please run `yarn test:integration`
+For the full script list please see the [package.json](./package.json)
 
-The app can be run from the command line by opening the command prompt in the project folder and running the following command `yarn start`
-**Please note:** if another application is already running on the port specified in the .env then an error will appear
+**NOTE:** if another application is already running on the port specified in the environment variable or .env file then an error will occur
+
+The scripts can be run using the following
+
+Open a command prompt in the root directory and run the following command
+
+```sh
+yarn lerna <script>
+```
+
+**NOTE:** This will run the script on all packages.
+
+If you want to run the script for this package only, then please use
+
+```sh
+yarn lerna --scope @rjpearson94/web-app <script>
+```
+
+Alternatively you can use yarn to run these commands, to do this please open a command prompt in this directory and run
+
+```sh
+yarn <script>
+```
 
 ## Running the application
 
@@ -41,16 +60,9 @@ The application can be run as a standalone app or within a Docker container
 
 For both you will need:
 
-- To open a command prompt in the web-app directory
-- Run `yarn build`
+- The built web-app artefact
 
-For a standalone deployment run the following command:
-
-- `node dist/main.js`
-
-or both commands can be run using `yarn start`
-
-To build the docker container and run the application you need to run the following commands:
+For a standalone deployment please run the **start** script detailed above. To build the docker container and run the application you need to run the following commands:
 
 - `docker image build -t inversify-web-app .`
 - `docker run -p 3000:3000 inversify-web-app`
@@ -72,21 +84,17 @@ The API docs can be run as a docker container, you need to run the following com
 
 The API docs should now be available at <http://localhost:8080/>
 
-## Postman Tests
+## Postman
 
-To test the end 2 end solution, Postman is used.
+To test the solution including the API, Postman is used.
 
-The Postman Scripts can be seen in the postman-scripts folder
+The Postman Scripts can be found in the postman-scripts folder
+
+**NOTE:** These postman tests are run as part of the E2E tests
 
 ### Running Postman Tests via GUI
 
 To run the postman scripts via the Postman GUI.
-
-#### Prerequisites
-
-In addition to the prerequistes above, you also need:
-
-- Postman <https://www.getpostman.com>
 
 Setup
 
@@ -116,14 +124,3 @@ To run the postman scripts via the CLI, Newman test runner is used. To run the N
 For more information on Postman, see <https://www.getpostman.com/>
 
 For more information on Newman, see <https://github.com/postmanlabs/newman>
-
-### E2E Tests
-
-To run E2E tests a combination of Terratests (to run Docker Compose Commands) and Newman (to run the postman scripts) is used.
-
-To run the E2E tests
-
-- Change into the e2e directory
-- Run `go test`
-
-**NOTE:** Go modules are being used. Running `go test` will download all of the necessary dependencies

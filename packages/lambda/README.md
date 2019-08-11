@@ -1,133 +1,83 @@
-# Example Typescript Inversify Lambda App
-
-Example lambda app to prototype Dependency Injection in TypeScript.
-
-## Prerequisites
-
-You will need:
-
-- Node.js (v12.3.1 used) <https://nodejs.org/en/>
-- Yarn (v1.16.0 used) <https://yarnpkg.com>
-- Command Prompt
-
-## Scripts
-
-To download all dependencies, run `yarn install`.
-
-To run the tests and view code coverage report, run `yarn test`
-
-To generate a lambda zip artefact, run `yarn build`
-
-## Architecture
+# @rjpearson94/lambda
 
 This example application to prototype TypeScript & Dependency Injection comprises of many programming languages, frameworks, etc. to build, test and deploy the application.
 
-### Diagram
+The application is currently designed to run on Amazon Web Service (AWS). The application uses the following AWS services:
+
+- [API Gateway](https://aws.amazon.com/api-gateway/)
+- [Lambda](https://aws.amazon.com/lambda/)
+- [Cloudwatch](https://aws.amazon.com/cloudwatch/)
+- [IAM](https://aws.amazon.com/iam/)
 
 A high level architecture can be seen below
 
 ![architecture diagram](./diagrams/Architecture.jpg)
 
-### Technology
+To be able to deploy all of the AWS infrastructure, the following IaC tools are used:
 
-The application is written using:
+- [Terraform](https://www.terraform.io/)
+- [Terragrunt](https://github.com/gruntwork-io/terragrunt)
 
-- TypeScript (<https://www.typescriptlang.org/>)
+To test the AWS infrastructure that is provisioned, the following programming language and framework is used:
 
-#### Unit Testing
+- [Golang](https://golang.org/)
+- [Terratest](https://github.com/gruntwork-io/terratest)
 
-The following testing frameworks were used for unit testing:
+## Getting Started
 
-- Jest (<https://jestjs.io/>)
-- TS-Jest (<https://github.com/kulshekhar/ts-jest>)
+To be able to test and run the lambda function on real AWS infrastructure you need the following:
 
-#### Build Tools
+- [AWS Account](https://aws.amazon.com/)
+- [AWS CLI](https://aws.amazon.com/cli/) (configured)
+- [Terraform](https://www.terraform.io/) (v0.12 or above)
+- [Terragrunt](https://github.com/gruntwork-io/terragrunt) (v0.19 or above)
 
-To create a artefact, the following build tools are used:
+To be able to run the component, integration & E2E tests you also need the following:
 
-- Babel (<https://babeljs.io/>)
-- Webpack (<https://webpack.js.org/>)
+- [Golang](https://golang.org/) (v1.12 or above)
 
-#### Infrastructure
+**NOTE:** To run the terratests the Terraform version must match the terraform version in the [go module file](../utility/terratest/go.mod) used by the terratests. If the versions do not match then an error will occur
 
-The application is currently designed to run on Amazon Web Service (AWS). The application uses the following AWS services:
+## Scripts
 
-- API Gateway (<https://aws.amazon.com/api-gateway/>)
-- Lambda (<https://aws.amazon.com/lambda/>)
-- Cloudwatch (<https://aws.amazon.com/cloudwatch/>)
-- IAM (<https://aws.amazon.com/iam/>)
+- test (Run all tests)
+- test:unit (Run unit tests & generate coverage report)
+- test:component (Run component tests)
+- test:integration (Run integration tests)
+- test:e2e (Run e2e tests)
+- build (build lambda artefact zip)
 
-#### Infrastructure as Code
+For the full script list please see the [package.json](./package.json)
 
-To be able to deploy all of the AWS infrastrcture, the following IaC tools are used:
+The scripts can be run using the following
 
-- Terraform (<https://www.terraform.io/>)
-- Terragrunt (<https://github.com/gruntwork-io/terragrunt>)
+Open a command prompt in the root directory and run the following command
 
-#### Infrastructure Testing
+```sh
+yarn lerna <script>
+```
 
-To test the AWS infrastructure that is provisioned, the following programmming language and framework is used:
+**NOTE:** This will run the script on all packages.
 
-- Golang (<https://golang.org/>)
-- Terratest (<https://github.com/gruntwork-io/terratest>)
+If you want to run the script for this package only, then please use
 
-## Terraform
+```sh
+yarn lerna --scope @rjpearson94/lambda <script>
+```
 
-This module will provision and confifure a API Gateway and lambda function.
+Alternatively you can use yarn to run these commands, to do this please open a command prompt in this directory and run
 
-**NOTE:** This module requries Terraform 0.12
+```sh
+yarn <script>
+```
 
-### Terraform Docs
+## Postman
 
-#### Inputs
-
-| Name          | Description                            |  Type  | Default | Required |
-| ------------- | -------------------------------------- | :----: | :-----: | :------: |
-| log_retention | Max duration to retain cloudwatch logs | string | `"14"`  |    no    |
-| tags          | AWS tags to be applied to resources    |  map   |   n/a   |   yes    |
-
-### Outputs
-
-| Name       | Description                    |
-| ---------- | ------------------------------ |
-| invoke_url | The URL to invoke an API stage |
-
-## Terratests
-
-To test the Terraform infrastructure and modules, Terratest <https://github.com/gruntwork-io/terratest> is used.
-
-The tests are written in Go and can be seen in the test folder in each Terraform module directory.
-
-Terragrunt is run/ excute Terraform code and commands against real AWS infrastructure
-
-The Terratest are designed to test the terraform modules and code on the following infrastructure
-
-- AWS
-
-### Terratest Prerequisites
-
-In addition to the prerequistes above, you also need:
-
-- Terraform (v0.12.2 used) <https://www.terraform.io/>
-- Terragrunt (v0.19.2 used) <https://github.com/gruntwork-io/terragrunt>
-- Golang (v1.12.6 used) <https://golang.org/>
-- AWS CLI <https://aws.amazon.com/cli/>
-
-### Running Terratests
-
-To run the terratests for a given Terraform module, please run the following commands
-
-- Change into the desired module directory i.e. `cd modules/lambda/test`
-- Change into the test directory
-- Run `go test`
-
-**NOTE:** Go modules are being used. Running `go test` will download all of the necessary dependencies
-
-## Postman Tests
-
-To test the end 2 end solution, Postman is used.
+To test the solution including the API, Postman is used.
 
 The Postman Scripts can be seen in the postman-scripts folder
+
+**NOTE:** These postman tests are run as part of the E2E tests
 
 ### Running Postman Tests via GUI
 
@@ -135,7 +85,7 @@ To run the postman scripts via the Postman GUI.
 
 #### Prerequisites
 
-In addition to the prerequistes above, you also need:
+In addition to the prerequisites above, you also need:
 
 - Postman <https://www.getpostman.com>
 
@@ -164,20 +114,30 @@ To run the postman scripts via the CLI, Newman test runner is used. To run the N
 
 `yarn newman run postman-scripts/lambda.collection.json --env-var "URL=<<API_GATEWAY_URL>>" -r cli`
 
+**NOTE:** These postman tests are run as part of the E2E tests
+
 For more information on Postman, see <https://www.getpostman.com/>
 
 For more information on Newman, see <https://github.com/postmanlabs/newman>
 
-### E2E Tests
+## Terraform
 
-To run E2E tests a combination of Terratests (to provision AWS infrastructure) and Newman (to run the postman scripts) is used.
+This module will provision and configure a API Gateway and lambda function.
 
-To run the E2E tests
+### Terraform Docs
 
-- Change into the e2e directory
-- Run `go test`
+#### Inputs
 
-**NOTE:** Go modules are being used. Running `go test` will download all of the necessary dependencies
+| Name          | Description                            |  Type  | Default | Required |
+| ------------- | -------------------------------------- | :----: | :-----: | :------: |
+| log_retention | Max duration to retain cloudwatch logs | string | `"14"`  |    no    |
+| tags          | AWS tags to be applied to resources    |  map   |   n/a   |   yes    |
+
+### Outputs
+
+| Name       | Description                    |
+| ---------- | ------------------------------ |
+| invoke_url | The URL to invoke an API stage |
 
 ## Deploying to AWS
 
