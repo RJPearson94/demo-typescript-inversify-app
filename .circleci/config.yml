@@ -107,11 +107,15 @@ jobs:
       scope:
         type: string
     machine:
-      image: circleci/classic:latest
+      image: ubuntu-1604:201903-01
       docker_layer_caching: true
     working_directory: *root_directory
     steps:
+      - run: node --version
+      - run: go version
       - nodejs_cache_restore
+      - run: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+      - run: sudo apt update && sudo apt install yarn
       - run: yarn lerna run --scope @rjpearson94/<<parameters.scope>> <<parameters.command>>
 
   terratest_executor:
