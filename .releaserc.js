@@ -1,5 +1,4 @@
 module.exports = {
-  repositoryUrl: 'https://github.com/RJPearson94/demo-typescript-inversify-app.git',
   tagFormat: 'v${version}',
   branch: 'master',
   plugins: [
@@ -8,7 +7,7 @@ module.exports = {
     [
       '@semantic-release/exec',
       {
-        prepareCmd: 'cd lambda && ./create_release_artefact.sh ${nextRelease.version}'
+        prepareCmd: 'cd packages/lambda && ./create_release_artefact.sh ${nextRelease.version}'
       }
     ],
     [
@@ -16,7 +15,7 @@ module.exports = {
       {
         assets: [
           {
-            path: 'lambda/release/*.zip'
+            path: 'packages/lambda/release/*.zip'
           }
         ]
       }
