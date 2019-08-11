@@ -1,0 +1,38 @@
+{
+  "name": "@rjpearson94/lambda",
+  "description": "An example lambda app to prototype Dependency Injection using Typescript & Inversify",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "yarn clean && webpack",
+    "clean": "rm -rf ./dist",
+    "newman": "newman",
+    "test": "yarn test:unit && yarn test:component && yarn test:integration && yarn test:e2e",
+    "test:component": "yarn test:component:api-gateway && yarn test:component:lambda && yarn test:component:root",
+    "test:component:api-gateway": "go test ./modules/api-gateway/component-test",
+    "test:component:lambda": "go test ./modules/lambda/component-test",
+    "test:component:root": "go test ./component-test",
+    "test:e2e": "go test ./e2e",
+    "test:integration": "yarn test:integration:lambda && yarn test:integration:root",
+    "test:integration:lambda": "go test ./modules/lambda/integration-test",
+    "test:integration:root": "go test ./integration-test",
+    "test:unit": "jest ./test",
+    "webpack": "webpack-cli"
+  },
+  "dependencies": {
+    "@rjpearson94/core": "^1.0.0",
+    "inversify": "^5.0.1",
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.17",
+    "@types/node": "^12.6.9",
+    "awesome-typescript-loader": "^5.2.1",
+    "jest": "^24.8.0",
+    "newman": "^4.5.3",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.3",
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6",
+    "zip-webpack-plugin": "^3.0.0"
+  }
+}
