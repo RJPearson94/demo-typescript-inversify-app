@@ -7,7 +7,7 @@ module.exports = {
     [
       '@semantic-release/exec',
       {
-        prepareCmd: 'cd lambda && ./create_release_artefact.sh ${nextRelease.version}'
+        prepareCmd: 'cd packages/lambda && ./create_release_artefact.sh ${nextRelease.version}'
       }
     ],
     [
@@ -15,7 +15,7 @@ module.exports = {
       {
         assets: [
           {
-            path: 'lambda/release/*.zip'
+            path: 'packages/lambda/release/*.zip'
           }
         ]
       }
