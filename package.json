@@ -7,9 +7,7 @@
   },
   "scripts": {
     "lerna": "lerna",
-    "lint": "yarn lint:js && yarn lint:ts",
-    "lint:js": "yarn eslint '**/*.{js,jsx}'",
-    "lint:ts": "yarn eslint '**/*.{ts,tsx}'",
+    "lint": "eslint",
     "prettier": "prettier",
     "semantic-release": "semantic-release"
   },
