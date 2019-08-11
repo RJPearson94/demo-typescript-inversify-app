@@ -83,12 +83,6 @@ The Postman Scripts can be seen in the postman-scripts folder
 
 To run the postman scripts via the Postman GUI.
 
-#### Prerequisites
-
-In addition to the prerequisites above, you also need:
-
-- Postman <https://www.getpostman.com>
-
 Setup
 
 - Import the lambda collection (found within the postman-scripts folder)

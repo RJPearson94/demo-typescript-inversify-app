@@ -36,8 +36,8 @@ For more information see the **README** of each of the packages
 
 You will need:
 
-- Nodejs (<https://nodejs.org/en/>)
-- Yarn (<https://yarnpkg.com>)
+- [Nodejs](https://nodejs.org/en/)
+- [Yarn](https://yarnpkg.com)
 - Command Prompt
 
 Once you have Yarn installed, open a command prompt at the root of this project and run
