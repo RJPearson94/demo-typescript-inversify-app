@@ -100,6 +100,20 @@ jobs:
       - nodejs_cache_restore
       - run: yarn lerna run --scope @rjpearson94/<<parameters.scope>> <<parameters.command>>
 
+  docker_executor:
+    parameters:
+      command:
+        type: string
+      scope:
+        type: string
+    machine:
+      image: circleci/classic:latest
+      docker_layer_caching: true
+    working_directory: *root_directory
+    steps:
+      - nodejs_cache_restore
+      - run: yarn lerna run --scope @rjpearson94/<<parameters.scope>> <<parameters.command>>
+
   terratest_executor:
     parameters:
       command:
@@ -178,10 +192,16 @@ workflows:
           scope: *lambda
           requires:
             - lambda_integration_test
+      - docker_executor:
+          name: web_app_e2e
+          command: *e2e_test
+          scope: *web_app
+          requires:
+            - web_app_integration_test
 
       - release:
           requires:
-            - web_app_integration_test
+            - web_app_e2e
             - lambda_e2e
           filters:
             branches:
