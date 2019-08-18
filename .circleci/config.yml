@@ -113,10 +113,9 @@ jobs:
     working_directory: *root_directory
     steps:
       - nodejs_cache_restore
-      - run: sudo apt-get update && sudo apt-get -y upgrade
-      - run: curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - && sudo apt-get install -y nodejs
+      - run: sudo apt-get install nodejs -y --allow-remove-essential
       - run: curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list && sudo apt-get update && sudo apt-get install yarn
-      - run: sudo apt-get install -y golang-1.12
+      - run: sudo apt-get install golang-go -y --allow-remove-essential
       - run: node --version
       - run: go version
       - run: cd packages/<<parameters.directory>> && yarn <<parameters.command>>
