@@ -101,6 +101,27 @@ jobs:
           paths:
             - <<parameters.cache_path>>
 
+  docker_executor:
+    parameters:
+      command:
+        type: string
+      directory:
+        type: string
+    machine:
+      image: ubuntu-1604:201903-01
+      docker_layer_caching: true
+    working_directory: *root_directory
+    steps:
+      - nodejs_cache_restore
+      - run: sudo apt-get update && sudo apt-get -y upgrade
+      - run: curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - && sudo apt-get install -y nodejs
+      - run: sudo add-apt-repository ppa:evarlast/golang1.4 && sudo apt-get install golang
+      - run: node --version
+      - run: go version
+      - run: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+      - run: sudo apt update && sudo apt install yarn
+      - run: cd packages/<<parameters.directory>> && yarn <<parameters.command>>
+
   terratest_executor:
     parameters:
       command:
@@ -112,7 +133,7 @@ jobs:
     steps:
       - nodejs_cache_restore
       - restore_cache:
-          key: *repo_cache
+          key: *go_cache
       - run: wget https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip	&& unzip terraform_0.12.6_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
       - run: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.16/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
       - run: cd packages/<<parameters.directory>> && yarn <<parameters.command>>
@@ -215,10 +236,17 @@ workflows:
           requires:
             - web_app_build
 
+      - docker_executor:
+          name: web_app_e2e
+          command: *e2e_test
+          directory: *web_app
+          requires:
+            - web_app_integration_test
+
       - release:
           requires:
             - lambda_e2e
-            - web_app_integration_test
+            - web_app_e2e
           filters:
             branches:
               only: master
