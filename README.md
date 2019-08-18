@@ -25,7 +25,7 @@ demo-typescript-inversify-app
     +-- web-app
         +-- ...
         +-- package.json
-+-- lerna.json
++-- ...
 +-- package.json
 ```
 
