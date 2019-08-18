@@ -47,13 +47,12 @@ jobs:
           paths:
             - *root_directory
 
-  bootstrap:
+  install:
     working_directory: *root_directory
     executor: nodejs
     steps:
       - nodejs_cache_restore
       - run: yarn install
-      - run: yarn lerna bootstrap
       - save_cache:
           key: *nodejs_cache
           paths:
@@ -69,42 +68,46 @@ jobs:
       - nodejs_cache_restore
       - run: yarn lint
 
-  unit_test:
-    working_directory: *root_directory
-    executor: nodejs
-    steps:
-      - nodejs_cache_restore
-      - run: yarn lerna run test:unit
-
   build_artefact:
     working_directory: *root_directory
     executor: nodejs
     steps:
       - nodejs_cache_restore
-      - run: yarn lerna run build
+      - run: cd packages/core && yarn build
+      - run: cd packages/lambda && yarn build
+      - run: cd packages/web-app && yarn build
       - save_cache:
           key: *artefact_cache
           paths:
             - packages/lambda/modules/lambda/dist
             - packages/web-app/dist
 
+  unit_test:
+    working_directory: *root_directory
+    executor: nodejs
+    steps:
+      - nodejs_cache_restore
+      - run: cd packages/core && yarn test:unit
+      - run: cd packages/lambda && yarn test:unit
+      - run: cd packages/web-app && yarn test:unit
+
   test_executor:
     parameters:
       command:
         type: string
-      scope:
+      directory:
         type: string
     working_directory: *root_directory
     executor: nodejs
     steps:
       - nodejs_cache_restore
-      - run: yarn lerna run --scope @rjpearson94/<<parameters.scope>> <<parameters.command>>
+      - run: cd packages/<<parameters.directory>> && yarn <<parameters.command>>
 
   docker_executor:
     parameters:
       command:
         type: string
-      scope:
+      directory:
         type: string
     machine:
       image: ubuntu-1604:201903-01
@@ -119,13 +122,13 @@ jobs:
       - run: go version
       - run: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
       - run: sudo apt update && sudo apt install yarn
-      - run: yarn lerna run --scope @rjpearson94/<<parameters.scope>> <<parameters.command>>
+      - run: cd packages/<<parameters.directory>> && yarn <<parameters.command>>
 
   terratest_executor:
     parameters:
       command:
         type: string
-      scope:
+      directory:
         type: string
     working_directory: *root_directory
     executor: nodejs-golang
@@ -135,7 +138,7 @@ jobs:
           key: *repo_cache
       - run: wget https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip	&& unzip terraform_0.12.6_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
       - run: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.16/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
-      - run: yarn lerna run --scope @rjpearson94/<<parameters.scope>> <<parameters.command>>
+      - run: cd packages/<<parameters.directory>> && yarn <<parameters.command>>
       - save_cache:
           key: *go_cache
           paths:
@@ -154,27 +157,27 @@ workflows:
     jobs:
       - setup
 
-      - bootstrap:
+      - install:
           requires:
             - setup
 
       - lint:
           requires:
-            - bootstrap
-
-      - unit_test:
-          requires:
-            - lint
+            - install
 
       - build_artefact:
           requires:
-            - unit_test
+            - lint
+
+      - unit_test:
+          requires:
+            - build_artefact
 
       # Component Test
       - terratest_executor:
           name: lambda_component_test
           command: *component_test
-          scope: *lambda
+          directory: *lambda
           requires:
             - build_artefact
 
@@ -182,13 +185,13 @@ workflows:
       - test_executor:
           name: web_app_integration_test
           command: *integration_test
-          scope: *web_app
+          directory: *web_app
           requires:
             - build_artefact
       - terratest_executor:
           name: lambda_integration_test
           command: *integration_test
-          scope: *lambda
+          directory: *lambda
           requires:
             - lambda_component_test
 
@@ -196,13 +199,13 @@ workflows:
       - terratest_executor:
           name: lambda_e2e
           command: *e2e_test
-          scope: *lambda
+          directory: *lambda
           requires:
             - lambda_integration_test
       - docker_executor:
           name: web_app_e2e
           command: *e2e_test
-          scope: *web_app
+          directory: *web_app
           requires:
             - web_app_integration_test
 

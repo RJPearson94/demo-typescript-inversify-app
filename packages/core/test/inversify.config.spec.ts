@@ -1,8 +1,9 @@
 import 'reflect-metadata';
-import container from '@shared/inversify.config';
-import TYPES from '@shared/constant/types';
-import HelloService from '@shared/service/hello/hello';
-import HelloServiceImpl from '@shared/service/hello/impl/hello-impl';
+
+import container from '@src/inversify.config';
+import TYPES from '@src/constant/types';
+import HelloService from '@src/service/hello/hello';
+import HelloServiceImpl from '@src/service/hello/impl/hello-impl';
 
 describe('#InversifyConfig', () => {
   test('Should verify HelloServiceImpl is bound to HelloService', () => {

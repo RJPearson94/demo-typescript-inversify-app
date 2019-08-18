@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+
 import TYPES from '@src/constant/types';
 import GreetingController from '@src/controller/greeting';
 import container from '@src/inversify.config';

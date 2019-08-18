@@ -10,26 +10,13 @@ No additional prerequisites are required for this package
 
 ## Scripts
 
+- build (Generate build artefacts)
 - test (Run all tests)
 - test:unit (Run unit tests & generate coverage report)
 
 The scripts can be run using the following
 
-Open a command prompt in the root directory and run the following command
-
-```sh
-yarn lerna <script>
-```
-
-**NOTE:** This will run the script on all packages.
-
-If you want to run the script for this package only, then please use
-
-```sh
-yarn lerna --scope @rjpearson94/core <script>
-```
-
-Alternatively you can use yarn to run these commands, to do this please open a command prompt in this directory and run
+Open a command prompt in this directory and run
 
 ```sh
 yarn <script>

@@ -2,7 +2,10 @@
   "name": "@rjpearson94/core",
   "version": "1.0.0",
   "license": "Apache-2.0",
+  "main": "dist/index.js",
   "scripts": {
+    "build": "yarn clean && tsc -p tsconfig.build.json && tscpaths -p tsconfig.build.json -s ./src -o ./dist",
+    "clean": "rm -rf dist",
     "test": "yarn test:unit",
     "test:unit": "jest ./test"
   },
@@ -12,8 +15,10 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.17",
+    "@types/node": "^12.6.9",
     "jest": "^24.8.0",
     "ts-jest": "^24.0.2",
+    "tscpaths": "^0.0.9",
     "typescript": "^3.5.3"
   }
 }
