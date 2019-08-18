@@ -170,7 +170,7 @@ workflows:
           cache_path: packages/lambda/modules/lambda/dist
           directory: *lambda
           requires:
-            - core_unit_test
+            - lambda_unit_test
 
       - terratest_executor:
           name: lambda_component_test
@@ -206,7 +206,7 @@ workflows:
           cache_path: packages/web-app/dist
           directory: *web_app
           requires:
-            - core_unit_test
+            - web_app_unit_test
 
       - test_executor:
           name: web_app_integration_test
