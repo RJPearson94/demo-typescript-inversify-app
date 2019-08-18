@@ -1,8 +1,10 @@
 import 'reflect-metadata';
 import { InversifyExpressServer } from 'inversify-express-utils';
 import * as supertest from 'supertest';
+
+import container from '@core/inversify.config';
+
 import '@src/controller/v2/greeting';
-import container from '@shared/inversify.config';
 
 describe('V2GreetingController Integration Test', () => {
   test('should GET JSON with SayHello message when the /v2/ endpoint is called', async done => {

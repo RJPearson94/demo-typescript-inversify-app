@@ -41,7 +41,7 @@ module.exports = {
   resolve: {
     plugins: [
       new TsConfigPathsPlugin({
-        configFileName: 'tsconfig.json'
+        configFileName: 'tsconfig.build.json'
       })
     ],
     extensions: ['.tsx', '.ts', '.js']

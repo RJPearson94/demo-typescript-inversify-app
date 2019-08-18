@@ -5,8 +5,9 @@
     "baseUrl": ".",
     "paths": {
       "@src/*": ["src/*"],
-      "@shared/*": ["node_modules/@rjpearson94/core/src/*"]
-    }
-  },
-  "include": ["src", "test", "node_modules/@rjpearson94/core"]
+      "@core/*": ["../../node_modules/@rjpearson94/core/dist/*"]
+    },
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true
+  }
 }

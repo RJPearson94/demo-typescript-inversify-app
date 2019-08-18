@@ -1,5 +1,7 @@
 import 'reflect-metadata';
-import HelloService from '@shared/service/hello/hello';
+
+import HelloService from '@core/service/hello/hello';
+
 import GreetingController from '@src/controller/impl/greeting-impl';
 
 describe('#V1GreetingController', () => {

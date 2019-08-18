@@ -5,7 +5,7 @@ const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 module.exports = {
   mode: 'production',
   entry: 'src/lambda',
-  devtool: '(none)',
+  devtool: 'source-map',
   target: 'node',
 
   output: {
@@ -48,7 +48,7 @@ module.exports = {
   resolve: {
     plugins: [
       new TsConfigPathsPlugin({
-        configFileName: 'tsconfig.json'
+        configFileName: 'tsconfig.build.json'
       })
     ],
     extensions: ['.tsx', '.ts', '.js']

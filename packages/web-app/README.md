@@ -34,21 +34,7 @@ For the full script list please see the [package.json](./package.json)
 
 The scripts can be run using the following
 
-Open a command prompt in the root directory and run the following command
-
-```sh
-yarn lerna <script>
-```
-
-**NOTE:** This will run the script on all packages.
-
-If you want to run the script for this package only, then please use
-
-```sh
-yarn lerna --scope @rjpearson94/web-app <script>
-```
-
-Alternatively you can use yarn to run these commands, to do this please open a command prompt in this directory and run
+Open a command prompt in this directory and run
 
 ```sh
 yarn <script>

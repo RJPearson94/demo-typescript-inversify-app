@@ -9,12 +9,13 @@ references:
   repo_cache: &repo_cache repo-v1-{{ .Environment.CIRCLE_SHA1 }}
   nodejs_cache: &nodejs_cache repo-v1-packages-{{ .Environment.CIRCLE_SHA1 }}
   go_cache: &go_cache repo-v1-go-{{ .Environment.CIRCLE_SHA1 }}
-  artefact_cache: &artefact_cache repo-v1-artefact-{{ .Environment.CIRCLE_SHA1 }}
 
   e2e_test: &e2e_test test:e2e
   component_test: &component_test test:component
   integration_test: &integration_test test:integration
+  unit_test: &unit_test test:unit
 
+  core: &core core
   lambda: &lambda lambda
   web_app: &web_app web-app
 
@@ -34,7 +35,11 @@ commands:
       - restore_cache:
           key: *nodejs_cache
       - restore_cache:
-          key: *artefact_cache
+          key: repo-v1-core-artefact-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: repo-v1-lambda-artefact-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: repo-v1-web-app-artefact-{{ .Environment.CIRCLE_SHA1 }}
 
 jobs:
   setup:
@@ -47,13 +52,12 @@ jobs:
           paths:
             - *root_directory
 
-  bootstrap:
+  install:
     working_directory: *root_directory
     executor: nodejs
     steps:
       - nodejs_cache_restore
       - run: yarn install
-      - run: yarn lerna bootstrap
       - save_cache:
           key: *nodejs_cache
           paths:
@@ -69,42 +73,39 @@ jobs:
       - nodejs_cache_restore
       - run: yarn lint
 
-  unit_test:
-    working_directory: *root_directory
-    executor: nodejs
-    steps:
-      - nodejs_cache_restore
-      - run: yarn lerna run test:unit
-
-  build_artefact:
-    working_directory: *root_directory
-    executor: nodejs
-    steps:
-      - nodejs_cache_restore
-      - run: yarn lerna run build
-      - save_cache:
-          key: *artefact_cache
-          paths:
-            - packages/lambda/modules/lambda/dist
-            - packages/web-app/dist
-
   test_executor:
     parameters:
       command:
         type: string
-      scope:
+      directory:
         type: string
     working_directory: *root_directory
     executor: nodejs
     steps:
       - nodejs_cache_restore
-      - run: yarn lerna run --scope @rjpearson94/<<parameters.scope>> <<parameters.command>>
+      - run: cd packages/<<parameters.directory>> && yarn <<parameters.command>>
+
+  build_artefact:
+    parameters:
+      cache_path:
+        type: string
+      directory:
+        type: string
+    working_directory: *root_directory
+    executor: nodejs
+    steps:
+      - nodejs_cache_restore
+      - run: cd packages/<<parameters.directory>> && yarn build
+      - save_cache:
+          key: repo-v1-<<parameters.directory>>-artefact-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - <<parameters.cache_path>>
 
   terratest_executor:
     parameters:
       command:
         type: string
-      scope:
+      directory:
         type: string
     working_directory: *root_directory
     executor: nodejs-golang
@@ -114,7 +115,7 @@ jobs:
           key: *repo_cache
       - run: wget https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip	&& unzip terraform_0.12.6_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
       - run: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.16/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
-      - run: yarn lerna run --scope @rjpearson94/<<parameters.scope>> <<parameters.command>>
+      - run: cd packages/<<parameters.directory>> && yarn <<parameters.command>>
       - save_cache:
           key: *go_cache
           paths:
@@ -133,56 +134,91 @@ workflows:
     jobs:
       - setup
 
-      - bootstrap:
+      - install:
           requires:
             - setup
 
       - lint:
           requires:
-            - bootstrap
+            - install
 
-      - unit_test:
+      # Core
+      - test_executor:
+          name: core_unit_test
+          command: *unit_test
+          directory: *core
           requires:
             - lint
 
       - build_artefact:
+          name: core_build
+          cache_path: packages/core/dist
+          directory: *core
           requires:
-            - unit_test
+            - core_unit_test
 
-      # Component Test
+      # lambda
+      - test_executor:
+          name: lambda_unit_test
+          command: *unit_test
+          directory: *lambda
+          requires:
+            - core_build
+
+      - build_artefact:
+          name: lambda_build
+          cache_path: packages/lambda/modules/lambda/dist
+          directory: *lambda
+          requires:
+            - lambda_unit_test
+
       - terratest_executor:
           name: lambda_component_test
           command: *component_test
-          scope: *lambda
+          directory: *lambda
           requires:
-            - build_artefact
+            - lambda_build
 
-      # Integration Test
-      - test_executor:
-          name: web_app_integration_test
-          command: *integration_test
-          scope: *web_app
-          requires:
-            - build_artefact
       - terratest_executor:
           name: lambda_integration_test
           command: *integration_test
-          scope: *lambda
+          directory: *lambda
           requires:
             - lambda_component_test
 
-      # E2E
       - terratest_executor:
           name: lambda_e2e
           command: *e2e_test
-          scope: *lambda
+          directory: *lambda
           requires:
             - lambda_integration_test
 
+      #  web app
+      - test_executor:
+          name: web_app_unit_test
+          command: *unit_test
+          directory: *web_app
+          requires:
+            - core_build
+
+      - build_artefact:
+          name: web_app_build
+          cache_path: packages/web-app/dist
+          directory: *web_app
+          requires:
+            - web_app_unit_test
+
+      - test_executor:
+          name: web_app_integration_test
+          command: *integration_test
+          directory: *web_app
+          requires:
+            - web_app_build
+
       - release:
           requires:
-            - web_app_integration_test
             - lambda_e2e
+            - web_app_integration_test
           filters:
             branches:
               only: master
