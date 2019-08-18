@@ -9,12 +9,13 @@ references:
   repo_cache: &repo_cache repo-v1-{{ .Environment.CIRCLE_SHA1 }}
   nodejs_cache: &nodejs_cache repo-v1-packages-{{ .Environment.CIRCLE_SHA1 }}
   go_cache: &go_cache repo-v1-go-{{ .Environment.CIRCLE_SHA1 }}
-  artefact_cache: &artefact_cache repo-v1-artefact-{{ .Environment.CIRCLE_SHA1 }}
 
   e2e_test: &e2e_test test:e2e
   component_test: &component_test test:component
   integration_test: &integration_test test:integration
+  unit_test: &unit_test test:unit
 
+  core: &core core
   lambda: &lambda lambda
   web_app: &web_app web-app
 
@@ -34,7 +35,11 @@ commands:
       - restore_cache:
           key: *nodejs_cache
       - restore_cache:
-          key: *artefact_cache
+          key: repo-v1-core-artefact-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: repo-v1-lambda-artefact-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: repo-v1-web-app-artefact-{{ .Environment.CIRCLE_SHA1 }}
 
 jobs:
   setup:
@@ -68,30 +73,6 @@ jobs:
       - nodejs_cache_restore
       - run: yarn lint
 
-  build_artefact:
-    working_directory: *root_directory
-    executor: nodejs
-    steps:
-      - nodejs_cache_restore
-      - run: cd packages/core && yarn build
-      - run: cd packages/lambda && yarn build
-      - run: cd packages/web-app && yarn build
-      - save_cache:
-          key: *artefact_cache
-          paths:
-            - packages/core/dist
-            - packages/lambda/modules/lambda/dist
-            - packages/web-app/dist
-
-  unit_test:
-    working_directory: *root_directory
-    executor: nodejs
-    steps:
-      - nodejs_cache_restore
-      - run: cd packages/core && yarn test:unit
-      - run: cd packages/lambda && yarn test:unit
-      - run: cd packages/web-app && yarn test:unit
-
   test_executor:
     parameters:
       command:
@@ -104,26 +85,21 @@ jobs:
       - nodejs_cache_restore
       - run: cd packages/<<parameters.directory>> && yarn <<parameters.command>>
 
-  docker_executor:
+  build_artefact:
     parameters:
-      command:
+      cache_path:
         type: string
       directory:
         type: string
-    machine:
-      image: ubuntu-1604:201903-01
-      docker_layer_caching: true
     working_directory: *root_directory
+    executor: nodejs
     steps:
       - nodejs_cache_restore
-      - run: sudo apt-get update && sudo apt-get -y upgrade
-      - run: curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - && sudo apt-get install -y nodejs
-      - run: sudo apt-get purge golang && sudo add-apt-repository ppa:evarlast/golang1.4 && sudo apt-get update && sudo apt-get install golang
-      - run: node --version
-      - run: go version
-      - run: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-      - run: sudo apt update && sudo apt install yarn
-      - run: cd packages/<<parameters.directory>> && yarn <<parameters.command>>
+      - run: cd packages/<<parameters.directory>> && yarn build
+      - save_cache:
+          key: repo-v1-<<parameters.directory>>-artefact-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - <<parameters.cache_path>>
 
   terratest_executor:
     parameters:
@@ -166,29 +142,43 @@ workflows:
           requires:
             - install
 
-      - build_artefact:
+      # Core
+      - test_executor:
+          name: core_unit_test
+          command: *unit_test
+          directory: *core
           requires:
             - lint
 
-      - unit_test:
+      - build_artefact:
+          name: core_build
+          cache_path: packages/core/dist
+          directory: *core
           requires:
-            - build_artefact
+            - core_unit_test
 
-      # Component Test
+      # lambda
+      - test_executor:
+          name: lambda_unit_test
+          command: *unit_test
+          directory: *lambda
+          requires:
+            - core_build
+
+      - build_artefact:
+          name: lambda_build
+          cache_path: packages/lambda/modules/lambda/dist
+          directory: *lambda
+          requires:
+            - core_unit_test
+
       - terratest_executor:
           name: lambda_component_test
           command: *component_test
           directory: *lambda
           requires:
-            - unit_test
+            - lambda_build
 
-      # Integration Test
-      - test_executor:
-          name: web_app_integration_test
-          command: *integration_test
-          directory: *web_app
-          requires:
-            - unit_test
       - terratest_executor:
           name: lambda_integration_test
           command: *integration_test
@@ -196,24 +186,39 @@ workflows:
           requires:
             - lambda_component_test
 
-      # E2E
       - terratest_executor:
           name: lambda_e2e
           command: *e2e_test
           directory: *lambda
           requires:
             - lambda_integration_test
-      - docker_executor:
-          name: web_app_e2e
-          command: *e2e_test
+
+      #  web app
+      - test_executor:
+          name: web_app_unit_test
+          command: *unit_test
           directory: *web_app
           requires:
-            - web_app_integration_test
+            - core_build
+
+      - build_artefact:
+          name: web_app_build
+          cache_path: packages/web-app/dist
+          directory: *web_app
+          requires:
+            - core_unit_test
+
+      - test_executor:
+          name: web_app_integration_test
+          command: *integration_test
+          directory: *web_app
+          requires:
+            - web_app_build
 
       - release:
           requires:
-            - web_app_e2e
             - lambda_e2e
+            - web_app_integration_test
           filters:
             branches:
               only: master
