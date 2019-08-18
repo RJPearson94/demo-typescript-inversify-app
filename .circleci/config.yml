@@ -114,9 +114,9 @@ jobs:
     steps:
       - nodejs_cache_restore
       - run: sudo apt-get update && sudo apt-get -y upgrade
-      - run: sudo apt-get install -y nodejs
+      - run: curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - && sudo apt-get install -y nodejs
       - run: curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list && sudo apt-get update && sudo apt-get install yarn
-      - run: sudo apt-get install -y golang-go
+      - run: sudo apt-get install -y golang-1.12
       - run: node --version
       - run: go version
       - run: cd packages/<<parameters.directory>> && yarn <<parameters.command>>
@@ -177,41 +177,41 @@ workflows:
           requires:
             - core_unit_test
 
-      # lambda
-      - test_executor:
-          name: lambda_unit_test
-          command: *unit_test
-          directory: *lambda
-          requires:
-            - core_build
+      # # lambda
+      # - test_executor:
+      #     name: lambda_unit_test
+      #     command: *unit_test
+      #     directory: *lambda
+      #     requires:
+      #       - core_build
 
-      - build_artefact:
-          name: lambda_build
-          cache_path: packages/lambda/modules/lambda/dist
-          directory: *lambda
-          requires:
-            - lambda_unit_test
+      # - build_artefact:
+      #     name: lambda_build
+      #     cache_path: packages/lambda/modules/lambda/dist
+      #     directory: *lambda
+      #     requires:
+      #       - lambda_unit_test
 
-      - terratest_executor:
-          name: lambda_component_test
-          command: *component_test
-          directory: *lambda
-          requires:
-            - lambda_build
+      # - terratest_executor:
+      #     name: lambda_component_test
+      #     command: *component_test
+      #     directory: *lambda
+      #     requires:
+      #       - lambda_build
 
-      - terratest_executor:
-          name: lambda_integration_test
-          command: *integration_test
-          directory: *lambda
-          requires:
-            - lambda_component_test
+      # - terratest_executor:
+      #     name: lambda_integration_test
+      #     command: *integration_test
+      #     directory: *lambda
+      #     requires:
+      #       - lambda_component_test
 
-      - terratest_executor:
-          name: lambda_e2e
-          command: *e2e_test
-          directory: *lambda
-          requires:
-            - lambda_integration_test
+      # - terratest_executor:
+      #     name: lambda_e2e
+      #     command: *e2e_test
+      #     directory: *lambda
+      #     requires:
+      #       - lambda_integration_test
 
       #  web app
       - test_executor:
@@ -244,7 +244,7 @@ workflows:
 
       - release:
           requires:
-            - lambda_e2e
+            # - lambda_e2e
             - web_app_e2e
           filters:
             branches:
