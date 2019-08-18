@@ -179,7 +179,7 @@ workflows:
           command: *component_test
           directory: *lambda
           requires:
-            - build_artefact
+            - unit_test
 
       # Integration Test
       - test_executor:
@@ -187,7 +187,7 @@ workflows:
           command: *integration_test
           directory: *web_app
           requires:
-            - build_artefact
+            - unit_test
       - terratest_executor:
           name: lambda_integration_test
           command: *integration_test
