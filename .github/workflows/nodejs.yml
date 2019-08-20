@@ -41,7 +41,7 @@ jobs:
           cd packages/lambda
           yarn build
 
-      # Wen App
+      # Web App
       - name: Run Web App Unit tests
         run: |
           cd packages/web-app
@@ -51,3 +51,13 @@ jobs:
         run: |
           cd packages/web-app
           yarn build
+
+      - name: Run Web App Integration tests
+        run: |
+          cd packages/web-app
+          yarn test:integration
+
+      - name: Run Web App E2E tests
+        run: |
+          cd packages/web-app
+          yarn test:e2e
