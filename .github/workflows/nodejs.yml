@@ -55,7 +55,7 @@ jobs:
       - name: Run Web App Integration tests
         run: |
           cd packages/web-app
-          yarn test:integration
+          yarn test:integration --detectOpenHandles
 
       - name: Run Web App E2E tests
         run: |
