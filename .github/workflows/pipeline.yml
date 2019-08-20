@@ -88,3 +88,7 @@ jobs:
         run: |
           cd packages/web-app
           yarn test:e2e
+
+      - name: Release
+        if: github.branch_name == 'master'
+        run: yarn semantic-release
