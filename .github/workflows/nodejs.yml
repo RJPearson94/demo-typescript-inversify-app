@@ -1,0 +1,25 @@
+name: Node CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: install
+      run: yarn install
+    - name: lint
+      run: yarn lint
+    - name: Run Core Unit tests
+      run: |
+        cd packages/core
+        yarn test
+    - name: Build Core artefact
+      run: |
+        cd packages/core
+        yarn build
