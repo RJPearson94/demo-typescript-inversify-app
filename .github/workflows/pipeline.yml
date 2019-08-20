@@ -16,9 +16,6 @@ jobs:
       - name: install
         run: yarn install
 
-      - name: lint
-        run: yarn lint "**/*.{ts,js,json,yml,md}" --ignore-pattern node_modules/
-
       # Core
       - name: Run Core Unit tests
         run: |
