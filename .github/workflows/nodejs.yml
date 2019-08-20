@@ -6,20 +6,45 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-    - name: install
-      run: yarn install
-    - name: lint
-      run: yarn lint
-    - name: Run Core Unit tests
-      run: |
-        cd packages/core
-        yarn test
-    - name: Build Core artefact
-      run: |
-        cd packages/core
-        yarn build
+      - uses: actions/checkout@v1
+
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: install
+        run: yarn install
+
+      - name: lint
+        run: yarn lint .
+
+      - name: Run Core Unit tests
+        run: |
+          cd packages/core
+          yarn test
+
+      - name: Build Core artefact
+        run: |
+          cd packages/core
+          yarn build
+
+      - name: Run Lambda Unit tests
+        run: |
+          cd packages/lambda
+          yarn test
+
+      - name: Build Lambda artefact
+        run: |
+          cd packages/lambda
+          yarn build
+
+      - name: Run Web App Unit tests
+        run: |
+          cd packages/web-app
+          yarn test
+
+      - name: Build Web App artefact
+        run: |
+          cd packages/web-app
+          yarn build
