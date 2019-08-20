@@ -40,8 +40,9 @@ jobs:
         run: |
           cd packages/lambda
           yarn build
-      
+
       - name: Run Lambda Component tests
+        secrets: ['AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY']
         run: |
           wget https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip	&& unzip terraform_0.12.6_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
           wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.20/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
