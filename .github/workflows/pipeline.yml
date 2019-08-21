@@ -1,9 +1,9 @@
-name: Node CI
+name: Monorepo Pipeline
 
 on: [push]
 
 jobs:
-  build:
+  linux-pipeline:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -13,10 +13,14 @@ jobs:
         with:
           node-version: 12.x
 
-      - name: install
+      - name: Environment Setup
+        run: |
+          wget https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip	&& unzip terraform_0.12.6_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
+          wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.20/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
+
+      - name: Install
         run: yarn install
 
-      # Core
       - name: Run Core Unit tests
         run: |
           cd packages/core
@@ -27,7 +31,6 @@ jobs:
           cd packages/core
           yarn build
 
-      # Lambda
       - name: Run Lambda Unit tests
         run: |
           cd packages/lambda
@@ -43,8 +46,6 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          wget https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip	&& unzip terraform_0.12.6_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
-          wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.20/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
           cd packages/lambda
           yarn test:component
 
@@ -53,8 +54,6 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          wget https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip	&& unzip terraform_0.12.6_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
-          wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.20/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
           cd packages/lambda
           yarn test:integration
 
@@ -63,12 +62,9 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          wget https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip	&& unzip terraform_0.12.6_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
-          wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.20/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
           cd packages/lambda
           yarn test:e2e
 
-      # Web App
       - name: Run Web App Unit tests
         run: |
           cd packages/web-app
