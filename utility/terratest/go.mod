@@ -7,6 +7,6 @@ require (
 	github.com/gruntwork-io/terratest v0.18.3
 	github.com/hashicorp/go-uuid v1.0.1
 	github.com/hashicorp/terraform v0.12.6
-	github.com/stretchr/testify v1.3.0
+	github.com/stretchr/testify v1.4.0
 	github.com/zclconf/go-cty v1.1.0
 )
