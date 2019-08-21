@@ -86,5 +86,5 @@ jobs:
           yarn test:e2e
 
       - name: Release
-        if: github.branch_name == 'master'
+        if: github.branch == 'master'
         run: yarn semantic-release
