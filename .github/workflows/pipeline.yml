@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   linux-pipeline:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
 
@@ -86,5 +86,6 @@ jobs:
           yarn test:e2e
 
       - name: Release
-        if: github.branch == 'master'
+        branches: # Array of patterns that match refs/heads
+          - master
         run: yarn semantic-release
