@@ -3,6 +3,10 @@ import * as supertest from 'supertest';
 import server from '@src/server';
 
 describe('Server Integration Test', () => {
+  afterAll(done => {
+    return server.close(done);
+  });
+
   test('should perform GET request to /v1/ endpoint', async done => {
     // Given
 

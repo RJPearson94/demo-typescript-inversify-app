@@ -1,0 +1,90 @@
+name: Monorepo Pipeline
+
+on: [push]
+
+jobs:
+  linux-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Environment Setup
+        run: |
+          wget https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip	&& unzip terraform_0.12.6_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
+          wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.19.20/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
+
+      - name: Install
+        run: yarn install
+
+      - name: Run Core Unit tests
+        run: |
+          cd packages/core
+          yarn test:unit
+
+      - name: Build Core artefact
+        run: |
+          cd packages/core
+          yarn build
+
+      - name: Run Lambda Unit tests
+        run: |
+          cd packages/lambda
+          yarn test:unit
+
+      - name: Build Lambda artefact
+        run: |
+          cd packages/lambda
+          yarn build
+
+      - name: Run Lambda Component tests
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          cd packages/lambda
+          yarn test:component
+
+      - name: Run Lambda Integration tests
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          cd packages/lambda
+          yarn test:integration
+
+      - name: Run Lambda E2E tests
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          cd packages/lambda
+          yarn test:e2e
+
+      - name: Run Web App Unit tests
+        run: |
+          cd packages/web-app
+          yarn test:unit
+
+      - name: Build Web App artefact
+        run: |
+          cd packages/web-app
+          yarn build
+
+      - name: Run Web App Integration tests
+        run: |
+          cd packages/web-app
+          yarn test:integration
+
+      - name: Run Web App E2E tests
+        run: |
+          cd packages/web-app
+          yarn test:e2e
+
+      - name: Release
+        if: github.branch_name == 'master'
+        run: yarn semantic-release
