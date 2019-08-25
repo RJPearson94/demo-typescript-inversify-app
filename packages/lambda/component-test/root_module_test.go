@@ -2,6 +2,7 @@ package root_module_ctest
 
 import (
 	"github.com/stretchr/testify/assert"
+	"terratest_utility/helper"
 	"terratest_utility/terraform"
 	"testing"
 )
@@ -9,8 +10,10 @@ import (
 func TestRootModule(test *testing.T) {
 	test.Parallel()
 
+	resourceSuffix := helper.GenerateUUID(test)
+
 	// Before
-	plan := terraform.Plan(test, ".")
+	plan := terraform.Plan(test, ".", resourceSuffix)
 
 	test.Run("Should verify api gateway resources", func(test *testing.T) {
 		// Given

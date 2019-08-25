@@ -1,9 +1,11 @@
 package lambda_module_itest
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"terratest_utility/terraform"
 	"terratest_utility/aws"
+	"terratest_utility/helper"
 	"encoding/json"
 	"testing"
 )
@@ -11,16 +13,18 @@ import (
 func TestLambdaModule(test *testing.T) {
 	test.Parallel()
 
-	// Before
+	resourceSuffix := helper.GenerateUUID(test)
 	service := "."
-	defer terraform.Destroy(test, service)
-	terraform.Apply(test, service)
+
+	// Before
+	defer terraform.Destroy(test, service, resourceSuffix)
+	terraform.Apply(test, service, resourceSuffix)
 
 	test.Run("Should verify terraform outputs", func(test *testing.T) {
 		// Given
 
 		// When
-		terraformOutputs := terraform.OutputAll(test, service)
+		terraformOutputs := terraform.OutputAll(test, service, resourceSuffix)
 
 		// Then
 		assert.NotEmpty(test, terraformOutputs)
@@ -32,7 +36,8 @@ func TestLambdaModule(test *testing.T) {
 		client := aws.NewLambdaClient()
 
 		// When
-		lambdaResponse := aws.InvokeAndMarshallLambdaResponse(test, client, "inversify_demo_function")
+		functionName := fmt.Sprintf("inversify_demo_function_%s", resourceSuffix)
+		lambdaResponse := aws.InvokeAndMarshallLambdaResponse(test, client, functionName)
 
 		// Then
 		assert.Equal(test, 200, lambdaResponse.StatusCode)

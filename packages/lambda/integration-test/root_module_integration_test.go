@@ -2,6 +2,7 @@ package root_module_itest
 
 import (
 	"github.com/stretchr/testify/assert"
+	"terratest_utility/helper"
 	"terratest_utility/terraform"
 	"testing"
 )
@@ -9,16 +10,18 @@ import (
 func TestRootModule(test *testing.T) {
 	test.Parallel()
 
-	// Before
+	resourceSuffix := helper.GenerateUUID(test)
 	service := "."
-	defer terraform.Destroy(test, service)
-	terraform.Apply(test, service)
+
+	// Before
+	defer terraform.Destroy(test, service, resourceSuffix)
+	terraform.Apply(test, service, resourceSuffix)
 
 	test.Run("Should verify terraform outputs", func(test *testing.T) {
 		// Given
 
 		// When
-		terraformOutputs := terraform.OutputAll(test, service)
+		terraformOutputs := terraform.OutputAll(test, service, resourceSuffix)
 
 		// Then
 		assert.NotEmpty(test, terraformOutputs)

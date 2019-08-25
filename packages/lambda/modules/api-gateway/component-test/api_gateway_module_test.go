@@ -1,6 +1,7 @@
 package api_gateway_module_ctest
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"github.com/zclconf/go-cty/cty/gocty"
 	"terratest_utility/terraform"
@@ -13,9 +14,10 @@ func TestAPIGatewayModule(test *testing.T) {
 
 	environmentTag := "Environment"
 	environmentTagResult := "Testing"
+	resourceSuffix := helper.GenerateUUID(test)
 
 	// Before
-	plan := terraform.Plan(test, ".")
+	plan := terraform.Plan(test, ".", resourceSuffix)
 
 	test.Run("Should verify api gateway deployment", func(test *testing.T) {
 		// Given
@@ -54,10 +56,11 @@ func TestAPIGatewayModule(test *testing.T) {
 
 		assert.NotNil(test, afterAPGatewayRestAPIChange)
 		assert.Equal(test, "HEADER", afterAPGatewayRestAPIChange.APIKeySource)
-		assert.Equal(test, getAPIGatewayBody(), helper.SanitizeString(afterAPGatewayRestAPIChange.Body))
+		assert.Equal(test, getAPIGatewayBody(resourceSuffix), helper.SanitizeString(afterAPGatewayRestAPIChange.Body))
 		assert.Equal(test, "Example Typescript Inversify Lambda App", afterAPGatewayRestAPIChange.Description)
 		assert.Equal(test, -1, afterAPGatewayRestAPIChange.MinimumCompressionSize)
-		assert.Equal(test, "TypeScript Inversify Lambda App", afterAPGatewayRestAPIChange.Name)
+		apiGatewayName := fmt.Sprintf("TypeScript Inversify Lambda App %s", resourceSuffix)
+		assert.Equal(test, apiGatewayName, afterAPGatewayRestAPIChange.Name)
 	})
 
 	test.Run("Should verify api gateway stage", func(test *testing.T) {
@@ -107,6 +110,6 @@ func TestAPIGatewayModule(test *testing.T) {
 
 }
 
-func getAPIGatewayBody() string {
-	return "{\"openapi\": \"3.0.1\",\"info\": {\"title\": \"TypeScript Inversify Lambda App\",\"description\": \"Example Typescript Inversify Lambda App\",\"version\": \"1.0.0\"},\"paths\": {\"/v1/greet\": {\"get\": {\"summary\": \"Provide Greeting Message\",\"description\": \"Provide Greeting Message when lambda is invoked. Lambda is written in TypeScript and uses Inversify for Dependency Injection\",\"operationId\": \"getV1Greet\",\"x-amazon-apigateway-integration\": {\"uri\": \"arn:aws:apigateway:us-east-1:lambda:path/2015–03–31/functions/arn:aws:lambda:us-east-1:0000000000:function:example_lambda/invocations\",\"passthroughBehavior\": \"when_no_match\",\"timeoutInMillis\": 10000,\"httpMethod\": \"POST\",\"type\": \"aws_proxy\"},\"responses\": {\"200\": {\"description\": \"Successfully Greet\",\"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/GreetingResponse\"}}}}}}}},\"components\": {\"schemas\": {\"GreetingResponse\": {\"type\": \"object\",\"properties\": {\"message\": {\"type\": \"string\"}}}}}}"
+func getAPIGatewayBody(resourceSuffix string) string {
+	return fmt.Sprintf("{\"openapi\": \"3.0.1\",\"info\": {\"title\": \"TypeScript Inversify Lambda App %s\",\"description\": \"Example Typescript Inversify Lambda App\",\"version\": \"1.0.0\"},\"paths\": {\"/v1/greet\": {\"get\": {\"summary\": \"Provide Greeting Message\",\"description\": \"Provide Greeting Message when lambda is invoked. Lambda is written in TypeScript and uses Inversify for Dependency Injection\",\"operationId\": \"getV1Greet\",\"x-amazon-apigateway-integration\": {\"uri\": \"arn:aws:apigateway:us-east-1:lambda:path/2015–03–31/functions/arn:aws:lambda:us-east-1:0000000000:function:example_lambda/invocations\",\"passthroughBehavior\": \"when_no_match\",\"timeoutInMillis\": 10000,\"httpMethod\": \"POST\",\"type\": \"aws_proxy\"},\"responses\": {\"200\": {\"description\": \"Successfully Greet\",\"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/GreetingResponse\"}}}}}}}},\"components\": {\"schemas\": {\"GreetingResponse\": {\"type\": \"object\",\"properties\": {\"message\": {\"type\": \"string\"}}}}}}", resourceSuffix)
 }

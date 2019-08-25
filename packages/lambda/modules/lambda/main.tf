@@ -1,5 +1,6 @@
 locals {
-  function_name = "inversify_demo_function"
+  resource_suffix = var.resource_suffix == "" ? "" : "_${var.resource_suffix}"
+  function_name = "inversify_demo_function${local.resource_suffix}"
   zip_file      = "${path.module}/dist/inversify-demo-lambda.zip"
 }
 
@@ -30,7 +31,7 @@ resource "aws_cloudwatch_log_group" "inversify_demo_log_group" {
 }
 
 resource "aws_iam_role" "inversify_demo_iam" {
-  name        = "inversify_demo_iam"
+  name        = "inversify_demo_iam${local.resource_suffix}"
   description = "Lambda IAM Role"
 
   assume_role_policy = <<EOF
@@ -52,7 +53,7 @@ EOF
 }
 
 resource "aws_iam_policy" "inversify_demo_lambda_policy" {
-  name = "inversify_demo_lambda_policy"
+  name = "inversify_demo_lambda_policy${local.resource_suffix}"
   path = "/"
   description = "IAM policy for logging from a lambda"
 

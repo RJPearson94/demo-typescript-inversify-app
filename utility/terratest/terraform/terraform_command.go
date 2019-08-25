@@ -9,28 +9,28 @@ import (
 	"testing"
 )
 
-func Apply(test *testing.T, path string) {
-	tfOptions := setupTerraformOptions(path)
+func Apply(test *testing.T, path string, resource_suffix string) {
+	tfOptions := setupTerraformOptions(path, resource_suffix)
 	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "apply", "-auto-approve")...)
 }
 
-func Output(test *testing.T, path string, key string) string {
-	tfOptions := setupTerraformOptions(path)
+func Output(test *testing.T, path string, key string, resource_suffix string) string {
+	tfOptions := setupTerraformOptions(path, resource_suffix)
 	return terraform.Output(test, tfOptions, key)
 }
 
-func OutputAll(test *testing.T, path string) map[string]interface{} {
-	tfOptions := setupTerraformOptions(path)
+func OutputAll(test *testing.T, path string, resource_suffix string) map[string]interface{} {
+	tfOptions := setupTerraformOptions(path, resource_suffix)
 	return terraform.OutputAll(test, tfOptions)
 }
 
-func Destroy(test *testing.T, path string) {
-	tfOptions := setupTerraformOptions(path)
+func Destroy(test *testing.T, path string, resource_suffix string) {
+	tfOptions := setupTerraformOptions(path, resource_suffix)
 	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "destroy", "-auto-approve")...)
 }
 
-func Plan(test *testing.T, path string) *plans.Plan {
-	tfOptions := setupTerraformOptions(path)
+func Plan(test *testing.T, path string, resource_suffix string) *plans.Plan {
+	tfOptions := setupTerraformOptions(path, resource_suffix)
 
 	workingDirectory := helper.GetCurrentWorkingDirectory(test)
 	uuid := helper.GenerateUUID(test)
@@ -40,10 +40,11 @@ func Plan(test *testing.T, path string) *plans.Plan {
 	return readPlanFile(test, planFilePath)
 }
 
-func setupTerraformOptions(path string) *terraform.Options {
+func setupTerraformOptions(path string, resource_suffix string) *terraform.Options {
 	return &terraform.Options{
 		TerraformBinary: "terragrunt",
 		TerraformDir:    path,
+		Vars: map[string]interface{}{"resource_suffix": resource_suffix},
 	}
 }
 

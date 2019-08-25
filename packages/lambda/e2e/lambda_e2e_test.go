@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"terratest_utility/helper"
 	"terratest_utility/terraform"
 	"testing"
 )
@@ -11,11 +12,13 @@ import (
 func TestServiceEndToEnd(test *testing.T) {
 	test.Parallel()
 
-	// Given
+	resourceSuffix := helper.GenerateUUID(test)
 	service := "."
-	defer terraform.Destroy(test, service)
-	terraform.Apply(test, service)
-	invokeURL := terraform.Output(test, service, "invoke_url")
+
+	// Given
+	defer terraform.Destroy(test, service, resourceSuffix)
+	terraform.Apply(test, service, resourceSuffix)
+	invokeURL := terraform.Output(test, service, "invoke_url", resourceSuffix)
 
 	// When
 	envVariables := fmt.Sprintf("URL=%s", invokeURL)

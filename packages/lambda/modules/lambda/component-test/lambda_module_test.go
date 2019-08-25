@@ -1,6 +1,7 @@
 package lambda_module_ctest
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"github.com/zclconf/go-cty/cty/gocty"
 	"terratest_utility/terraform"
@@ -13,9 +14,10 @@ func TestLambdaModule(test *testing.T) {
 
 	environmentTag := "Environment"
 	environmentTagResult := "Testing"
+	resourceSuffix := helper.GenerateUUID(test)
 
 	// Before
-	plan := terraform.Plan(test, ".")
+	plan := terraform.Plan(test, ".", resourceSuffix)
 
 	test.Run("Should verify cloudwatch log group", func(test *testing.T) {
 		// Given
@@ -33,7 +35,8 @@ func TestLambdaModule(test *testing.T) {
 		}
 
 		assert.NotNil(test, afterCloudwatchLogGroupChange)
-		assert.Equal(test, "/aws/lambda/inversify_demo_function", afterCloudwatchLogGroupChange.Name)
+		logGroupName := fmt.Sprintf("/aws/lambda/inversify_demo_function_%s", resourceSuffix)
+		assert.Equal(test, logGroupName, afterCloudwatchLogGroupChange.Name)
 		assert.Equal(test, 14, afterCloudwatchLogGroupChange.Retention)
 		tags := afterCloudwatchLogGroupChange.Tags
 		assert.NotEmpty(test, tags)
@@ -59,7 +62,8 @@ func TestLambdaModule(test *testing.T) {
 		assert.Empty(test, afterlambdaFunctionChange.DeadLetterConfig)
 		assert.Equal(test, "Example Typescript Inversify Lambda", afterlambdaFunctionChange.Description)
 		assert.Empty(test, afterlambdaFunctionChange.EnvironmentVariables)
-		assert.Equal(test, "inversify_demo_function", afterlambdaFunctionChange.FunctionName)
+		functionName := fmt.Sprintf("inversify_demo_function_%s", resourceSuffix)
+		assert.Equal(test, functionName, afterlambdaFunctionChange.FunctionName)
 		assert.Equal(test, "main.handler", afterlambdaFunctionChange.Handler)
 		assert.Equal(test, 128, afterlambdaFunctionChange.MemorySize)
 		assert.Equal(test, false, afterlambdaFunctionChange.Publish)
@@ -91,7 +95,8 @@ func TestLambdaModule(test *testing.T) {
 
 		assert.NotNil(test, afterIAMPolicyChange)
 		assert.Equal(test, "IAM policy for logging from a lambda", afterIAMPolicyChange.Description)
-		assert.Equal(test, "inversify_demo_lambda_policy", afterIAMPolicyChange.Name)
+		iamPolicyName := fmt.Sprintf("inversify_demo_lambda_policy_%s", resourceSuffix)
+		assert.Equal(test, iamPolicyName, afterIAMPolicyChange.Name)
 		assert.Equal(test, "/", afterIAMPolicyChange.Path)
 		assert.Equal(test, getPolicyString(), helper.SanitizeString(afterIAMPolicyChange.Policy))
 	})
@@ -116,7 +121,8 @@ func TestLambdaModule(test *testing.T) {
 		assert.Equal(test, "Lambda IAM Role", afterIAMRoleChange.Description)
 		assert.Equal(test, false, afterIAMRoleChange.ForceDetachPolicies)
 		assert.Equal(test, 3600, afterIAMRoleChange.MaxSessionDuration)
-		assert.Equal(test, "inversify_demo_iam", afterIAMRoleChange.Name)
+		iamRoleName := fmt.Sprintf("inversify_demo_iam_%s", resourceSuffix)
+		assert.Equal(test, iamRoleName, afterIAMRoleChange.Name)
 		assert.Equal(test, "/", afterIAMRoleChange.Path)
 		tags := afterIAMRoleChange.Tags
 		assert.NotEmpty(test, tags)
@@ -139,7 +145,8 @@ func TestLambdaModule(test *testing.T) {
 		}
 
 		assert.NotNil(test, afterIAMRolePolicyAttachmentChange)
-		assert.Equal(test, "inversify_demo_iam", afterIAMRolePolicyAttachmentChange.Role)
+		iamRoleName := fmt.Sprintf("inversify_demo_iam_%s", resourceSuffix)
+		assert.Equal(test, iamRoleName, afterIAMRolePolicyAttachmentChange.Role)
 	})
 
 }

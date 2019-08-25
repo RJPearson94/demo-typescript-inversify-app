@@ -1,5 +1,5 @@
 locals {
-  name        = "TypeScript Inversify Lambda App"
+  name        = "TypeScript Inversify Lambda App ${var.resource_suffix}"
   description = "Example Typescript Inversify Lambda App"
   version     = "1.0.0"
   stage       = "dev"
