@@ -30,6 +30,6 @@
     "pm2": "^3.5.1",
     "supertest": "^4.0.2",
     "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.7"
+    "webpack-cli": "^3.3.8"
   }
 }
