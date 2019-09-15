@@ -26,6 +26,11 @@ jobs:
           cd packages/core
           yarn test:unit
 
+      - name: Run Core Build
+        run: |
+          cd packages/core
+          yarn build
+
       - name: Run Lambda Unit tests
         run: |
           cd packages/lambda

@@ -7,7 +7,6 @@
   "scripts": {
     "build": "yarn clean && tsc -p tsconfig.build.json && tscpaths -p tsconfig.build.json -s ./src -o ./dist",
     "clean": "rm -rf dist",
-    "postinstall": "yarn build",
     "test": "yarn test:unit",
     "test:unit": "jest ./test"
   },
