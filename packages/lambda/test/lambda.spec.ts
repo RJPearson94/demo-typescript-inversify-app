@@ -15,9 +15,8 @@ describe('#Lambda', () => {
 
   test('Should return HelloTest when lambda is invoked', async done => {
     // Setup
-    const mockGreetFunction = jest.fn().mockReturnValue('HelloTest');
     const greetingController: GreetingController = {
-      greet: mockGreetFunction
+      greet: jest.fn().mockReturnValue('HelloTest')
     };
 
     container.unbind(TYPES.GreetingController);
@@ -33,7 +32,7 @@ describe('#Lambda', () => {
       expect(error).toBeNull();
       expect(response).toBeDefined();
 
-      expect(mockGreetFunction).toHaveBeenCalled();
+      expect(greetingController.greet).toHaveBeenCalled();
 
       expect(response.statusCode).toEqual(200);
       expect(JSON.parse(response.body)).toEqual({

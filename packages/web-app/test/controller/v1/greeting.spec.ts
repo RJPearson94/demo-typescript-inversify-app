@@ -7,9 +7,8 @@ import V1GreetingController from '@src/controller/v1/greeting';
 describe('#V1GreetingController', () => {
   test('should return Hello when greet is called', () => {
     // Given
-    const mockedSayHelloFunction = jest.fn(() => 'Hello');
     const helloMock: HelloService = {
-      sayHello: mockedSayHelloFunction
+      sayHello: jest.fn(() => 'Hello')
     };
 
     // When
@@ -17,7 +16,7 @@ describe('#V1GreetingController', () => {
     const response = testSubject.greet();
 
     // Then
-    expect(mockedSayHelloFunction).toHaveBeenCalled();
+    expect(helloMock.sayHello).toHaveBeenCalled();
     expect(response).toEqual('Hello');
   });
 });
