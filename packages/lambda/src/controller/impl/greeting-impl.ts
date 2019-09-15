@@ -1,7 +1,6 @@
 import { injectable, inject } from 'inversify';
 
-import TYPES from '@core/constant/types';
-import HelloService from '@core/service/hello/hello';
+import { TYPES, HelloService } from '@rjpearson94/core';
 
 import GreetingController from '@src/controller/greeting';
 

@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import HelloService from '@core/service/hello/hello';
+import { HelloService } from '@rjpearson94/core';
 
 import V2GreetingController from '@src/controller/v2/greeting';
 import GreetingResponse from '@src/controller/v2/model/greeting-response';

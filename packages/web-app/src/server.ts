@@ -4,14 +4,14 @@ import { config } from 'dotenv';
 import { urlencoded, json } from 'body-parser';
 import { InversifyExpressServer } from 'inversify-express-utils';
 
-import container from '@core/inversify.config';
+import { inversifyContainer } from '@rjpearson94/core';
 
 import '@src/controller';
 
 config();
 const serverPort: string = process.env.PORT || '3000';
 
-const server = new InversifyExpressServer(container);
+const server = new InversifyExpressServer(inversifyContainer);
 
 server.setConfig((app): void => {
   app.use(

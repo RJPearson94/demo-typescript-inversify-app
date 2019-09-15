@@ -1,2 +1,2 @@
-export * from './v1/greeting';
-export * from './v2/greeting';
+export * from '@src/controller/v1/greeting';
+export * from '@src/controller/v2/greeting';

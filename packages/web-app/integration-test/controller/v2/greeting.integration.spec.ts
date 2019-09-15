@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { InversifyExpressServer } from 'inversify-express-utils';
 import * as supertest from 'supertest';
 
-import container from '@core/inversify.config';
+import { inversifyContainer } from '@rjpearson94/core';
 
 import '@src/controller/v2/greeting';
 
@@ -11,7 +11,7 @@ describe('V2GreetingController Integration Test', () => {
     // Given
 
     // When
-    const server = new InversifyExpressServer(container);
+    const server = new InversifyExpressServer(inversifyContainer);
     const response: supertest.Response = await supertest(server.build()).get('/v2/');
 
     // Then
