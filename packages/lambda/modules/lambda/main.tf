@@ -14,7 +14,7 @@ resource "aws_lambda_function" "inversify_demo_function" {
 
   runtime     = "nodejs10.x"
   handler     = "main.handler"
-  memory_size = 128
+  memory_size = 512
   timeout     = 30
   tags        = var.tags
 
