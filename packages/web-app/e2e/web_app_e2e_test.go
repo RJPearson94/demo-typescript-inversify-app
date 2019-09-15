@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os/exec"
 	"os"
-	"terratest-utility/docker"
+	"terratest_utility/docker"
 	"testing"
 )
 

@@ -10,3 +10,5 @@ require (
 	github.com/stretchr/testify v1.4.0
 	github.com/zclconf/go-cty v1.1.0
 )
+
+replace git.apache.org/thrift.git => github.com/apache/thrift v0.0.0-20180902110319-2566ecd5d999
