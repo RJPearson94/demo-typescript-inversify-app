@@ -15,7 +15,7 @@
     "semantic-release": "semantic-release"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.1.0",
+    "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.1.0",
     "@semantic-release/exec": "^3.3.6",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
