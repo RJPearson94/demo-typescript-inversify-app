@@ -65,7 +65,7 @@ func TestLambdaModule(test *testing.T) {
 		functionName := fmt.Sprintf("inversify_demo_function_%s", resourceSuffix)
 		assert.Equal(test, functionName, afterlambdaFunctionChange.FunctionName)
 		assert.Equal(test, "main.handler", afterlambdaFunctionChange.Handler)
-		assert.Equal(test, 128, afterlambdaFunctionChange.MemorySize)
+		assert.Equal(test, 512, afterlambdaFunctionChange.MemorySize)
 		assert.Equal(test, false, afterlambdaFunctionChange.Publish)
 		assert.Equal(test, -1, afterlambdaFunctionChange.ReservedConcurrentExecutions)
 		assert.Equal(test, "nodejs10.x", afterlambdaFunctionChange.Runtime)
