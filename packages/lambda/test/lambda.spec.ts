@@ -3,16 +3,9 @@ import 'reflect-metadata';
 import TYPES from '@src/constant/types';
 import GreetingController from '@src/controller/greeting';
 import container from '@src/inversify.config';
+import APIResponse from '@src/lib/APIResponse';
 
 describe('#Lambda', () => {
-  beforeEach(() => {
-    container.snapshot();
-  });
-
-  afterEach(() => {
-    container.restore();
-  });
-
   test('Should return HelloTest when lambda is invoked', async done => {
     // Setup
     const greetingController: GreetingController = {
@@ -23,12 +16,14 @@ describe('#Lambda', () => {
     container.bind<GreetingController>(TYPES.GreetingController).toConstantValue(greetingController);
 
     // Given
-    const event: any = {};
+    const event: any = {
+      context: {}
+    };
     const context: any = {};
 
     // When
     const lambda = require('@src/lambda');
-    lambda.handler(event, context, (error: any, response: any) => {
+    lambda.handler(event, context, (error: any, response: APIResponse | undefined) => {
       expect(error).toBeNull();
       expect(response).toBeDefined();
 
