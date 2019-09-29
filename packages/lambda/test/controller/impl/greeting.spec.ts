@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { HelloService } from '@rjpearson94/core';
 
-import GreetingController from '@src/controller/impl/greeting-impl';
+import { GreetingControllerImpl } from '@src/controller/impl/greeting-impl';
 
 describe('#V1GreetingController', () => {
   test('should return HelloLambda when greet is called', () => {
@@ -12,7 +12,7 @@ describe('#V1GreetingController', () => {
     };
 
     // When
-    const testSubject = new GreetingController(helloMock);
+    const testSubject = new GreetingControllerImpl(helloMock);
     const response = testSubject.greet();
 
     // Then

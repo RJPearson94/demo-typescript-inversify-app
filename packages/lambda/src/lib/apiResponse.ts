@@ -1,4 +1,4 @@
-export default interface APIResponse {
+export interface APIResponse {
     statusCode: number;
     body: string;
 }

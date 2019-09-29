@@ -1,3 +1,3 @@
-export default interface GreetingResponse {
+export interface GreetingResponse {
   message: string;
 }

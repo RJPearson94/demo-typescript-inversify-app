@@ -1,4 +1,4 @@
-import TYPES from '@src/constant/types';
+import { TYPES } from '@src/constant/types';
 
 describe('#Types', () => {
   test('Should verify HelloService type is mapped to HelloService string', () => {

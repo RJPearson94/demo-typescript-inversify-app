@@ -2,10 +2,10 @@ import { injectable, inject } from 'inversify';
 
 import { TYPES, HelloService } from '@rjpearson94/core';
 
-import GreetingController from '@src/controller/greeting';
+import { GreetingController } from '@src/controller/greeting';
 
 @injectable()
-export default class GreetingControllerImpl implements GreetingController {
+export class GreetingControllerImpl implements GreetingController {
   public constructor(@inject(TYPES.HelloService) private helloService: HelloService) {}
 
   public greet(): string {

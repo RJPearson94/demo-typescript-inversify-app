@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 
-import TYPES from '@src/constant/types';
-import GreetingController from '@src/controller/greeting';
-import container from '@src/inversify.config';
-import APIResponse from '@src/lib/apiResponse';
+import { container } from '@src/inversify.config';
+import { TYPES } from '@src/constant/types';
+import { GreetingController } from '@src/controller';
+import { APIResponse } from '@src/lib';
 
 describe('#Lambda', () => {
   test('Should return HelloTest when lambda is invoked', async done => {

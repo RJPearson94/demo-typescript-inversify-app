@@ -1,5 +1,3 @@
-const TYPES = {
+export const TYPES = {
   HelloService: 'HelloService'
 };
-
-export default TYPES;

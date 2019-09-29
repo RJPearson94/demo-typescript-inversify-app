@@ -1,5 +1,3 @@
-const TYPES = {
+export const TYPES = {
   GreetingController: 'GreetingController'
 };
-
-export default TYPES;

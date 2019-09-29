@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import HelloServiceImpl from '@src/service/hello/impl/hello-impl';
+import { HelloServiceImpl } from '@src/service/hello/impl/hello-impl';
 
 describe('#HelloServiceImpl', () => {
   test('should return Hello when sayHello is called', () => {

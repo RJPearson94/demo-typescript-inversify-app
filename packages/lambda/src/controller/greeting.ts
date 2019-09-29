@@ -1,3 +1,3 @@
-export default interface GreetingController {
+export interface GreetingController {
   greet(): string;
 }
