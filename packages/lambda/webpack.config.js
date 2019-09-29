@@ -1,12 +1,18 @@
 const path = require('path');
 const ZipPlugin = require('zip-webpack-plugin');
 const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   mode: 'production',
   entry: 'src/lambda',
   devtool: 'source-map',
   target: 'node',
+  externals: [
+    nodeExternals({
+      whitelist: ['@rjpearson94/core']
+    })
+  ],
 
   output: {
     filename: 'main.js',

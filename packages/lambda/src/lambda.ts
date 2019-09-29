@@ -1,17 +1,24 @@
 import 'reflect-metadata';
+import 'source-map-support/register';
 
-import container from '@src/inversify.config';
-import TYPES from '@src/constant/types';
-import GreetingController from '@src/controller/greeting';
+import middy from 'middy';
+import { httpErrorHandler } from 'middy/middlewares';
+import { APIGatewayEvent } from 'aws-lambda';
 
-const greetingController: GreetingController = container.get<GreetingController>(TYPES.GreetingController);
+import APIResponse from '@src/lib/apiResponse';
+import Context from '@src/lib/context';
+import inversifyMiddleware from '@src/middleware/inversify';
 
-exports.handler = function(event: any, context: any, callback: Function): void {
-  const helloResponse = greetingController.greet();
-  callback(null, {
+const apiGatewayHandler = async (event: APIGatewayEvent, context: Context): Promise<APIResponse> => {
+  const helloResponse = context.greetingController.greet();
+  return {
     statusCode: 200,
     body: JSON.stringify({
       message: helloResponse
     })
-  });
+  };
 };
+
+exports.handler = middy(apiGatewayHandler)
+  .use(inversifyMiddleware())
+  .use(httpErrorHandler());
