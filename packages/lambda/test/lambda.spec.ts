@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import TYPES from '@src/constant/types';
 import GreetingController from '@src/controller/greeting';
 import container from '@src/inversify.config';
-import APIResponse from '@src/lib/APIResponse';
+import APIResponse from '@src/lib/apiResponse';
 
 describe('#Lambda', () => {
   test('Should return HelloTest when lambda is invoked', async done => {
