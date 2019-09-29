@@ -2,7 +2,6 @@ import 'reflect-metadata';
 import 'source-map-support/register';
 
 import middy from 'middy';
-import { httpErrorHandler } from 'middy/middlewares';
 import { APIGatewayEvent } from 'aws-lambda';
 
 import APIResponse from '@src/lib/apiResponse';
@@ -19,6 +18,4 @@ const apiGatewayHandler = async (event: APIGatewayEvent, context: Context): Prom
   };
 };
 
-exports.handler = middy(apiGatewayHandler)
-  .use(inversifyMiddleware())
-  .use(httpErrorHandler());
+exports.handler = middy(apiGatewayHandler).use(inversifyMiddleware());
