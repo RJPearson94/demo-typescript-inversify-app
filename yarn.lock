@@ -1569,10 +1569,10 @@ awesome-typescript-loader@^5.2.1:
     source-map-support "^0.5.3"
     webpack-log "^1.2.0"
 
-aws-sdk@^2.543.0:
-  version "2.543.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.543.0.tgz#08b69a6fab9b3ab08e329888d06a8c4ee583f26d"
-  integrity sha512-ABHsA4W7LLYnTBCgtbTt0NF7+66nMCtdcJuAn30+RGzF0bOw3lCguqzootFrMlIOXklddQFJ9kKTXd+p/+uCVQ==
+aws-sdk@^2.545.0:
+  version "2.545.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.545.0.tgz#98c50ddfc806376a18cf72f4d4c3d2fdfe25046d"
+  integrity sha512-oQjpvvTkh2a7CvWhSUcFQWkpfkM3wVpzvLgGMInoZ6QIOsuQ+oNKz+zq48yQ619/GP8XnOh0zBQJLcYaa3XAKw==
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -10321,12 +10321,12 @@ utils-merge@1.0.1:
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
 
-uuid@3.3.2, uuid@^3.0.0, uuid@^3.1.0, uuid@^3.2.1, uuid@^3.3.2:
+uuid@3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
   integrity sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==
 
-uuid@3.3.3:
+uuid@3.3.3, uuid@^3.0.0, uuid@^3.1.0, uuid@^3.2.1, uuid@^3.3.2:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.3.tgz#4568f0216e78760ee1dbf3a4d2cf53e224112866"
   integrity sha512-pW0No1RGHgzlpHJO1nsVrHKpOEIxkGg1xB+v0ZmdNH5OAeAwzAVrCnI2/6Mtx+Uys6iaylxa+D3g4j63IKKjSQ==
