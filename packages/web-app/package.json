@@ -27,7 +27,7 @@
     "@types/supertest": "^2.0.8",
     "awesome-typescript-loader": "^5.2.1",
     "newman": "^4.5.5",
-    "pm2": "^3.5.1",
+    "pm2": "^4.1.2",
     "supertest": "^4.0.2",
     "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9"
