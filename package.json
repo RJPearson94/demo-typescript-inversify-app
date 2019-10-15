@@ -19,7 +19,7 @@
     "@commitlint/config-conventional": "^8.2.0",
     "@semantic-release/exec": "^3.3.7",
     "@typescript-eslint/eslint-plugin": "^2.3.2",
-    "@typescript-eslint/parser": "^2.3.2",
+    "@typescript-eslint/parser": "^2.4.0",
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-jest": "^22.17.0",
