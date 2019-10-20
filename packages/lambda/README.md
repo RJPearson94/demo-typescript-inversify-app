@@ -100,25 +100,6 @@ For more information on Postman, see <https://www.getpostman.com/>
 
 For more information on Newman, see <https://github.com/postmanlabs/newman>
 
-## Terraform
-
-This module will provision and configure a API Gateway and lambda function.
-
-### Terraform Docs
-
-#### Inputs
-
-| Name          | Description                            |  Type  | Default | Required |
-| ------------- | -------------------------------------- | :----: | :-----: | :------: |
-| log_retention | Max duration to retain cloudwatch logs | string | `"14"`  |    no    |
-| tags          | AWS tags to be applied to resources    |  map   |   n/a   |   yes    |
-
-### Outputs
-
-| Name       | Description                    |
-| ---------- | ------------------------------ |
-| invoke_url | The URL to invoke an API stage |
-
 ## Deploying to AWS
 
 Instructions coming soon

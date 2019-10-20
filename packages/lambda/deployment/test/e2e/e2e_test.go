@@ -13,21 +13,24 @@ func TestServiceEndToEnd(test *testing.T) {
 	test.Parallel()
 
 	resourceSuffix := helper.GenerateUUID(test)
-	service := "."
+	service := "../.."
 
 	// Given
 	defer terraform.Destroy(test, service, resourceSuffix)
 	terraform.Apply(test, service, resourceSuffix)
-	invokeURL := terraform.Output(test, service, "invoke_url", resourceSuffix)
+
+	apiGateway := service + "/api-gateway"
+	invokeURL := terraform.Output(test, apiGateway, "invoke_url", resourceSuffix)
 
 	// When
 	envVariables := fmt.Sprintf("URL=%s", invokeURL)
 	cmd := exec.Command("yarn", "newman", "run", "postman-scripts/lambda.collection.json", "--env-var", envVariables, "-r", "cli")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	
+
 	// Then
-	err := cmd.Run(); if err != nil {
+	err := cmd.Run()
+	if err != nil {
 		test.Fatal(err)
 	}
 }

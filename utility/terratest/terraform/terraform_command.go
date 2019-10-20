@@ -2,16 +2,17 @@ package terraform
 
 import (
 	"fmt"
+	"terratest_utility/helper"
+	"testing"
+
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/hashicorp/terraform/plans"
 	"github.com/hashicorp/terraform/plans/planfile"
-	"terratest_utility/helper"
-	"testing"
 )
 
 func Apply(test *testing.T, path string, resource_suffix string) {
 	tfOptions := setupTerraformOptions(path, resource_suffix)
-	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "apply", "-auto-approve")...)
+	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "apply-all", "-auto-approve")...)
 }
 
 func Output(test *testing.T, path string, key string, resource_suffix string) string {
@@ -26,7 +27,7 @@ func OutputAll(test *testing.T, path string, resource_suffix string) map[string]
 
 func Destroy(test *testing.T, path string, resource_suffix string) {
 	tfOptions := setupTerraformOptions(path, resource_suffix)
-	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "destroy", "-auto-approve")...)
+	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "destroy-all", "-auto-approve")...)
 }
 
 func Plan(test *testing.T, path string, resource_suffix string) *plans.Plan {
@@ -44,13 +45,13 @@ func setupTerraformOptions(path string, resource_suffix string) *terraform.Optio
 	return &terraform.Options{
 		TerraformBinary: "terragrunt",
 		TerraformDir:    path,
-		Vars: map[string]interface{}{"resource_suffix": resource_suffix},
+		Vars:            map[string]interface{}{"resource_suffix": resource_suffix},
 	}
 }
 
 func runTerragruntPlan(test *testing.T, tfOptions *terraform.Options, planFilePath string) {
 	planOutputArgument := fmt.Sprintf("-out=%s", planFilePath)
-	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "plan", "--input=false", planOutputArgument)...)
+	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "plan-all", "--input=false", planOutputArgument)...)
 }
 
 func readPlanFile(test *testing.T, planFilePath string) *plans.Plan {
