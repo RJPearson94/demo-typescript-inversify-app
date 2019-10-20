@@ -5,7 +5,7 @@ LABEL app = "Typescript Inversify Express App"
 LABEL description = "An example app to prototype Dependency Injection using Typescript & Inversify"
 LABEL version = "1.0.0"
 
-RUN npm install pm2@3.5.1 -g
+RUN npm install pm2@4.1.2 -g
 
 RUN adduser -D webappuser
 USER webappuser
