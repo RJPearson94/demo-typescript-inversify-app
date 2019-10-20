@@ -1,4 +1,4 @@
-FROM node:12.10-alpine
+FROM node:12.12-alpine
 
 LABEL maintainer = "Rob Pearson"
 LABEL app = "Typescript Inversify Express App"
