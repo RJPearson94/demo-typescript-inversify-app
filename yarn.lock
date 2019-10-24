@@ -6662,10 +6662,10 @@ micromatch@^4.0.2:
     braces "^3.0.1"
     picomatch "^2.0.5"
 
-middy@^0.30.3:
-  version "0.30.3"
-  resolved "https://registry.yarnpkg.com/middy/-/middy-0.30.3.tgz#fd5be8840691312660f17232bf4fd7bbb161bbc6"
-  integrity sha512-1QdaFNMiysG/E1nAJOBx4Pj4vUgC0U9snyDaFFGbWKXoSA7PElT3kRpD7rfP6EoUX00PEco+BAvgyemiJtGHAw==
+middy@^0.30.4:
+  version "0.30.4"
+  resolved "https://registry.yarnpkg.com/middy/-/middy-0.30.4.tgz#c92ff1323513763cf85e716028e1d586be217e7a"
+  integrity sha512-pXwNfERIlI5mPgbG5x15J2LItrSeTl4LNH55KVg6DdnlCg7xdo8YlSfpLTEsE/Hw8zTcNVhtCq5giYshGcgAhg==
   dependencies:
     "@types/aws-lambda" "^8.10.19"
     "@types/http-errors" "^1.6.1"
@@ -8389,12 +8389,7 @@ qs@6.7.0:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
   integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
 
-qs@^6.5.1:
-  version "6.8.0"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.8.0.tgz#87b763f0d37ca54200334cd57bb2ef8f68a1d081"
-  integrity sha512-tPSkj8y92PfZVbinY1n84i1Qdx75lZjMQYx9WZhnkofyxzw2r7Ho39G3/aEvSUdebxpnnM4LZJCtvE/Aq3+s9w==
-
-qs@^6.6.0:
+qs@^6.5.1, qs@^6.6.0:
   version "6.9.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.0.tgz#d1297e2a049c53119cb49cca366adbbacc80b409"
   integrity sha512-27RP4UotQORTpmNQDX8BHPukOnBP3p1uUJY5UnDhaJB+rMt9iMsok724XL+UHU23bEFOHRMQ2ZhI99qOWUMGFA==
