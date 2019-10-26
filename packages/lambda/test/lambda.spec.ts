@@ -9,23 +9,16 @@ import { GreetingController } from '@src/controller';
 
 describe('#Lambda', () => {
   test('Should return HelloTest when lambda is invoked', async done => {
-    // Setup
+    // Given
     const greetingController: GreetingController = {
       greet: jest.fn().mockReturnValue('HelloTest')
     };
 
-    container.unbind(TYPES.GreetingController);
-    container.bind<GreetingController>(TYPES.GreetingController).toConstantValue(greetingController);
-
-    // Given
-    const event: any = {
-      context: {}
-    };
-    const context: any = {};
+    container.rebind<GreetingController>(TYPES.GreetingController).toConstantValue(greetingController);
 
     // When
     // @ts-ignore
-    lambda.handler(event, context, (error: Error | undefined, response: ProxyResult | undefined) => {
+    lambda.handler({}, {}, (error: Error | undefined, response: ProxyResult | undefined) => {
       expect(error).toBeNull();
       expect(response).toBeDefined();
 
