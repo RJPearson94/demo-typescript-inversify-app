@@ -1,10 +1,11 @@
 import 'reflect-metadata';
 
+import { ProxyResult } from 'aws-lambda';
+
 import * as lambda from '@src/lambda';
 import { container } from '@src/inversify.config';
 import { TYPES } from '@src/constant/types';
 import { GreetingController } from '@src/controller';
-import { APIResponse } from '@src/lib';
 
 describe('#Lambda', () => {
   test('Should return HelloTest when lambda is invoked', async done => {
@@ -24,7 +25,7 @@ describe('#Lambda', () => {
 
     // When
     // @ts-ignore
-    lambda.handler(event, context, (error: Error | undefined, response: APIResponse | undefined) => {
+    lambda.handler(event, context, (error: Error | undefined, response: ProxyResult | undefined) => {
       expect(error).toBeNull();
       expect(response).toBeDefined();
 
