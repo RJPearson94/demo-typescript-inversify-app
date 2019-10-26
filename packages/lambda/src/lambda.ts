@@ -4,17 +4,16 @@ import 'source-map-support/register';
 import middy from 'middy';
 import { APIGatewayEvent } from 'aws-lambda';
 
-import { APIResponse, Context } from '@src/lib';
-import { inversifyMiddleware } from '@src/middleware';
+import { MessageResponse, Context } from '@src/lib';
+import { inversifyMiddleware, lambdaProxyMiddleware } from '@src/middleware';
 
-const apiGatewayHandler = async (event: APIGatewayEvent, context: Context): Promise<APIResponse> => {
+const apiGatewayHandler = async (_: APIGatewayEvent, context: Context): Promise<MessageResponse> => {
   const helloResponse = context.greetingController.greet();
   return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: helloResponse
-    })
+    message: helloResponse
   };
 };
 
-exports.handler = middy(apiGatewayHandler).use(inversifyMiddleware());
+exports.handler = middy(apiGatewayHandler)
+  .use(inversifyMiddleware())
+  .use(lambdaProxyMiddleware());

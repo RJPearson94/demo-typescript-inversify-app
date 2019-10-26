@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 
+import * as lambda from '@src/lambda';
 import { container } from '@src/inversify.config';
 import { TYPES } from '@src/constant/types';
 import { GreetingController } from '@src/controller';
@@ -22,8 +23,8 @@ describe('#Lambda', () => {
     const context: any = {};
 
     // When
-    const lambda = require('@src/lambda');
-    lambda.handler(event, context, (error: any, response: APIResponse | undefined) => {
+    // @ts-ignore
+    lambda.handler(event, context, (error: Error | undefined, response: APIResponse | undefined) => {
       expect(error).toBeNull();
       expect(response).toBeDefined();
 

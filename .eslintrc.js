@@ -30,6 +30,7 @@ module.exports = {
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/no-var-requires': 'off',
+        '@typescript-eslint/ban-ts-ignore': 'off',
         'no-async-promise-executor': 'off',
         'jest/no-disabled-tests': 'warn',
         'jest/no-focused-tests': 'error',
