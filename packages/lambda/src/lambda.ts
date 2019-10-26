@@ -2,13 +2,13 @@ import 'reflect-metadata';
 import 'source-map-support/register';
 
 import middy from 'middy';
-import { APIGatewayEvent } from 'aws-lambda';
+import { APIGatewayProxyEvent } from 'aws-lambda';
 
 import { MessageResponse, Context } from '@src/lib';
 import { inversifyMiddleware, lambdaProxyMiddleware } from '@src/middleware';
 
-const apiGatewayHandler = async (_: APIGatewayEvent, context: Context): Promise<MessageResponse> => {
-  const helloResponse = context.greetingController.greet();
+const apiGatewayHandler = async (_: APIGatewayProxyEvent, { greetingController }: Context): Promise<MessageResponse> => {
+  const helloResponse = greetingController.greet();
   return {
     message: helloResponse
   };
