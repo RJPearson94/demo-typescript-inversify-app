@@ -6,6 +6,7 @@
     "build": "yarn clean && webpack",
     "clean": "rm -rf ./dist",
     "newman": "newman",
+    "local-lambda": "bst proxy lambda modules/lambda/dist/main.js --verbose",
     "test": "yarn test:unit && yarn test:component && yarn test:integration && yarn test:e2e",
     "test:component": "yarn test:component:api-gateway && yarn test:component:lambda",
     "test:component:api-gateway": "go test ./modules/api-gateway/test/component",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "awesome-typescript-loader": "^5.2.1",
+    "bespoken-tools": "^2.4.15",
     "newman": "^4.5.5",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9",
