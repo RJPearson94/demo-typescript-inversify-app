@@ -1734,7 +1734,7 @@ before-after-hook@^2.0.0:
   resolved "https://registry.yarnpkg.com/before-after-hook/-/before-after-hook-2.1.0.tgz#b6c03487f44e24200dd30ca5e6a1979c5d2fb635"
   integrity sha512-IWIbu7pMqyw3EAJHzzHbWa85b6oud/yfKYg5rqB5hNE8CeMi3nX+2C2sj0HswfblST86hpVEOAb9x34NZd6P7A==
 
-bespoken-jest-stare@^1.0.7:
+bespoken-jest-stare@^1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/bespoken-jest-stare/-/bespoken-jest-stare-1.0.9.tgz#13d098954a76afd429f273f88b5bef79cfa3c6f4"
   integrity sha512-iGaxOoFLLZ4+Jmo6DYkwveFVCiijU2c7ayWZm/JNo41CmaboKSc0x3MAzlFWnX8m455LcyjZ4rCEgwhkR2FpqQ==
@@ -1752,10 +1752,10 @@ bespoken-jest-stare@^1.0.7:
     popper.js "^1.14.6"
     yargs "^14.2.0"
 
-bespoken-tools@^2.4.15:
-  version "2.4.15"
-  resolved "https://registry.yarnpkg.com/bespoken-tools/-/bespoken-tools-2.4.15.tgz#2a21b92ededd89c49f6d3731780eb84e98b69cfa"
-  integrity sha512-PA12eyPXpdVJQ//XwV6s+Kn4gQRK0Wb1+ZDNxER7zz2wBzRWPkXxCr4z2xQaYZIhQ5EcgYJh7UR4Ks2+jraAkg==
+bespoken-tools@^2.4.16:
+  version "2.4.16"
+  resolved "https://registry.yarnpkg.com/bespoken-tools/-/bespoken-tools-2.4.16.tgz#76298daf61390add90737f13bf47a86186d10c87"
+  integrity sha512-KZMsIJ5BeegT7KFfgSzH2P1sjTMpuXHy/FX8O/6Pr8kupLz1t5y76WsmWredqKfcU8cEiZzG171aqjgmO8mAtQ==
   dependencies:
     async "^2.0.0"
     aws-sdk "^2.130.0"
@@ -1773,7 +1773,7 @@ bespoken-tools@^2.4.15:
     properties-reader "0.0.15"
     request "^2.88.0"
     request-promise-native "^1.0.5"
-    skill-testing-ml "~1.1.15"
+    skill-testing-ml "~1.1.16"
     update-notifier "^2.5.0"
     uuid "3.0.0"
     virtual-alexa "^0.7.2"
@@ -10005,12 +10005,12 @@ sisteransi@^1.0.3:
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-1.0.3.tgz#98168d62b79e3a5e758e27ae63c4a053d748f4eb"
   integrity sha512-SbEG75TzH8G7eVXFSN5f9EExILKfly7SUvVY5DhhYLvfhKqhDFY0OzevWa/zwak0RLRfWS5AvfMWpd9gJvr5Yg==
 
-skill-testing-ml@~1.1.15:
-  version "1.1.15"
-  resolved "https://registry.yarnpkg.com/skill-testing-ml/-/skill-testing-ml-1.1.15.tgz#eea18058790ed2433284da2c9c9fd3cdcd260eca"
-  integrity sha512-V2GL864xFyfY6hCCwbkXfggaHcal98rTOR2fbqsoF54ibtxr1GPhVCTCiatK4aAbjTGxuVfR8QBl0xgW9G+21Q==
+skill-testing-ml@~1.1.16:
+  version "1.1.16"
+  resolved "https://registry.yarnpkg.com/skill-testing-ml/-/skill-testing-ml-1.1.16.tgz#1a9f863f24dc33459dca97ea81208a04beaafaf7"
+  integrity sha512-ZtuGSYU2AbUllIj1/QVdPBAn40KfUuTWwH3icZG7/yme6U8EQsdNrrDPWzwYmYRlhCXq++nlWDiA9hLvZclmGA==
   dependencies:
-    bespoken-jest-stare "^1.0.7"
+    bespoken-jest-stare "^1.0.9"
     chalk "^2.4.2"
     cosmiconfig "^5.2.0"
     debug "^4.1.1"
@@ -11322,15 +11322,7 @@ virtual-core@0.0.12:
     "@types/uuid" "^3.4.3"
     uuid "^3.2.1"
 
-virtual-device-sdk@^1.5.16:
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/virtual-device-sdk/-/virtual-device-sdk-1.6.2.tgz#b13dc8f6bbd799eb9f6f92f8d6ed0120f3921053"
-  integrity sha512-6QdJJPry6x10DxeMaiBa/zs4Y1GbSUCaogj5QkzyVhLoKRoOUXkfYjKYpywu7s9QZz7zRwioFW+IUnGAXmYN+Q==
-  dependencies:
-    chalk "^2.3.1"
-    dotenv "^4.0.0"
-
-virtual-device-sdk@^1.6.4:
+virtual-device-sdk@^1.5.16, virtual-device-sdk@^1.6.4:
   version "1.6.4"
   resolved "https://registry.yarnpkg.com/virtual-device-sdk/-/virtual-device-sdk-1.6.4.tgz#0cd2e46ad16e4ab4fbeda51e701a1371588ed7b9"
   integrity sha512-kGPUHYexXqJdaJ9uV2XDTtZl5msEhBFuzkSWM4sf6mFiJqh3m8SbxGKFRQ+ShQyRqp8ZSsfkk3ZvDHnb2HnN5Q==
