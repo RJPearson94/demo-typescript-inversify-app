@@ -19,16 +19,16 @@
   },
   "dependencies": {
     "@rjpearson94/core": "file:../core",
-    "aws-sdk": "^2.556.0",
+    "aws-sdk": "^2.562.0",
     "middy": "^0.30.4",
-    "source-map-support": "^0.5.13"
+    "source-map-support": "^0.5.16"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^5.2.1",
-    "bespoken-tools": "^2.4.15",
+    "bespoken-tools": "^2.4.16",
     "newman": "^4.5.5",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9",
+    "webpack-cli": "^3.3.10",
     "webpack-node-externals": "^1.7.2",
     "zip-webpack-plugin": "^3.0.0"
   }
