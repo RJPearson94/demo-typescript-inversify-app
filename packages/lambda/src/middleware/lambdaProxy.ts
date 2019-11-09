@@ -1,14 +1,13 @@
+import { APIGatewayProxyResult } from 'aws-lambda';
 import { MiddlewareConfig, APIGatewayProxyMiddleware } from '@src/middleware';
 
-const createResponse = (statusCode: number, body: string) => {
-  return {
-    statusCode,
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body
-  };
-};
+const createResponse = (statusCode: number, body: string): APIGatewayProxyResult => ({
+  statusCode,
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body
+});
 
 export const lambdaProxyMiddleware: MiddlewareConfig = (): APIGatewayProxyMiddleware => ({
   after: (handler, next): void => {
