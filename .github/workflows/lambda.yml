@@ -1,6 +1,11 @@
-name: Monorepo Pipeline
+name: Lambda Pipeline
 
-on: [push]
+on:
+  push:
+    paths:
+      - '.github/workflows/lambda.yml'
+      - 'packages/core/*'
+      - 'packages/lambda/*'
 
 jobs:
   linux-pipeline:
@@ -20,21 +25,6 @@ jobs:
 
       - name: Install
         run: yarn install
-
-      - name: Run Core Unit tests
-        run: |
-          cd packages/core
-          yarn test:unit
-
-      - name: Run Core Build
-        run: |
-          cd packages/core
-          yarn build
-
-      - name: Run Lambda Unit tests
-        run: |
-          cd packages/lambda
-          yarn test:unit
 
       - name: Build Lambda artefact
         run: |
@@ -63,26 +53,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           cd packages/lambda
-          yarn test:e2e
-
-      - name: Run Web App Unit tests
-        run: |
-          cd packages/web-app
-          yarn test:unit
-
-      - name: Build Web App artefact
-        run: |
-          cd packages/web-app
-          yarn build
-
-      - name: Run Web App Integration tests
-        run: |
-          cd packages/web-app
-          yarn test:integration
-
-      - name: Run Web App E2E tests
-        run: |
-          cd packages/web-app
           yarn test:e2e
 
       - name: Release

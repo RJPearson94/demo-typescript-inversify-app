@@ -1,0 +1,47 @@
+name: Web App Pipeline
+
+on:
+  push:
+    paths:
+      - '.github/workflows/web-app.yml'
+      - 'packages/core/*'
+      - 'packages/web-app/*'
+
+jobs:
+  linux-pipeline:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Environment Setup
+        run: |
+          wget https://releases.hashicorp.com/terraform/0.12.10/terraform_0.12.10_linux_amd64.zip	&& unzip terraform_0.12.10_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
+          wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.20.5/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
+
+      - name: Install
+        run: yarn install
+
+      - name: Run Web App Unit tests
+        run: |
+          cd packages/web-app
+          yarn test:unit
+
+      - name: Build Web App artefact
+        run: |
+          cd packages/web-app
+          yarn build
+
+      - name: Run Web App Integration tests
+        run: |
+          cd packages/web-app
+          yarn test:integration
+
+      - name: Run Web App E2E tests
+        run: |
+          cd packages/web-app
+          yarn test:e2e
