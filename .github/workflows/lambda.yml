@@ -26,6 +26,16 @@ jobs:
       - name: Install
         run: yarn install
 
+      - name: Run Core Unit tests
+        run: |
+          cd packages/core	
+          yarn test:unit
+
+      - name: Run Core Build
+        run: |
+          cd packages/core	
+          yarn build
+
       - name: Build Lambda artefact
         run: |
           cd packages/lambda
