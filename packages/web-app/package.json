@@ -3,6 +3,8 @@
   "description": "An example app to prototype Dependency Injection using Typescript & Inversify",
   "version": "1.0.0",
   "scripts": {
+    "api-docs:view": "speccy serve ./api/docs/swagger.json",
+    "api-docs:lint": "speccy lint ./api/docs/swagger.json",
     "build": "yarn clean && webpack",
     "clean": "rm -rf ./dist",
     "newman": "newman",
@@ -27,6 +29,7 @@
     "awesome-typescript-loader": "^5.2.1",
     "newman": "^4.5.5",
     "pm2": "^4.1.2",
+    "speccy": "^0.11.0",
     "supertest": "^4.0.2",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"

@@ -61,9 +61,15 @@ The API Docs can be viewed in the api/docs folder
 
 The docs are written using the OpenAPI 3.0 spec. For more information, see <https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md>
 
-The docs can also be viewed in a Swagger UI. For more information on Swagger UI, see <https://swagger.io/tools/swagger-ui/>
+The docs can also be viewed using Redoc or Swagger UI. For more information on Redoc, see <https://github.com/Redocly/redoc> and for Swagger UI, see <https://swagger.io/tools/swagger-ui/>
 
-The API docs can be run as a docker container, you need to run the following commands:
+The API docs can be run using node (using Redoc), you need to run the following command:
+
+`yarn api-docs:view`
+
+The API docs should now be available at <http://localhost:5000/>
+
+Alternatively the API docs can be run as a docker container (using Swagger UI), you need to run the following commands:
 
 - `docker image build -t inversify-express-api ./api/`
 - `run -p 8080:8080 inversify-express-api`

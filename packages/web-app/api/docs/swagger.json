@@ -7,8 +7,19 @@
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
+    "contact": {
+      "name": "RJPearson94",
+      "url": "https://github.com/RJPearson94/demo-typescript-inversify-app",
+      "email": "RJPearson94@users.noreply.github.com"
+    },
     "version": "v1.0.0"
   },
+  "tags": [
+    {
+      "name": "Greeting",
+      "description": "The Greeting Endpoint"
+    }
+  ],
   "servers": [
     {
       "url": "http://localhost:3000",
@@ -16,7 +27,7 @@
     }
   ],
   "paths": {
-    "/v1/": {
+    "/v1": {
       "get": {
         "summary": "Provide V1 Greeting Message",
         "description": "Provide string Greeting Message when Web App is called. Web App is written in TypeScript and uses Express & Inversify for Dependency Injection",
@@ -37,7 +48,7 @@
         }
       }
     },
-    "/v2/": {
+    "/v2": {
       "get": {
         "summary": "Provide V2 Greeting Message",
         "description": "Provide JSON Greeting Message when Web App is called. Web App is written in TypeScript and uses Express & Inversify for Dependency Injection",
