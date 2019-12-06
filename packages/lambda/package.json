@@ -20,7 +20,7 @@
   "dependencies": {
     "@rjpearson94/core": "file:../core",
     "aws-sdk": "^2.580.0",
-    "middy": "^0.30.5",
+    "middy": "^0.32.3",
     "source-map-support": "^0.5.16"
   },
   "devDependencies": {
