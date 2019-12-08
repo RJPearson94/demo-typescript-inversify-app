@@ -3,8 +3,10 @@
   "description": "An example azure function to prototype Dependency Injection using Typescript & Inversify",
   "version": "1.0.0",
   "scripts": {
-    "build": "run-s clean webpack",
-    "clean": "rm -rf ./dist",
+    "build": "run-s clean webpack func:pack",
+    "clean": "rm -rf ./InversifyFunction/dist",
+    "func": "func",
+    "func:pack": "func pack",
     "newman": "newman",
     "test": "yarn test:unit",
     "test:unit": "jest ./test",
@@ -17,7 +19,7 @@
   },
   "devDependencies": {
     "awesome-typescript-loader": "^5.2.1",
-    "mkdirp": "^0.5.1",
+    "azure-functions-core-tools": "^2.7.1948",
     "npm-run-all": "^4.1.5",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",

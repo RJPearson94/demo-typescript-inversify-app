@@ -8,12 +8,14 @@ yarn-error.log
 # Artefacts
 dist
 release
+*.zip
 
 # Code Coverage
 coverage
 
 # Misc
 .DS_Store
+.history
 
 # Environment
 .env
@@ -33,3 +35,9 @@ newman
 
 # Code Analysis
 .scannerwork
+
+# Azure Functions artifacts
+bin
+obj
+appsettings.json
+local.settings.json

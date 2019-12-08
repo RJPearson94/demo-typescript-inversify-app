@@ -1,0 +1,15 @@
+.history
+.git*
+.vscode
+src
+test
+coverage
+deployment
+modules
+node_modules
+
+local.settings.json
+tsconfig.*
+package.json
+*.config.js
+*.md

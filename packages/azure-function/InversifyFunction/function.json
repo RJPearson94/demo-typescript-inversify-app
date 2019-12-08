@@ -12,5 +12,7 @@
       "direction": "out",
       "name": "res"
     }
-  ]
+  ],
+  "scriptFile": "./dist/index.js",
+  "entryPoint": "handler"
 }

@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import httpEventHandler from '@src/azure';
+import * as azure from '@src/azure';
 import { container } from '@src/inversify.config';
 import { TYPES } from '@src/constant/types';
 import { GreetingController } from '@src/controller';
@@ -15,9 +15,11 @@ describe('#Azure', () => {
     container.rebind<GreetingController>(TYPES.GreetingController).toConstantValue(greetingController);
 
     const context: any = {};
+    const request: any = {};
 
     // When
-    await httpEventHandler(context);
+    // @ts-ignore
+    await azure.handler(context, request);
 
     // Then
     expect(greetingController.greet).toHaveBeenCalled();
