@@ -26,6 +26,7 @@ generated-docs
 .terraform
 .terragrunt-cache
 *.tfplan
+*.tfstate*
 
 # Test Reports
 newman

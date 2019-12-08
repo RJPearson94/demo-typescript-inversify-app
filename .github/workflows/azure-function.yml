@@ -1,0 +1,42 @@
+name: Azure Function Pipeline
+
+on:
+  push:
+    paths:
+      - '.github/workflows/azure-function.yml'
+      - 'packages/core/*'
+      - 'packages/azure-function/*'
+
+jobs:
+  linux-pipeline:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Install
+        run: yarn install
+
+      - name: Run Core Unit tests
+        run: |
+          cd packages/core	
+          yarn test:unit
+
+      - name: Run Core Build
+        run: |
+          cd packages/core	
+          yarn build
+
+      - name: Run unit tests
+        run: |
+          cd packages/azure-function
+          yarn test:unit
+
+      - name: Build artefact
+        run: |
+          cd packages/azure-function
+          yarn build
