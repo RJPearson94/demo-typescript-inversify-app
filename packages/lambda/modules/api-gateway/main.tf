@@ -14,6 +14,8 @@ resource "aws_api_gateway_rest_api" "greeting_rest_api" {
     version             = local.version
     lambda_excution_uri = var.lambda_excution_uri
   })
+
+  tags = var.tags
 }
 
 resource "aws_api_gateway_deployment" "greeting_deployment" {

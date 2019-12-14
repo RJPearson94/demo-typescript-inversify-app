@@ -3,6 +3,7 @@ package terraform
 import "github.com/zclconf/go-cty/cty"
 
 type APIGatewayStage struct {
+	ARN                  cty.Value         `cty:"arn"`
 	AccessLogSettings    []string          `cty:"access_log_settings"`
 	CacheClusterEnabled  cty.Value         `cty:"cache_cluster_enabled"`
 	CacheClusterSize     cty.Value         `cty:"cache_cluster_size"`

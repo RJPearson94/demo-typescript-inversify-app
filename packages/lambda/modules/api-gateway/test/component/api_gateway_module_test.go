@@ -2,11 +2,12 @@ package api_gateway_module_ctest
 
 import (
 	"fmt"
+	"terratest_utility/helper"
+	"terratest_utility/terraform"
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/zclconf/go-cty/cty/gocty"
-	"terratest_utility/terraform"
-	"terratest_utility/helper"
-	"testing"
 )
 
 func TestAPIGatewayModule(test *testing.T) {
@@ -61,6 +62,9 @@ func TestAPIGatewayModule(test *testing.T) {
 		assert.Equal(test, -1, afterAPGatewayRestAPIChange.MinimumCompressionSize)
 		apiGatewayName := fmt.Sprintf("TypeScript Inversify Lambda App %s", resourceSuffix)
 		assert.Equal(test, apiGatewayName, afterAPGatewayRestAPIChange.Name)
+		tags := afterAPGatewayRestAPIChange.Tags
+		assert.NotEmpty(test, tags)
+		assert.Equal(test, tags[environmentTag], environmentTagResult)
 	})
 
 	test.Run("Should verify api gateway stage", func(test *testing.T) {
