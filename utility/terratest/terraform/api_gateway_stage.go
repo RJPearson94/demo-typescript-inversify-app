@@ -4,7 +4,6 @@ import "github.com/zclconf/go-cty/cty"
 
 type APIGatewayStage struct {
 	AccessLogSettings    []string          `cty:"access_log_settings"`
-	ARN                  cty.Value         `cty:"arn"`
 	CacheClusterEnabled  cty.Value         `cty:"cache_cluster_enabled"`
 	CacheClusterSize     cty.Value         `cty:"cache_cluster_size"`
 	ClientCertificateID  cty.Value         `cty:"client_certificate_id"`
