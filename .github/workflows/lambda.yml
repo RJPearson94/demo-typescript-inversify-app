@@ -20,8 +20,8 @@ jobs:
 
       - name: Environment Setup
         run: |
-          wget https://releases.hashicorp.com/terraform/0.12.10/terraform_0.12.10_linux_amd64.zip	&& unzip terraform_0.12.10_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
-          wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.20.5/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
+          wget https://releases.hashicorp.com/terraform/0.12.18/terraform_0.12.18_linux_amd64.zip	&& unzip terraform_0.12.18_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
+          wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.21.9/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
 
       - name: Install
         run: yarn install
