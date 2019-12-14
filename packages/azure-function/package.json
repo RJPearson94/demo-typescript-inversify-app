@@ -7,8 +7,7 @@
     "clean": "rm -rf ./InversifyFunction/dist",
     "func": "func",
     "func:pack": "func pack",
-    "newman": "newman",
-    "test": "yarn test:unit",
+    "test": "run-s test:unit",
     "test:unit": "jest ./test",
     "webpack": "webpack-cli"
   },
