@@ -102,4 +102,50 @@ For more information on Newman, see <https://github.com/postmanlabs/newman>
 
 ## Deploying to AWS
 
-Instructions coming soon
+To setup and build the artefact (lambda zip) which will be deployed to AWS, please to run the following commands:
+
+```bash
+yarn install
+yarn build
+```
+
+To see what resources will be provisioned, change into the deployment folder and run the following:
+
+```bash
+terragrunt plan-all
+```
+
+This will show you all the resources that will be provisioned, including:
+
+- [API Gateway](https://aws.amazon.com/api-gateway/)
+- [Lambda](https://aws.amazon.com/lambda/)
+
+If you want to provision these resources, please run the following command (Please note cost/ charges may be incurred):
+
+```bash
+terragrunt apply-all
+```
+
+When you see `[terragrunt] Are you sure you want to run 'terragrunt apply' in each folder of the stack described above? (y/n)` type `y` and hit the return/ enter key. Alternatively if you don't want the manual accept process you can run the following command:
+
+```bash
+terragrunt apply-all --terragrunt-non-interactive
+```
+
+The resources should be provisioned
+
+## Remove Resources from AWS
+
+Once you are finished with the resources you can remove all the provisioned resources by running the following command (from from the deployment folder):
+
+```bash
+terragrunt destroy-all
+```
+
+When you see `[terragrunt] Are you sure you want to run 'terragrunt destroy' in each folder of the stack described above? (y/n)` type `y` and hit the return/ enter key. Alternatively if you don't want the manual accept process you can run the following command:
+
+```bash
+terragrunt destroy-all --terragrunt-non-interactive
+```
+
+Then all the resources (which Terraform/ Terragrunt has state information for) should be removed.

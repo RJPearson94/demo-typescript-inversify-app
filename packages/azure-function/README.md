@@ -83,7 +83,7 @@ terragrunt apply-all --terragrunt-non-interactive
 
 The resources should be provisioned (Please note this may take a couple of minutes to provision all resources)
 
-_NOTE:_ If you already have resources i.e. Resource Groups or Storage Accounts then feel free to modify the terraform/ terragrunt to meet you needs.
+**NOTE:** If you already have resources i.e. Resource Groups or Storage Accounts then feel free to modify the terraform/ terragrunt to meet you needs.
 
 ## Remove Resources from Azure
 

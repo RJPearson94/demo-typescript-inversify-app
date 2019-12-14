@@ -64,9 +64,3 @@ jobs:
         run: |
           cd packages/lambda
           yarn test:e2e
-
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
-        if: github.ref == 'refs/heads/master'
-        run: yarn semantic-release
