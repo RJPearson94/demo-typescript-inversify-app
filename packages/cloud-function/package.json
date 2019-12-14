@@ -1,0 +1,25 @@
+{
+  "name": "@rjpearson94/cloud-function",
+  "description": "An example cloud function to prototype Dependency Injection using Typescript & Inversify",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "run-s clean webpack",
+    "clean": "rm -rf ./dist",
+    "test": "yarn test:unit",
+    "test:unit": "jest ./test",
+    "webpack": "webpack-cli"
+  },
+  "dependencies": {
+    "@google-cloud/functions-framework": "^1.3.2",
+    "@rjpearson94/core": "file:../core",
+    "source-map-support": "^0.5.16"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1",
+    "npm-run-all": "^4.1.5",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-node-externals": "^1.7.2",
+    "zip-webpack-plugin": "^3.0.0"
+  }
+}

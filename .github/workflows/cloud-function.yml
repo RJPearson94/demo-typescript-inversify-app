@@ -1,11 +1,11 @@
-name: Cloud Function Pipeline
+name: Azure Function Pipeline
 
 on:
   push:
     paths:
-      - '.github/workflows/cloud-function.yml'
+      - '.github/workflows/azure-function.yml'
       - 'packages/core/*'
-      - 'packages/cloud-function/*'
+      - 'packages/azure-function/*'
 
 jobs:
   linux-pipeline:
@@ -33,10 +33,10 @@ jobs:
 
       - name: Run unit tests
         run: |
-          cd packages/cloud-function
+          cd packages/azure-function
           yarn test:unit
 
       - name: Build artefact
         run: |
-          cd packages/cloud-function
+          cd packages/azure-function
           yarn build
