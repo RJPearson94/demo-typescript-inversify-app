@@ -5,7 +5,19 @@ update_configs:
     update_schedule: 'daily'
 
   - package_manager: 'javascript'
+    directory: '/packages/azure-function'
+    update_schedule: 'daily'
+
+  - package_manager: 'javascript'
+    directory: '/packages/cloud-function'
+    update_schedule: 'daily'
+
+  - package_manager: 'javascript'
     directory: '/packages/core'
+    update_schedule: 'daily'
+
+  - package_manager: 'javascript'
+    directory: '/packages/lambda'
     update_schedule: 'daily'
 
   - package_manager: 'javascript'
@@ -16,8 +28,4 @@ update_configs:
     update_schedule: 'daily'
   - package_manager: 'docker'
     directory: '/packages/web-app/api'
-    update_schedule: 'daily'
-
-  - package_manager: 'javascript'
-    directory: '/packages/lambda'
     update_schedule: 'daily'
