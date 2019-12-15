@@ -4,8 +4,8 @@ on:
   push:
     paths:
       - '.github/workflows/web-app.yml'
-      - 'packages/core/*'
-      - 'packages/web-app/*'
+      - 'packages/core/**/*'
+      - 'packages/web-app/**/*'
 
 jobs:
   linux-pipeline:

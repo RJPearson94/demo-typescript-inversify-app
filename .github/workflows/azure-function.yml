@@ -4,8 +4,8 @@ on:
   push:
     paths:
       - '.github/workflows/azure-function.yml'
-      - 'packages/core/*'
-      - 'packages/azure-function/*'
+      - 'packages/core/**/*'
+      - 'packages/azure-function/**/*'
 
 jobs:
   linux-pipeline:

@@ -4,8 +4,8 @@ on:
   push:
     paths:
       - '.github/workflows/cloud-function.yml'
-      - 'packages/core/*'
-      - 'packages/cloud-function/*'
+      - 'packages/core/**/*'
+      - 'packages/cloud-function/**/*'
 
 jobs:
   linux-pipeline:
