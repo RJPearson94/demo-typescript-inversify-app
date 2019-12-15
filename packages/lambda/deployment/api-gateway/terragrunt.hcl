@@ -1,5 +1,5 @@
 terraform {
-  source = "../../modules/api-gateway"
+  source = "../../modules/api-gateway//inversify"
 }
 
 dependency "lambda" {
@@ -20,6 +20,8 @@ include {
 }
 
 inputs = {
-  lambda_arn          = dependency.lambda.outputs.inversify_lambda_function.arn
-  lambda_excution_uri = dependency.lambda.outputs.inversify_lambda_function.invoke_arn
+  lambda = {
+    arn          = dependency.lambda.outputs.inversify_lambda_function.arn
+    excution_uri = dependency.lambda.outputs.inversify_lambda_function.invoke_arn
+  }
 }

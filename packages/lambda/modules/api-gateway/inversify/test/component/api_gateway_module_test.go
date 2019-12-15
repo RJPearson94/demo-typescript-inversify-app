@@ -24,7 +24,7 @@ func TestAPIGatewayModule(test *testing.T) {
 		// Given
 
 		// When
-		apiGatewayDeploymentChange := terraform.GetResource(test, plan, "aws_api_gateway_deployment.greeting_deployment", &terraform.APIGatewayDeployment{})
+		apiGatewayDeploymentChange := terraform.GetResource(test, plan, "module.inversify_api_gateway.aws_api_gateway_deployment.greeting_deployment", &terraform.APIGatewayDeployment{})
 
 		// Then
 		assert.NotNil(test, apiGatewayDeploymentChange)
@@ -37,14 +37,13 @@ func TestAPIGatewayModule(test *testing.T) {
 
 		assert.NotNil(test, afterAPIGatewayDeploymentChange)
 		assert.Equal(test, "Deployment of API Gateway to invoke inversify lambda function", afterAPIGatewayDeploymentChange.Description)
-		assert.Equal(test, "To allow testing of solution", afterAPIGatewayDeploymentChange.StageDescription)
 	})
 
 	test.Run("Should verify api gateway rest api", func(test *testing.T) {
 		// Given
 
 		// When
-		apiGatewayRestAPIChange := terraform.GetResource(test, plan, "aws_api_gateway_rest_api.greeting_rest_api", &terraform.APIGatewayRestAPI{})
+		apiGatewayRestAPIChange := terraform.GetResource(test, plan, "module.inversify_api_gateway.aws_api_gateway_rest_api.greeting_rest_api", &terraform.APIGatewayRestAPI{})
 
 		// Then
 		assert.NotNil(test, apiGatewayRestAPIChange)
@@ -71,7 +70,7 @@ func TestAPIGatewayModule(test *testing.T) {
 		// Given
 
 		// When
-		apiGatewayStageChange := terraform.GetResource(test, plan, "aws_api_gateway_stage.greeting_stage", &terraform.APIGatewayStage{})
+		apiGatewayStageChange := terraform.GetResource(test, plan, "module.inversify_api_gateway.aws_api_gateway_stage.greeting_stage", &terraform.APIGatewayStage{})
 
 		// Then
 		assert.NotNil(test, apiGatewayStageChange)
@@ -94,7 +93,7 @@ func TestAPIGatewayModule(test *testing.T) {
 		// Given
 
 		// When
-		lambdaPermissionChange := terraform.GetResource(test, plan, "aws_lambda_permission.api_gateway_lambda", &terraform.LambdaPermission{})
+		lambdaPermissionChange := terraform.GetResource(test, plan, "module.inversify_api_gateway.aws_lambda_permission.api_gateway_lambda", &terraform.LambdaPermission{})
 
 		// Then
 		assert.NotNil(test, lambdaPermissionChange)

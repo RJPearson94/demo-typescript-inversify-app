@@ -1,9 +1,37 @@
-variable "lambda_arn" {
-  description = "ARN for API Gateway invoking a lambda function"
+variable "name" {
+  description = "Name of API Gateway"
 }
 
-variable "lambda_excution_uri" {
-  description = "URI/ ARN for API Gateway invoking a lambda function"
+variable "description" {
+  description = "Description of API Gateway"
+}
+
+variable "openapi" {
+  description = "OpenAPI schama"
+  type        = any
+}
+
+variable "deployment" {
+  description = "Deployment details"
+  type = object({
+    description = string
+  })
+}
+
+variable "stage" {
+  description = "Stage details"
+  type = object({
+    name        = string,
+    description = string
+  })
+}
+
+
+variable "lambda" {
+  description = "Lambda details"
+  type = object({
+    arn = string
+  })
 }
 
 variable "resource_suffix" {

@@ -16,7 +16,7 @@ module.exports = {
 
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'modules', 'lambda', 'dist')
+    path: path.resolve(__dirname, 'modules', 'lambda', 'inversify', 'dist')
   },
 
   plugins: [

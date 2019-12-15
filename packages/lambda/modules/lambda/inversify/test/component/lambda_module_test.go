@@ -2,11 +2,12 @@ package lambda_module_ctest
 
 import (
 	"fmt"
+	"terratest_utility/helper"
+	"terratest_utility/terraform"
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/zclconf/go-cty/cty/gocty"
-	"terratest_utility/terraform"
-	"terratest_utility/helper"
-	"testing"
 )
 
 func TestLambdaModule(test *testing.T) {
@@ -23,7 +24,7 @@ func TestLambdaModule(test *testing.T) {
 		// Given
 
 		// When
-		cloudwatchLogGroupChange := terraform.GetResource(test, plan, "aws_cloudwatch_log_group.inversify_demo_log_group", &terraform.CloudwatchLogGroup{})
+		cloudwatchLogGroupChange := terraform.GetResource(test, plan, "module.inversify_function.aws_cloudwatch_log_group.lambda_log_group", &terraform.CloudwatchLogGroup{})
 
 		// Then
 		assert.NotNil(test, cloudwatchLogGroupChange)
@@ -47,7 +48,7 @@ func TestLambdaModule(test *testing.T) {
 		// Given
 
 		// When
-		lambdaFunctionChange := terraform.GetResource(test, plan, "aws_lambda_function.inversify_demo_function", &terraform.LambdaFunction{})
+		lambdaFunctionChange := terraform.GetResource(test, plan, "module.inversify_function.aws_lambda_function.lambda_function", &terraform.LambdaFunction{})
 
 		// Then
 		assert.NotNil(test, lambdaFunctionChange)
@@ -82,7 +83,7 @@ func TestLambdaModule(test *testing.T) {
 		// Given
 
 		// When
-		iamPolicyChange := terraform.GetResource(test, plan, "aws_iam_policy.inversify_demo_lambda_policy", &terraform.IAMPolicy{})
+		iamPolicyChange := terraform.GetResource(test, plan, "module.inversify_function.aws_iam_policy.lambda_policy", &terraform.IAMPolicy{})
 
 		// Then
 		assert.NotNil(test, iamPolicyChange)
@@ -95,7 +96,7 @@ func TestLambdaModule(test *testing.T) {
 
 		assert.NotNil(test, afterIAMPolicyChange)
 		assert.Equal(test, "IAM policy for logging from a lambda", afterIAMPolicyChange.Description)
-		iamPolicyName := fmt.Sprintf("inversify_demo_lambda_policy_%s", resourceSuffix)
+		iamPolicyName := fmt.Sprintf("lambda_policy_%s", resourceSuffix)
 		assert.Equal(test, iamPolicyName, afterIAMPolicyChange.Name)
 		assert.Equal(test, "/", afterIAMPolicyChange.Path)
 		assert.Equal(test, getPolicyString(), helper.SanitizeString(afterIAMPolicyChange.Policy))
@@ -105,7 +106,7 @@ func TestLambdaModule(test *testing.T) {
 		// Given
 
 		// When
-		iamRoleChange := terraform.GetResource(test, plan, "aws_iam_role.inversify_demo_iam", &terraform.IAMRole{})
+		iamRoleChange := terraform.GetResource(test, plan, "module.inversify_function.aws_iam_role.lambda_iam", &terraform.IAMRole{})
 
 		// Then
 		assert.NotNil(test, iamRoleChange)
@@ -121,7 +122,7 @@ func TestLambdaModule(test *testing.T) {
 		assert.Equal(test, "Lambda IAM Role", afterIAMRoleChange.Description)
 		assert.Equal(test, false, afterIAMRoleChange.ForceDetachPolicies)
 		assert.Equal(test, 3600, afterIAMRoleChange.MaxSessionDuration)
-		iamRoleName := fmt.Sprintf("inversify_demo_iam_%s", resourceSuffix)
+		iamRoleName := fmt.Sprintf("lambda_iam_%s", resourceSuffix)
 		assert.Equal(test, iamRoleName, afterIAMRoleChange.Name)
 		assert.Equal(test, "/", afterIAMRoleChange.Path)
 		tags := afterIAMRoleChange.Tags
@@ -133,7 +134,7 @@ func TestLambdaModule(test *testing.T) {
 		// Given
 
 		// When
-		iamRolePolicyAttachmentChange := terraform.GetResource(test, plan, "aws_iam_role_policy_attachment.lambda_logs", &terraform.IAMRolePolicyAttachment{})
+		iamRolePolicyAttachmentChange := terraform.GetResource(test, plan, "module.inversify_function.aws_iam_role_policy_attachment.lambda_logs", &terraform.IAMRolePolicyAttachment{})
 
 		// Then
 		assert.NotNil(test, iamRolePolicyAttachmentChange)
@@ -145,7 +146,7 @@ func TestLambdaModule(test *testing.T) {
 		}
 
 		assert.NotNil(test, afterIAMRolePolicyAttachmentChange)
-		iamRoleName := fmt.Sprintf("inversify_demo_iam_%s", resourceSuffix)
+		iamRoleName := fmt.Sprintf("lambda_iam_%s", resourceSuffix)
 		assert.Equal(test, iamRoleName, afterIAMRolePolicyAttachmentChange.Role)
 	})
 

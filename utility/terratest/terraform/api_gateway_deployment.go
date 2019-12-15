@@ -9,7 +9,7 @@ type APIGatewayDeployment struct {
 	ID               cty.Value `cty:"id"`
 	InvokeURL        cty.Value `cty:"invoke_url"`
 	RestAPIID        cty.Value `cty:"rest_api_id"`
-	StageDescription string    `cty:"stage_description"`
+	StageDescription cty.Value `cty:"stage_description"`
 	StageName        cty.Value `cty:"stage_name"`
 	Variables        cty.Value `cty:"variables"`
 }

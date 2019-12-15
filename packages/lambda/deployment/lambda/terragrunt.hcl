@@ -1,5 +1,5 @@
 terraform {
-  source = "../../modules/lambda"
+  source = "../../modules/lambda//inversify"
 }
 
 include {
@@ -7,5 +7,7 @@ include {
 }
 
 inputs = {
-  log_retention = "14"
+  logs = {
+    retention = 14
+  }
 }
