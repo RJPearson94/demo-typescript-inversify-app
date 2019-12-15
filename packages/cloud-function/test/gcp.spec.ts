@@ -16,9 +16,10 @@ describe('#GCP', () => {
 
     const request: any = {};
 
-    const response: any = {};
-    jest.spyOn(response, 'status').mockImplementation(() => response);
-    jest.spyOn(response, 'json').mockImplementation(() => response);
+    const response: any = {
+      status: jest.fn(() => response),
+      json: jest.fn(() => response)
+    };
 
     // When
     // @ts-ignore
