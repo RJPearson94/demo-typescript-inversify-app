@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "run-s clean webpack",
-    "clean": "rm -rf ./dist",
+    "clean": "rm -rf ./modules/function/inversify/dist",
     "test": "yarn test:unit",
     "test:unit": "jest ./test",
     "webpack": "webpack-cli"
