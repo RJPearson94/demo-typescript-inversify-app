@@ -39,6 +39,7 @@ func TestLambdaModule(test *testing.T) {
 		logGroupName := fmt.Sprintf("/aws/lambda/inversify_demo_function_%s", resourceSuffix)
 		assert.Equal(test, logGroupName, afterCloudwatchLogGroupChange.Name)
 		assert.Equal(test, 14, afterCloudwatchLogGroupChange.Retention)
+
 		tags := afterCloudwatchLogGroupChange.Tags
 		assert.NotEmpty(test, tags)
 		assert.Equal(test, tags[environmentTag], environmentTagResult)
@@ -72,6 +73,14 @@ func TestLambdaModule(test *testing.T) {
 		assert.Equal(test, "nodejs10.x", afterlambdaFunctionChange.Runtime)
 		assert.Equal(test, "./dist/inversify-demo-lambda.zip", afterlambdaFunctionChange.Filename)
 		assert.NotNil(test, afterlambdaFunctionChange.SourceCodeHash)
+
+		tracingConfig := afterlambdaFunctionChange.TracingConfig
+		assert.NotEmpty(test, tracingConfig)
+
+		tracingConfigElement0 := tracingConfig[0]
+		assert.NotEmpty(test, tracingConfigElement0)
+		assert.Equal(test, tracingConfigElement0["mode"], "PassThrough")
+
 		tags := afterlambdaFunctionChange.Tags
 		assert.NotEmpty(test, tags)
 		assert.Equal(test, tags[environmentTag], environmentTagResult)
@@ -125,6 +134,7 @@ func TestLambdaModule(test *testing.T) {
 		iamRoleName := fmt.Sprintf("lambda_iam_%s", resourceSuffix)
 		assert.Equal(test, iamRoleName, afterIAMRoleChange.Name)
 		assert.Equal(test, "/", afterIAMRoleChange.Path)
+
 		tags := afterIAMRoleChange.Tags
 		assert.NotEmpty(test, tags)
 		assert.Equal(test, tags[environmentTag], environmentTagResult)
@@ -153,7 +163,7 @@ func TestLambdaModule(test *testing.T) {
 }
 
 func getPolicyString() string {
-	return "{\"Version\": \"2012-10-17\",\"Statement\": [{\"Action\": [\"logs:CreateLogStream\",\"logs:PutLogEvents\"],\"Resource\": \"arn:aws:logs:*:*:*\",\"Effect\": \"Allow\"}]}"
+	return "{\"Version\": \"2012-10-17\",\"Statement\": [{\"Action\": [\"logs:CreateLogStream\",\"logs:PutLogEvents\"],\"Resource\": \"arn:aws:logs:*:*:*\",\"Effect\": \"Allow\"},{\"Action\": [\"xray:PutTraceSegments\", \"xray:PutTelemetryRecords\"],\"Resource\": \"*\",\"Effect\": \"Allow\"}]}"
 }
 
 func getRoleString() string {

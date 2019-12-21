@@ -84,6 +84,8 @@ func TestAPIGatewayModule(test *testing.T) {
 		assert.NotNil(test, afterAPIGatewayStageChange)
 		assert.Equal(test, "Deployment of API Gateway stage", afterAPIGatewayStageChange.Description)
 		assert.Equal(test, "dev", afterAPIGatewayStageChange.StageName)
+		assert.Equal(test, true, afterAPIGatewayStageChange.XRayTracingEnabled)
+
 		tags := afterAPIGatewayStageChange.Tags
 		assert.NotEmpty(test, tags)
 		assert.Equal(test, tags[environmentTag], environmentTagResult)

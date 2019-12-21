@@ -11,11 +11,12 @@ resource "aws_api_gateway_deployment" "greeting_deployment" {
 }
 
 resource "aws_api_gateway_stage" "greeting_stage" {
-  description   = var.stage.description
-  stage_name    = var.stage.name
-  rest_api_id   = aws_api_gateway_rest_api.greeting_rest_api.id
-  deployment_id = aws_api_gateway_deployment.greeting_deployment.id
-  tags          = var.tags
+  description          = var.stage.description
+  stage_name           = var.stage.name
+  rest_api_id          = aws_api_gateway_rest_api.greeting_rest_api.id
+  deployment_id        = aws_api_gateway_deployment.greeting_deployment.id
+  xray_tracing_enabled = true
+  tags                 = var.tags
 }
 
 resource "aws_lambda_permission" "api_gateway_lambda" {

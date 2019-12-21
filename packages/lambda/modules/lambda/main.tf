@@ -18,6 +18,10 @@ resource "aws_lambda_function" "lambda_function" {
   timeout     = var.timeout
   tags        = var.tags
 
+  tracing_config {
+    mode = "PassThrough"
+  }
+
   depends_on = [
     aws_iam_role_policy_attachment.lambda_logs,
     aws_cloudwatch_log_group.lambda_log_group,
@@ -67,6 +71,14 @@ resource "aws_iam_policy" "lambda_policy" {
         "logs:PutLogEvents"
       ],
       "Resource": "arn:aws:logs:*:*:*",
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "xray:PutTraceSegments", 
+        "xray:PutTelemetryRecords"
+      ],
+      "Resource": "*",
       "Effect": "Allow"
     }
   ]

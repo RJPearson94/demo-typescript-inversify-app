@@ -14,18 +14,16 @@
     "test:e2e": "go test ./deployment/test/e2e",
     "test:integration": "run-s test:integration:lambda",
     "test:integration:lambda": "go test ./modules/lambda/inversify/test/integration",
-    "test:unit": "jest ./test",
+    "test:unit": "jest --clearCache && jest ./test --maxWorkers=1",
     "webpack": "webpack-cli"
   },
   "dependencies": {
     "@rjpearson94/core": "file:../core",
-    "aws-sdk": "^2.590.0",
     "middy": "^0.32.3",
     "source-map-support": "^0.5.16"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^5.2.1",
-    "bespoken-tools": "^2.4.24",
     "newman": "^4.5.7",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",

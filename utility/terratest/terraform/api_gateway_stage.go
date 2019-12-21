@@ -18,5 +18,5 @@ type APIGatewayStage struct {
 	StageName            string            `cty:"stage_name"`
 	Tags                 map[string]string `cty:"tags"`
 	Variables            cty.Value         `cty:"variables"`
-	XRayTracingEnabled   cty.Value         `cty:"xray_tracing_enabled"`
+	XRayTracingEnabled   bool              `cty:"xray_tracing_enabled"`
 }
