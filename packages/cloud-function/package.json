@@ -6,7 +6,7 @@
     "build": "run-s clean webpack",
     "clean": "rm -rf ./modules/function/inversify/dist",
     "test": "yarn test:unit",
-    "test:unit": "jest ./test",
+    "test:unit": "jest --clearCache && jest ./test --maxWorkers=1",
     "webpack": "webpack-cli"
   },
   "dependencies": {
@@ -17,7 +17,7 @@
   "devDependencies": {
     "awesome-typescript-loader": "^5.2.1",
     "npm-run-all": "^4.1.5",
-    "webpack": "^4.41.2",
+    "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10",
     "webpack-node-externals": "^1.7.2",
     "zip-webpack-plugin": "^3.0.0"
