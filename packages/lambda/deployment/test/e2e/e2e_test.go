@@ -29,8 +29,7 @@ func TestServiceEndToEnd(test *testing.T) {
 	cmd.Stderr = os.Stderr
 
 	// Then
-	err := cmd.Run()
-	if err != nil {
+	if err := cmd.Run(); err != nil {
 		test.Fatal(err)
 	}
 }

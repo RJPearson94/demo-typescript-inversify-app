@@ -6,7 +6,7 @@ import { InversifyExpressServer } from 'inversify-express-utils';
 
 import { container } from '@rjpearson94/core';
 
-import '@src/controller';
+import './controller';
 
 config();
 const serverPort: string = process.env.PORT || '3000';

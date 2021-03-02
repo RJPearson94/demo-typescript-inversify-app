@@ -1,4 +1,4 @@
-import { TYPES } from '@src/constant/types';
+import { TYPES } from '../../src/constant/types';
 
 describe('#Types', () => {
   test('Should verify GreetingController type is mapped to GreetingController string', () => {

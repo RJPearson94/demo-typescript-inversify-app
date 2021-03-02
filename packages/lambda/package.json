@@ -3,31 +3,33 @@
   "description": "An example lambda app to prototype Dependency Injection using Typescript & Inversify",
   "version": "1.0.0",
   "scripts": {
-    "build": "run-s clean webpack",
+    "build": "run-s clean build:lambda",
+    "build:lambda": "node ./esbuild.js",
     "clean": "rm -rf ./modules/lambda/invesify/dist",
     "newman": "newman",
-    "local-lambda": "bst proxy lambda modules/lambda/dist/main.js --verbose",
-    "test": "run-s test:unit test:component test:integration test:e2e",
-    "test:component": "run-s test:component:api-gateway test:component:lambda",
-    "test:component:api-gateway": "go test ./modules/api-gateway/inversify/test/component",
-    "test:component:lambda": "go test ./modules/lambda/inversify/test/component",
+    "test": "run-s test:unit test:integration test:e2e",
     "test:e2e": "go test ./deployment/test/e2e",
     "test:integration": "run-s test:integration:lambda",
     "test:integration:lambda": "go test ./modules/lambda/inversify/test/integration",
-    "test:unit": "jest --clearCache && jest ./test --maxWorkers=1",
-    "webpack": "webpack-cli"
+    "test:unit": "jest ./test"
   },
   "dependencies": {
-    "@rjpearson94/core": "file:../core",
-    "middy": "^0.33.0",
-    "source-map-support": "^0.5.16"
+    "@middy/core": "^1.5.2",
+    "@rjpearson94/core": "workspace:*",
+    "inversify": "5.0.5",
+    "reflect-metadata": "0.1.13",
+    "source-map-support": "^0.5.19"
   },
   "devDependencies": {
-    "awesome-typescript-loader": "^5.2.1",
-    "newman": "^4.5.7",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "webpack-node-externals": "^1.7.2",
-    "zip-webpack-plugin": "^3.0.0"
+    "@types/aws-lambda": "^8.10.72",
+    "@types/jest": "^26.0.20",
+    "@yarnpkg/esbuild-plugin-pnp": "^0.0.1",
+    "esbuild": "^0.8.53",
+    "jest": "^26.6.3",
+    "newman": "^5.2.2",
+    "npm-run-all": "^4.1.5",
+    "ts-jest": "^26.5.2",
+    "typescript": "~4.1.5",
+    "yazl": "^2.5.1"
   }
 }

@@ -13,15 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Use Node.js 12.x
+      - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
-
-      - name: Environment Setup
-        run: |
-          wget https://releases.hashicorp.com/terraform/0.12.18/terraform_0.12.18_linux_amd64.zip	&& unzip terraform_0.12.18_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
-          wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.21.9/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
+          node-version: 14.x
 
       - name: Install
         run: yarn install
@@ -40,27 +35,3 @@ jobs:
         run: |
           cd packages/lambda
           yarn build
-
-      - name: Run Lambda Component tests
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          cd packages/lambda
-          yarn test:component
-
-      - name: Run Lambda Integration tests
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          cd packages/lambda
-          yarn test:integration
-
-      - name: Run Lambda E2E tests
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          cd packages/lambda
-          yarn test:e2e

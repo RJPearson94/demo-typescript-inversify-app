@@ -8,7 +8,7 @@ resource "azurerm_storage_blob" "blob" {
   name                   = var.artefact.name
   storage_account_name   = var.storage_account.name
   storage_container_name = azurerm_storage_container.storage_container.name
-  type                   = "block"
+  type                   = "Block"
   source                 = var.artefact.source
 
   metadata = {

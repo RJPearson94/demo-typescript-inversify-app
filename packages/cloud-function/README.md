@@ -15,8 +15,8 @@ To be able to test and run the cloud function on real GCP infrastructure you nee
 
 - [GCP Account](https://cloud.google.com/)
 - [Cloud SDK](https://cloud.google.com/sdk/) (configured)
-- [Terraform](https://www.terraform.io/) (v0.12 or above)
-- [Terragrunt](https://github.com/gruntwork-io/terragrunt) (v0.19 or above)
+- [Terraform](https://www.terraform.io/) (v0.13 or above)
+- [Terragrunt](https://github.com/gruntwork-io/terragrunt) (v0.21 or above)
 
 ## Scripts
 

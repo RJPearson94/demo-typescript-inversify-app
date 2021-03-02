@@ -13,15 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Use Node.js 12.x
+      - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
-
-      - name: Environment Setup
-        run: |
-          wget https://releases.hashicorp.com/terraform/0.12.18/terraform_0.12.18_linux_amd64.zip	&& unzip terraform_0.12.18_linux_amd64.zip && sudo mv terraform /usr/local/bin/	&& chmod +x /usr/local/bin/terraform
-          wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.21.9/terragrunt_linux_amd64	&& sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
+          node-version: 14.x
 
       - name: Install
         run: yarn install
@@ -45,13 +40,3 @@ jobs:
         run: |
           cd packages/web-app
           yarn build
-
-      - name: Run Web App Integration tests
-        run: |
-          cd packages/web-app
-          yarn test:integration
-
-      - name: Run Web App E2E tests
-        run: |
-          cd packages/web-app
-          yarn test:e2e

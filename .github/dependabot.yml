@@ -1,0 +1,39 @@
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'npm'
+    directory: '/packages/azure-function'
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'npm'
+    directory: '/packages/cloud-function'
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'npm'
+    directory: '/packages/core'
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'npm'
+    directory: '/packages/lambda'
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'npm'
+    directory: '/packages/web-app'
+    schedule:
+      interval: 'daily'
+  - package-ecosystem: 'docker'
+    directory: '/packages/web-app'
+    schedule:
+      interval: 'daily'
+  - package-ecosystem: 'docker'
+    directory: '/packages/web-app/api'
+    schedule:
+      interval: 'daily'

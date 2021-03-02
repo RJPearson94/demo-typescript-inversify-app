@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { HelloService } from '@rjpearson94/core';
 
-import { GreetingControllerImpl } from '@src/controller/impl/greeting-impl';
+import { GreetingControllerImpl } from '../../../src/controller/impl/greeting-impl';
 
 describe('#V1GreetingController', () => {
   test('should return HelloAzureFunction when greet is called', () => {

@@ -1,7 +1,7 @@
-import { MiddlewareConfig, APIGatewayProxyMiddleware } from '@src/middleware';
-import { container } from '@src/inversify.config';
-import { TYPES } from '@src/constant/types';
-import { GreetingController } from '@src/controller/greeting';
+import { MiddlewareConfig, APIGatewayProxyMiddleware } from '../middleware';
+import { container } from '../inversify.config';
+import { TYPES } from '../constant/types';
+import { GreetingController } from '../controller/greeting';
 
 export const inversifyMiddleware: MiddlewareConfig = (): APIGatewayProxyMiddleware => ({
   before: (handler, next) => {

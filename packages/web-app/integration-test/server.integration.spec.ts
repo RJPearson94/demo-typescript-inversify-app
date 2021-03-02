@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import * as supertest from 'supertest';
 import { Response } from 'supertest';
 
-import server from '@src/server';
+import server from '../src/server';
 
 describe('Server Integration Test', () => {
   afterAll(done => server.close(done));

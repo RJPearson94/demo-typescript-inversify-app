@@ -8,6 +8,7 @@ The application is currently designed to run on Amazon Web Service (AWS). The ap
 - [Lambda](https://aws.amazon.com/lambda/)
 - [Cloudwatch](https://aws.amazon.com/cloudwatch/)
 - [IAM](https://aws.amazon.com/iam/)
+- [X-Ray](https://aws.amazon.com/xray/)
 
 A high level architecture can be seen below
 
@@ -29,12 +30,12 @@ To be able to test and run the lambda function on real AWS infrastructure you ne
 
 - [AWS Account](https://aws.amazon.com/)
 - [AWS CLI](https://aws.amazon.com/cli/) (configured)
-- [Terraform](https://www.terraform.io/) (v0.12 or above)
-- [Terragrunt](https://github.com/gruntwork-io/terragrunt) (v0.19 or above)
+- [Terraform](https://www.terraform.io/) (v0.14 or above)
+- [Terragrunt](https://github.com/gruntwork-io/terragrunt) (v0.21 or above)
 
 To be able to run the component, integration & E2E tests you also need the following:
 
-- [Golang](https://golang.org/) (v1.12 or above)
+- [Golang](https://golang.org/) (v1.14 or above)
 
 **NOTE:** To run the terratests the Terraform version must match the terraform version in the [go module file](../utility/terratest/go.mod) used by the terratests. If the versions do not match then an error will occur
 
@@ -42,7 +43,6 @@ To be able to run the component, integration & E2E tests you also need the follo
 
 - test (Run all tests)
 - test:unit (Run unit tests & generate coverage report)
-- test:component (Run component tests)
 - test:integration (Run integration tests)
 - test:e2e (Run e2e tests)
 - build (build lambda artefact zip)

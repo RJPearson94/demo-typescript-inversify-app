@@ -7,20 +7,23 @@
   "scripts": {
     "build": "run-s clean tsc",
     "clean": "rm -rf dist",
+    "postinstall": "run-s build",
     "test": "run-s test:unit",
-    "test:unit": "jest --clearCache && jest ./test --maxWorkers=1",
+    "test:unit": "jest ./test",
     "tsc": "tsc -p tsconfig.build.json && tscpaths -p tsconfig.build.json -s ./src -o ./dist"
   },
   "dependencies": {
-    "inversify": "^5.0.1",
+    "inversify": "^5.0.5",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.24",
-    "@types/node": "^12.12.21",
-    "jest": "^24.9.0",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.31",
+    "esbuild": "^0.8.53",
+    "jest": "^26.6.3",
     "npm-run-all": "^4.1.5",
-    "ts-jest": "^24.2.0",
-    "tscpaths": "^0.0.9"
+    "ts-jest": "^26.5.2",
+    "tscpaths": "^0.0.9",
+    "typescript": "~4.1.5"
   }
 }

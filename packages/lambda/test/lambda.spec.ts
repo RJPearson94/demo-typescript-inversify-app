@@ -2,10 +2,10 @@ import 'reflect-metadata';
 
 import { ProxyResult } from 'aws-lambda';
 
-import * as lambda from '@src/lambda';
-import { container } from '@src/inversify.config';
-import { TYPES } from '@src/constant/types';
-import { GreetingController } from '@src/controller';
+import * as lambda from '../src/lambda';
+import { container } from '../src/inversify.config';
+import { TYPES } from '../src/constant/types';
+import { GreetingController } from '../src/controller';
 
 describe('#Lambda', () => {
   test('Should return HelloTest when lambda is invoked', async done => {

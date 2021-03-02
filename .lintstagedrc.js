@@ -1,5 +1,5 @@
 module.exports = {
-  '*.{ts,js,json,yml,md}': ['yarn prettier --write', 'git add'],
-  '*.go': ['gofmt', 'git add'],
-  '*.{ts,js}': ['yarn lint --fix', 'git add']
+  '*.{ts,js,json,yml,md}': ['yarn prettier --write'],
+  '*.go': ['gofmt'],
+  '*.{ts,js}': ['yarn lint --fix']
 };

@@ -3,11 +3,11 @@ import 'source-map-support/register';
 
 import { AzureFunction, HttpRequest, Context } from '@azure/functions';
 
-import { TYPES } from '@src/constant/types';
-import { GreetingController } from '@src/controller';
-import { container } from '@src/inversify.config';
+import { TYPES } from './constant/types';
+import { GreetingController } from './controller';
+import { container } from './inversify.config';
 
-const httpEventHandler: AzureFunction = async (context: Context, req: HttpRequest): Promise<void> => {
+const httpEventHandler: AzureFunction = async (context: Context, _req: HttpRequest): Promise<void> => {
   const greetingController = container.get<GreetingController>(TYPES.GreetingController);
   const helloResponse = greetingController.greet();
 
@@ -18,4 +18,4 @@ const httpEventHandler: AzureFunction = async (context: Context, req: HttpReques
   };
 };
 
-exports.handler = httpEventHandler;
+export const handler = httpEventHandler;

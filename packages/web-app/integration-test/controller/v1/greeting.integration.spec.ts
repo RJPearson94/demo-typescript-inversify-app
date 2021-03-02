@@ -5,7 +5,7 @@ import { Response } from 'supertest';
 
 import { container } from '@rjpearson94/core';
 
-import '@src/controller/v1';
+import '../../../src/controller/v1';
 
 describe('V1GreetingController Integration Test', () => {
   test('should GET Hello when the /v1/ endpoint is called', async () => {

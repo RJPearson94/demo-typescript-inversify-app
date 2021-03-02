@@ -21,8 +21,7 @@ terraform {
     ]
 
     env_vars = {
-      # Cloud functions currently have to run in US-Central1
-      GOOGLE_REGION = "us-central1"
+      GOOGLE_REGION = "europe-west2"
     }
   }
 }

@@ -1,10 +1,10 @@
-FROM node:13.5-alpine
+FROM node:14.16-alpine
 
 LABEL maintainer = "RJPearson94"
 LABEL app = "Typescript Inversify Express App"
 LABEL description = "An example app to prototype Dependency Injection using Typescript & Inversify"
 
-RUN npm install pm2@4.2.1 -g
+RUN npm install pm2@4.5.5 -g
 
 RUN adduser -D webappuser
 USER webappuser

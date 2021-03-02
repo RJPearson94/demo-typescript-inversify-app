@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 
-import * as azure from '@src/azure';
-import { container } from '@src/inversify.config';
-import { TYPES } from '@src/constant/types';
-import { GreetingController } from '@src/controller';
+import * as azure from '../src/azure';
+import { container } from '../src/inversify.config';
+import { TYPES } from '../src/constant/types';
+import { GreetingController } from '../src/controller';
 
 describe('#Azure', () => {
   test('Should return HelloTest when azure function is invoked', async () => {

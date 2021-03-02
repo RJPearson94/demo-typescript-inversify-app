@@ -15,8 +15,8 @@ To be able to test and run the lambda function on real AWS infrastructure you ne
 
 - [Azure Account](https://azure.microsoft.com/en-gb/)
 - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest)
-- [Terraform](https://www.terraform.io/) (v0.12 or above)
-- [Terragrunt](https://github.com/gruntwork-io/terragrunt) (v0.19 or above)
+- [Terraform](https://www.terraform.io/) (v0.14 or above)
+- [Terragrunt](https://github.com/gruntwork-io/terragrunt) (v0.21 or above)
 
 ## Scripts
 

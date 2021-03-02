@@ -7,7 +7,7 @@ module "inversify_function" {
 
   name        = "inversify_demo_function"
   description = "Example Typescript Inversify Lambda"
-  runtime     = "nodejs10.x"
+  runtime     = "nodejs14.x"
   handler     = "main.handler"
   memory_size = 512
   timeout     = 30

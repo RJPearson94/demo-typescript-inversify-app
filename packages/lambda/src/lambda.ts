@@ -1,11 +1,11 @@
 import 'reflect-metadata';
 import 'source-map-support/register';
 
-import middy from 'middy';
+import middy from '@middy/core';
 import { APIGatewayProxyEvent } from 'aws-lambda';
 
-import { MessageResponse, Context } from '@src/lib';
-import { inversifyMiddleware, lambdaProxyMiddleware } from '@src/middleware';
+import { MessageResponse, Context } from './lib';
+import { inversifyMiddleware, lambdaProxyMiddleware } from './middleware';
 
 const apiGatewayHandler = async (_: APIGatewayProxyEvent, { greetingController }: Context): Promise<MessageResponse> => {
   const helloResponse = greetingController.greet();
@@ -14,6 +14,4 @@ const apiGatewayHandler = async (_: APIGatewayProxyEvent, { greetingController }
   };
 };
 
-exports.handler = middy(apiGatewayHandler)
-  .use(inversifyMiddleware())
-  .use(lambdaProxyMiddleware());
+export const handler = middy(apiGatewayHandler).use(inversifyMiddleware()).use(lambdaProxyMiddleware());

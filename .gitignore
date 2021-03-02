@@ -2,8 +2,12 @@
 .vscode
 
 # Dependencies
-node_modules
-yarn-error.log
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
 
 # Artefacts
 dist
@@ -29,6 +33,7 @@ generated-docs
 .terragrunt-cache
 *.tfplan
 *.tfstate*
+.terraform.lock.hcl
 
 # Test Reports
 newman

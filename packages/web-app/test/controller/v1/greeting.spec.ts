@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { HelloService } from '@rjpearson94/core';
 
-import { V1GreetingController } from '@src/controller/v1';
+import { V1GreetingController } from '../../../src/controller/v1';
 
 describe('#V1GreetingController', () => {
   test('should return Hello when greet is called', () => {

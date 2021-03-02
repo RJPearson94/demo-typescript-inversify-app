@@ -3,25 +3,27 @@
   "description": "An example azure function to prototype Dependency Injection using Typescript & Inversify",
   "version": "1.0.0",
   "scripts": {
-    "build": "run-s clean webpack func:pack",
-    "clean": "rm -rf ./InversifyFunction/dist",
-    "func": "func",
-    "func:pack": "func pack",
+    "build": "run-s clean build:function",
+    "build:function": "node ./esbuild.js",
+    "clean": "rm -rf ./dist",
     "test": "run-s test:unit",
-    "test:unit": "jest --clearCache && jest ./test --maxWorkers=1",
-    "webpack": "webpack-cli"
+    "test:unit": "jest ./test"
   },
   "dependencies": {
-    "@azure/functions": "^1.0.3",
-    "@rjpearson94/core": "file:../core",
-    "source-map-support": "^0.5.16"
+    "@azure/functions": "^1.2.3",
+    "@rjpearson94/core": "workspace:*",
+    "inversify": "^5.0.5",
+    "reflect-metadata": "^0.1.13",
+    "source-map-support": "^0.5.19"
   },
   "devDependencies": {
-    "awesome-typescript-loader": "^5.2.1",
-    "azure-functions-core-tools": "^2.7.1948",
+    "@types/jest": "^22.2.3",
+    "@yarnpkg/esbuild-plugin-pnp": "^0.0.1",
+    "esbuild": "^0.8.53",
+    "jest": "^26.6.3",
     "npm-run-all": "^4.1.5",
-    "webpack": "^4.41.4",
-    "webpack-cli": "^3.3.10",
-    "webpack-node-externals": "^1.7.2"
+    "ts-jest": "^26.5.2",
+    "typescript": "~4.1.5",
+    "yazl": "^2.5.1"
   }
 }

@@ -3,7 +3,7 @@ import { controller, httpGet } from 'inversify-express-utils';
 
 import { TYPES, HelloService } from '@rjpearson94/core';
 
-import { GreetingResponse } from '@src/controller/v2/model/greeting-response';
+import { GreetingResponse } from '../../controller/v2/model/greeting-response';
 
 @controller('/v2')
 export class V2GreetingController {

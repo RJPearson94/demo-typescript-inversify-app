@@ -15,7 +15,7 @@ module "inversify_function" {
     name        = "inversify_demo_function"
     description = "Example Typescript Inversify Cloud Function"
     entry       = "handler"
-    runtime     = "nodejs10"
+    runtime     = "nodejs14"
     memory      = 128
     timeout     = 5
   }

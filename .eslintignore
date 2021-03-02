@@ -1,12 +1,25 @@
+# IDE
 .vscode
 
-node_modules
-dist
-lib
-utility
+# Misc
+.history
 
+# Yarn
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
+# Artefact
+build
+dist
+
+# Tests
 coverage
 newman
 
+# Terraform
 .terraform
 .terragrunt-cache

@@ -1,7 +1,7 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'prettier', 'jest'],
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier/@typescript-eslint', 'plugin:prettier/recommended'],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier', 'plugin:prettier/recommended'],
   env: {
     es6: true,
     node: true
@@ -30,7 +30,7 @@ module.exports = {
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/no-var-requires': 'off',
-        '@typescript-eslint/ban-ts-ignore': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
         'no-async-promise-executor': 'off',
         'jest/no-disabled-tests': 'warn',
         'jest/no-focused-tests': 'error',

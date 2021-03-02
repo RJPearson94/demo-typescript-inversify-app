@@ -1,5 +1,5 @@
 import { APIGatewayProxyResult } from 'aws-lambda';
-import { MiddlewareConfig, APIGatewayProxyMiddleware } from '@src/middleware';
+import { MiddlewareConfig, APIGatewayProxyMiddleware } from '../middleware';
 
 const createResponse = (statusCode: number, body: string): APIGatewayProxyResult => ({
   statusCode,
