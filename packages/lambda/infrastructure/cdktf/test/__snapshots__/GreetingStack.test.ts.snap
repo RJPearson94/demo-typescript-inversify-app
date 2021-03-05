@@ -1,0 +1,437 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`create greeting stack 1`] = `
+"{
+  \\"//\\": {
+    \\"metadata\\": {
+      \\"version\\": \\"stubbed\\",
+      \\"stackName\\": \\"greeting-stack\\"
+    }
+  },
+  \\"resource\\": {
+    \\"aws_cloudwatch_log_group\\": {
+      \\"lambda_logs\\": {
+        \\"name\\": \\"/aws/lambda/greeting-stack-function\\",
+        \\"retention_in_days\\": 7,
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/lambda_logs\\",
+            \\"uniqueId\\": \\"lambda_logs\\"
+          }
+        }
+      }
+    },
+    \\"aws_iam_role\\": {
+      \\"lambda_role\\": {
+        \\"assume_role_policy\\": \\"{\\\\\\"Version\\\\\\":\\\\\\"2012-10-17\\\\\\",\\\\\\"Statement\\\\\\":[{\\\\\\"Action\\\\\\":\\\\\\"sts:AssumeRole\\\\\\",\\\\\\"Principal\\\\\\":{\\\\\\"Service\\\\\\":\\\\\\"lambda.amazonaws.com\\\\\\"},\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"}]}\\",
+        \\"name\\": \\"greeting-stack-function-role\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/lambda_role\\",
+            \\"uniqueId\\": \\"lambda_role\\"
+          }
+        }
+      }
+    },
+    \\"aws_iam_policy\\": {
+      \\"lambda_policy\\": {
+        \\"name\\": \\"greeting-stack-function-policy\\",
+        \\"policy\\": \\"{\\\\\\"Version\\\\\\":\\\\\\"2012-10-17\\\\\\",\\\\\\"Statement\\\\\\":[{\\\\\\"Action\\\\\\":[\\\\\\"logs:CreateLogStream\\\\\\",\\\\\\"logs:PutLogEvents\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"\${aws_cloudwatch_log_group.lambda_logs.arn}\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"},{\\\\\\"Action\\\\\\":[\\\\\\"xray:PutTraceSegments\\\\\\",\\\\\\"xray:PutTelemetryRecords\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"*\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"}]}\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/lambda_policy\\",
+            \\"uniqueId\\": \\"lambda_policy\\"
+          }
+        }
+      }
+    },
+    \\"aws_iam_role_policy_attachment\\": {
+      \\"lambda_policy_attachment\\": {
+        \\"policy_arn\\": \\"\${aws_iam_policy.lambda_policy.arn}\\",
+        \\"role\\": \\"\${aws_iam_role.lambda_role.name}\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/lambda_policy_attachment\\",
+            \\"uniqueId\\": \\"lambda_policy_attachment\\"
+          }
+        }
+      }
+    },
+    \\"aws_lambda_function\\": {
+      \\"lambda\\": {
+        \\"filename\\": \\"../../../dist/inversify-demo-lambda.zip\\",
+        \\"function_name\\": \\"greeting-stack-function\\",
+        \\"handler\\": \\"main.handler\\",
+        \\"memory_size\\": 128,
+        \\"role\\": \\"\${aws_iam_role.lambda_role.arn}\\",
+        \\"runtime\\": \\"nodejs14.x\\",
+        \\"source_code_hash\\": \\"filebase64sha256(../../../dist/inversify-demo-lambda.zip)\\",
+        \\"timeout\\": 5,
+        \\"tracing_config\\": [
+          {
+            \\"mode\\": \\"PassThrough\\"
+          }
+        ],
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/lambda\\",
+            \\"uniqueId\\": \\"lambda\\"
+          }
+        }
+      }
+    },
+    \\"aws_lambda_alias\\": {
+      \\"lambda_alias\\": {
+        \\"function_name\\": \\"\${aws_lambda_function.lambda.function_name}\\",
+        \\"function_version\\": \\"\${aws_lambda_function.lambda.version}\\",
+        \\"name\\": \\"stable\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/lambda_alias\\",
+            \\"uniqueId\\": \\"lambda_alias\\"
+          }
+        }
+      }
+    },
+    \\"aws_api_gateway_rest_api\\": {
+      \\"rest_api\\": {
+        \\"body\\": \\"{\\\\\\"openapi\\\\\\":\\\\\\"3.0.1\\\\\\",\\\\\\"info\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Greeting API\\\\\\",\\\\\\"version\\\\\\":\\\\\\"1.0.0\\\\\\"},\\\\\\"paths\\\\\\":{\\\\\\"/v1/greet\\\\\\":{\\\\\\"get\\\\\\":{\\\\\\"summary\\\\\\":\\\\\\"Provide Greeting Message\\\\\\",\\\\\\"description\\\\\\":\\\\\\"Provide Greeting Message when lambda is invoked. Lambda is written in TypeScript\\\\\\",\\\\\\"operationId\\\\\\":\\\\\\"getV1Greet\\\\\\",\\\\\\"security\\\\\\":[{\\\\\\"ApiKey\\\\\\":[]}],\\\\\\"x-amazon-apigateway-integration\\\\\\":{\\\\\\"uri\\\\\\":\\\\\\"\${aws_lambda_alias.lambda_alias.invoke_arn}\\\\\\",\\\\\\"timeoutInMillis\\\\\\":10000,\\\\\\"httpMethod\\\\\\":\\\\\\"POST\\\\\\",\\\\\\"type\\\\\\":\\\\\\"aws_proxy\\\\\\",\\\\\\"responses\\\\\\":{\\\\\\"default\\\\\\":{\\\\\\"statusCode\\\\\\":\\\\\\"200\\\\\\"}}},\\\\\\"responses\\\\\\":{\\\\\\"200\\\\\\":{\\\\\\"description\\\\\\":\\\\\\"Successfully Greet\\\\\\",\\\\\\"content\\\\\\":{\\\\\\"application/json\\\\\\":{\\\\\\"schema\\\\\\":{\\\\\\"$ref\\\\\\":\\\\\\"#/components/schemas/GreetingResponse\\\\\\"}}}}}}}},\\\\\\"components\\\\\\":{\\\\\\"securitySchemes\\\\\\":{\\\\\\"ApiKey\\\\\\":{\\\\\\"type\\\\\\":\\\\\\"apiKey\\\\\\",\\\\\\"in\\\\\\":\\\\\\"header\\\\\\",\\\\\\"name\\\\\\":\\\\\\"x-api-key\\\\\\"}},\\\\\\"schemas\\\\\\":{\\\\\\"GreetingResponse\\\\\\":{\\\\\\"type\\\\\\":\\\\\\"object\\\\\\",\\\\\\"properties\\\\\\":{\\\\\\"message\\\\\\":{\\\\\\"type\\\\\\":\\\\\\"string\\\\\\"}}}}}}\\",
+        \\"name\\": \\"greeting-stack-rest-api\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/rest_api\\",
+            \\"uniqueId\\": \\"rest_api\\"
+          }
+        }
+      }
+    },
+    \\"aws_api_gateway_deployment\\": {
+      \\"deployment\\": {
+        \\"rest_api_id\\": \\"\${aws_api_gateway_rest_api.rest_api.id}\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/deployment\\",
+            \\"uniqueId\\": \\"deployment\\"
+          }
+        }
+      }
+    },
+    \\"aws_api_gateway_stage\\": {
+      \\"stage\\": {
+        \\"deployment_id\\": \\"\${aws_api_gateway_deployment.deployment.id}\\",
+        \\"rest_api_id\\": \\"\${aws_api_gateway_rest_api.rest_api.id}\\",
+        \\"stage_name\\": \\"test\\",
+        \\"xray_tracing_enabled\\": true,
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/stage\\",
+            \\"uniqueId\\": \\"stage\\"
+          }
+        }
+      }
+    },
+    \\"aws_api_gateway_api_key\\": {
+      \\"api_key\\": {
+        \\"name\\": \\"greeting-stack-api-key\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/api_key\\",
+            \\"uniqueId\\": \\"api_key\\"
+          }
+        }
+      }
+    },
+    \\"aws_api_gateway_usage_plan\\": {
+      \\"usage_plan\\": {
+        \\"name\\": \\"greeting-stack-usage-plan\\",
+        \\"api_stages\\": [
+          {
+            \\"api_id\\": \\"\${aws_api_gateway_rest_api.rest_api.id}\\",
+            \\"stage\\": \\"\${aws_api_gateway_stage.stage.stage_name}\\"
+          }
+        ],
+        \\"quota_settings\\": [
+          {
+            \\"limit\\": 100,
+            \\"period\\": \\"MONTH\\"
+          }
+        ],
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/usage_plan\\",
+            \\"uniqueId\\": \\"usage_plan\\"
+          }
+        }
+      }
+    },
+    \\"aws_api_gateway_usage_plan_key\\": {
+      \\"usage_plan_key\\": {
+        \\"key_id\\": \\"\${aws_api_gateway_api_key.api_key.id}\\",
+        \\"key_type\\": \\"API_KEY\\",
+        \\"usage_plan_id\\": \\"\${aws_api_gateway_usage_plan.usage_plan.id}\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/usage_plan_key\\",
+            \\"uniqueId\\": \\"usage_plan_key\\"
+          }
+        }
+      }
+    },
+    \\"aws_lambda_permission\\": {
+      \\"api_gateway_invoke_lambda\\": {
+        \\"action\\": \\"lambda:InvokeFunction\\",
+        \\"function_name\\": \\"\${aws_lambda_alias.lambda_alias.arn}\\",
+        \\"principal\\": \\"apigateway.amazonaws.com\\",
+        \\"source_arn\\": \\"\${aws_api_gateway_rest_api.rest_api.execution_arn}/*/*\\",
+        \\"statement_id\\": \\"AllowAPIGatewayInvoke\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/api_gateway_invoke_lambda\\",
+            \\"uniqueId\\": \\"api_gateway_invoke_lambda\\"
+          }
+        }
+      }
+    }
+  },
+  \\"output\\": {
+    \\"api_gateway_url\\": {
+      \\"value\\": \\"\${aws_api_gateway_stage.stage.invoke_url}\\"
+    },
+    \\"api_key_arn\\": {
+      \\"value\\": \\"\${aws_api_gateway_api_key.api_key.arn}\\"
+    }
+  }
+}"
+`;
+
+exports[`create greeting stack with prefix and tags 1`] = `
+"{
+  \\"//\\": {
+    \\"metadata\\": {
+      \\"version\\": \\"stubbed\\",
+      \\"stackName\\": \\"greeting-stack\\"
+    }
+  },
+  \\"resource\\": {
+    \\"aws_cloudwatch_log_group\\": {
+      \\"lambda_logs\\": {
+        \\"name\\": \\"/aws/lambda/test-greeting-stack-function\\",
+        \\"retention_in_days\\": 7,
+        \\"tags\\": {
+          \\"service\\": \\"greeting-stack\\",
+          \\"testing\\": \\"true\\"
+        },
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/lambda_logs\\",
+            \\"uniqueId\\": \\"lambda_logs\\"
+          }
+        }
+      }
+    },
+    \\"aws_iam_role\\": {
+      \\"lambda_role\\": {
+        \\"assume_role_policy\\": \\"{\\\\\\"Version\\\\\\":\\\\\\"2012-10-17\\\\\\",\\\\\\"Statement\\\\\\":[{\\\\\\"Action\\\\\\":\\\\\\"sts:AssumeRole\\\\\\",\\\\\\"Principal\\\\\\":{\\\\\\"Service\\\\\\":\\\\\\"lambda.amazonaws.com\\\\\\"},\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"}]}\\",
+        \\"name\\": \\"test-greeting-stack-function-role\\",
+        \\"tags\\": {
+          \\"service\\": \\"greeting-stack\\",
+          \\"testing\\": \\"true\\"
+        },
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/lambda_role\\",
+            \\"uniqueId\\": \\"lambda_role\\"
+          }
+        }
+      }
+    },
+    \\"aws_iam_policy\\": {
+      \\"lambda_policy\\": {
+        \\"name\\": \\"test-greeting-stack-function-policy\\",
+        \\"policy\\": \\"{\\\\\\"Version\\\\\\":\\\\\\"2012-10-17\\\\\\",\\\\\\"Statement\\\\\\":[{\\\\\\"Action\\\\\\":[\\\\\\"logs:CreateLogStream\\\\\\",\\\\\\"logs:PutLogEvents\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"\${aws_cloudwatch_log_group.lambda_logs.arn}\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"},{\\\\\\"Action\\\\\\":[\\\\\\"xray:PutTraceSegments\\\\\\",\\\\\\"xray:PutTelemetryRecords\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"*\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"}]}\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/lambda_policy\\",
+            \\"uniqueId\\": \\"lambda_policy\\"
+          }
+        }
+      }
+    },
+    \\"aws_iam_role_policy_attachment\\": {
+      \\"lambda_policy_attachment\\": {
+        \\"policy_arn\\": \\"\${aws_iam_policy.lambda_policy.arn}\\",
+        \\"role\\": \\"\${aws_iam_role.lambda_role.name}\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/lambda_policy_attachment\\",
+            \\"uniqueId\\": \\"lambda_policy_attachment\\"
+          }
+        }
+      }
+    },
+    \\"aws_lambda_function\\": {
+      \\"lambda\\": {
+        \\"filename\\": \\"../../../dist/inversify-demo-lambda.zip\\",
+        \\"function_name\\": \\"test-greeting-stack-function\\",
+        \\"handler\\": \\"main.handler\\",
+        \\"memory_size\\": 128,
+        \\"role\\": \\"\${aws_iam_role.lambda_role.arn}\\",
+        \\"runtime\\": \\"nodejs14.x\\",
+        \\"source_code_hash\\": \\"filebase64sha256(../../../dist/inversify-demo-lambda.zip)\\",
+        \\"tags\\": {
+          \\"service\\": \\"greeting-stack\\",
+          \\"testing\\": \\"true\\"
+        },
+        \\"timeout\\": 5,
+        \\"tracing_config\\": [
+          {
+            \\"mode\\": \\"PassThrough\\"
+          }
+        ],
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/lambda\\",
+            \\"uniqueId\\": \\"lambda\\"
+          }
+        }
+      }
+    },
+    \\"aws_lambda_alias\\": {
+      \\"lambda_alias\\": {
+        \\"function_name\\": \\"\${aws_lambda_function.lambda.function_name}\\",
+        \\"function_version\\": \\"\${aws_lambda_function.lambda.version}\\",
+        \\"name\\": \\"stable\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/lambda_alias\\",
+            \\"uniqueId\\": \\"lambda_alias\\"
+          }
+        }
+      }
+    },
+    \\"aws_api_gateway_rest_api\\": {
+      \\"rest_api\\": {
+        \\"body\\": \\"{\\\\\\"openapi\\\\\\":\\\\\\"3.0.1\\\\\\",\\\\\\"info\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Greeting API\\\\\\",\\\\\\"version\\\\\\":\\\\\\"1.0.0\\\\\\"},\\\\\\"paths\\\\\\":{\\\\\\"/v1/greet\\\\\\":{\\\\\\"get\\\\\\":{\\\\\\"summary\\\\\\":\\\\\\"Provide Greeting Message\\\\\\",\\\\\\"description\\\\\\":\\\\\\"Provide Greeting Message when lambda is invoked. Lambda is written in TypeScript\\\\\\",\\\\\\"operationId\\\\\\":\\\\\\"getV1Greet\\\\\\",\\\\\\"security\\\\\\":[{\\\\\\"ApiKey\\\\\\":[]}],\\\\\\"x-amazon-apigateway-integration\\\\\\":{\\\\\\"uri\\\\\\":\\\\\\"\${aws_lambda_alias.lambda_alias.invoke_arn}\\\\\\",\\\\\\"timeoutInMillis\\\\\\":10000,\\\\\\"httpMethod\\\\\\":\\\\\\"POST\\\\\\",\\\\\\"type\\\\\\":\\\\\\"aws_proxy\\\\\\",\\\\\\"responses\\\\\\":{\\\\\\"default\\\\\\":{\\\\\\"statusCode\\\\\\":\\\\\\"200\\\\\\"}}},\\\\\\"responses\\\\\\":{\\\\\\"200\\\\\\":{\\\\\\"description\\\\\\":\\\\\\"Successfully Greet\\\\\\",\\\\\\"content\\\\\\":{\\\\\\"application/json\\\\\\":{\\\\\\"schema\\\\\\":{\\\\\\"$ref\\\\\\":\\\\\\"#/components/schemas/GreetingResponse\\\\\\"}}}}}}}},\\\\\\"components\\\\\\":{\\\\\\"securitySchemes\\\\\\":{\\\\\\"ApiKey\\\\\\":{\\\\\\"type\\\\\\":\\\\\\"apiKey\\\\\\",\\\\\\"in\\\\\\":\\\\\\"header\\\\\\",\\\\\\"name\\\\\\":\\\\\\"x-api-key\\\\\\"}},\\\\\\"schemas\\\\\\":{\\\\\\"GreetingResponse\\\\\\":{\\\\\\"type\\\\\\":\\\\\\"object\\\\\\",\\\\\\"properties\\\\\\":{\\\\\\"message\\\\\\":{\\\\\\"type\\\\\\":\\\\\\"string\\\\\\"}}}}}}\\",
+        \\"name\\": \\"test-greeting-stack-rest-api\\",
+        \\"tags\\": {
+          \\"service\\": \\"greeting-stack\\",
+          \\"testing\\": \\"true\\"
+        },
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/rest_api\\",
+            \\"uniqueId\\": \\"rest_api\\"
+          }
+        }
+      }
+    },
+    \\"aws_api_gateway_deployment\\": {
+      \\"deployment\\": {
+        \\"rest_api_id\\": \\"\${aws_api_gateway_rest_api.rest_api.id}\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/deployment\\",
+            \\"uniqueId\\": \\"deployment\\"
+          }
+        }
+      }
+    },
+    \\"aws_api_gateway_stage\\": {
+      \\"stage\\": {
+        \\"deployment_id\\": \\"\${aws_api_gateway_deployment.deployment.id}\\",
+        \\"rest_api_id\\": \\"\${aws_api_gateway_rest_api.rest_api.id}\\",
+        \\"stage_name\\": \\"test\\",
+        \\"tags\\": {
+          \\"service\\": \\"greeting-stack\\",
+          \\"testing\\": \\"true\\"
+        },
+        \\"xray_tracing_enabled\\": true,
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/stage\\",
+            \\"uniqueId\\": \\"stage\\"
+          }
+        }
+      }
+    },
+    \\"aws_api_gateway_api_key\\": {
+      \\"api_key\\": {
+        \\"name\\": \\"test-greeting-stack-api-key\\",
+        \\"tags\\": {
+          \\"service\\": \\"greeting-stack\\",
+          \\"testing\\": \\"true\\"
+        },
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/api_key\\",
+            \\"uniqueId\\": \\"api_key\\"
+          }
+        }
+      }
+    },
+    \\"aws_api_gateway_usage_plan\\": {
+      \\"usage_plan\\": {
+        \\"name\\": \\"test-greeting-stack-usage-plan\\",
+        \\"tags\\": {
+          \\"service\\": \\"greeting-stack\\",
+          \\"testing\\": \\"true\\"
+        },
+        \\"api_stages\\": [
+          {
+            \\"api_id\\": \\"\${aws_api_gateway_rest_api.rest_api.id}\\",
+            \\"stage\\": \\"\${aws_api_gateway_stage.stage.stage_name}\\"
+          }
+        ],
+        \\"quota_settings\\": [
+          {
+            \\"limit\\": 100,
+            \\"period\\": \\"MONTH\\"
+          }
+        ],
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/usage_plan\\",
+            \\"uniqueId\\": \\"usage_plan\\"
+          }
+        }
+      }
+    },
+    \\"aws_api_gateway_usage_plan_key\\": {
+      \\"usage_plan_key\\": {
+        \\"key_id\\": \\"\${aws_api_gateway_api_key.api_key.id}\\",
+        \\"key_type\\": \\"API_KEY\\",
+        \\"usage_plan_id\\": \\"\${aws_api_gateway_usage_plan.usage_plan.id}\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/usage_plan_key\\",
+            \\"uniqueId\\": \\"usage_plan_key\\"
+          }
+        }
+      }
+    },
+    \\"aws_lambda_permission\\": {
+      \\"api_gateway_invoke_lambda\\": {
+        \\"action\\": \\"lambda:InvokeFunction\\",
+        \\"function_name\\": \\"\${aws_lambda_alias.lambda_alias.arn}\\",
+        \\"principal\\": \\"apigateway.amazonaws.com\\",
+        \\"source_arn\\": \\"\${aws_api_gateway_rest_api.rest_api.execution_arn}/*/*\\",
+        \\"statement_id\\": \\"AllowAPIGatewayInvoke\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/api_gateway_invoke_lambda\\",
+            \\"uniqueId\\": \\"api_gateway_invoke_lambda\\"
+          }
+        }
+      }
+    }
+  },
+  \\"output\\": {
+    \\"api_gateway_url\\": {
+      \\"value\\": \\"\${aws_api_gateway_stage.stage.invoke_url}\\"
+    },
+    \\"api_key_arn\\": {
+      \\"value\\": \\"\${aws_api_gateway_api_key.api_key.arn}\\"
+    }
+  }
+}"
+`;

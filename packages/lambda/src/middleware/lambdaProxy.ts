@@ -15,7 +15,11 @@ export const lambdaProxyMiddleware: MiddlewareConfig = (): APIGatewayProxyMiddle
     next();
   },
   onError: (handler, next): void => {
-    handler.response = createResponse(500, handler.error.message);
+    console.error({
+      requestId: handler.context.awsRequestId,
+      ...handler.error
+    });
+    handler.response = createResponse(500, 'An error occurred');
     next();
   }
 });

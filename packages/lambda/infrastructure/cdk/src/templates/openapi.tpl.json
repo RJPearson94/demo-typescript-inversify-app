@@ -1,0 +1,59 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Greeting API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/v1/greet": {
+      "get": {
+        "summary": "Provide Greeting Message",
+        "description": "Provide Greeting Message when lambda is invoked. Lambda is written in TypeScript",
+        "operationId": "getV1Greet",
+        "security": [{ "ApiKey": [] }],
+        "x-amazon-apigateway-integration": {
+          "uri": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambda_arn}/invocations",
+          "timeoutInMillis": 10000,
+          "httpMethod": "POST",
+          "type": "aws_proxy",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully Greet",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GreetingResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key"
+      }
+    },
+    "schemas": {
+      "GreetingResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

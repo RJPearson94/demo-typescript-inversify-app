@@ -2,6 +2,9 @@
   "name": "@rjpearson94/cloud-function",
   "description": "An example cloud function to prototype Dependency Injection using Typescript & Inversify",
   "version": "1.0.0",
+  "engines": {
+    "node": ">= 14.15"
+  },
   "scripts": {
     "build": "run-s clean build:function",
     "build:function": "node ./esbuild.js",

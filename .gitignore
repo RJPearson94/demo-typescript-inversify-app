@@ -8,6 +8,7 @@
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+vendor
 
 # Artefacts
 dist
@@ -35,6 +36,12 @@ generated-docs
 *.tfstate*
 .terraform.lock.hcl
 
+# CDK
+cdk.out
+
+# CDKTF
+cdktf.out
+
 # Test Reports
 newman
 
@@ -42,7 +49,5 @@ newman
 .scannerwork
 
 # Azure Functions artifacts
-bin
-obj
 appsettings.json
 local.settings.json

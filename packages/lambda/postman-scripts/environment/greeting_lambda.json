@@ -1,0 +1,19 @@
+{
+  "id": "b4f31420-a53d-4146-af2e-7c525b47b931",
+  "name": "greeting_lambda",
+  "values": [
+    {
+      "key": "URL",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "ApiKey",
+      "value": "",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2021-03-02T20:30:28.877Z",
+  "_postman_exported_using": "Postman/7.36.5"
+}

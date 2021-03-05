@@ -2,7 +2,7 @@ const { pnpPlugin } = require('@yarnpkg/esbuild-plugin-pnp');
 const { ZipFile } = require('yazl');
 const fs = require('fs');
 
-const artefactPath = 'modules/lambda/inversify/dist';
+const artefactPath = 'dist';
 
 require('esbuild')
   .build({

@@ -1,0 +1,62 @@
+{
+  "info": {
+    "_postman_id": "5017175e-8cf6-4fca-8df1-d7eb6945e27f",
+    "name": "Greeting Lambda",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "API Gateway Greeting",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const Ajv = require('ajv');",
+              "const ajv = new Ajv({ logger: console });",
+              "",
+              "pm.test('Valid response with JSON body', () => {",
+              "  pm.response.to.be.ok;",
+              "  pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test('Verify response body matches schema', () => {",
+              "  const schema = {",
+              "    \"properties\": {",
+              "      \"message\": {",
+              "        \"type\": \"string\"",
+              "      }",
+              "    }",
+              "  };",
+              "  pm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
+              "})",
+              "",
+              "pm.test('response message is HelloLambda', () => {",
+              "  const jsonBody = pm.response.json();",
+              "  pm.expect(jsonBody.message).to.eql('HelloLambda')",
+              "})"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "{{ApiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{URL}}/v1/greet",
+          "host": ["{{URL}}"],
+          "path": ["v1", "greet"]
+        },
+        "description": "Verify Lambda has been deployed & configured correctly"
+      },
+      "response": []
+    }
+  ]
+}

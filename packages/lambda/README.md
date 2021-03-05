@@ -1,6 +1,6 @@
 # @rjpearson94/lambda
 
-This example application to prototype TypeScript & Dependency Injection comprises of many programming languages, frameworks, etc. to build, test and deploy the application.
+This example application to prototype TypeScript & Dependency Injection comprises many programming languages, frameworks, etc. to build, test and deploy the application.
 
 The application is currently designed to run on Amazon Web Service (AWS). The application uses the following AWS services:
 
@@ -10,42 +10,27 @@ The application is currently designed to run on Amazon Web Service (AWS). The ap
 - [IAM](https://aws.amazon.com/iam/)
 - [X-Ray](https://aws.amazon.com/xray/)
 
-A high level architecture can be seen below
+A high-level architecture can be seen below
 
 ![architecture diagram](./diagrams/Architecture.jpg)
 
-To be able to deploy all of the AWS infrastructure, the following IaC tools are used:
+The lambda function can be deployed using the following tools:
 
 - [Terraform](https://www.terraform.io/)
-- [Terragrunt](https://github.com/gruntwork-io/terragrunt)
-
-To test the AWS infrastructure that is provisioned, the following programming language and framework is used:
-
-- [Golang](https://golang.org/)
-- [Terratest](https://github.com/gruntwork-io/terratest)
+- [CDK for Terraform](https://github.com/hashicorp/terraform-cdk)
+- [CDK](https://aws.amazon.com/cdk/)
 
 ## Getting Started
 
-To be able to test and run the lambda function on real AWS infrastructure you need the following:
+To be able to build and test you need the following:
 
-- [AWS Account](https://aws.amazon.com/)
-- [AWS CLI](https://aws.amazon.com/cli/) (configured)
-- [Terraform](https://www.terraform.io/) (v0.14 or above)
-- [Terragrunt](https://github.com/gruntwork-io/terragrunt) (v0.21 or above)
-
-To be able to run the component, integration & E2E tests you also need the following:
-
-- [Golang](https://golang.org/) (v1.14 or above)
-
-**NOTE:** To run the terratests the Terraform version must match the terraform version in the [go module file](../utility/terratest/go.mod) used by the terratests. If the versions do not match then an error will occur
+- [Yarn 2/ Berry](https://yarnpkg.com/)
 
 ## Scripts
 
 - test (Run all tests)
 - test:unit (Run unit tests & generate coverage report)
-- test:integration (Run integration tests)
-- test:e2e (Run e2e tests)
-- build (build lambda artefact zip)
+- build (Builds lambda zip)
 
 For the full script list please see the [package.json](./package.json)
 
@@ -54,16 +39,27 @@ The scripts can be run using the following
 Open a command prompt in this directory and run
 
 ```sh
+yarn install
 yarn <script>
 ```
 
+## Deploying to AWS
+
+As mentioned above the lambda can be deployed to AWS using various Infrastructure as Code (IaC) tools.
+
+To deploy the lambda function using Terraform visit the [Terraform Infrastructure folder](./infrastructure/terraform) for more details
+
+To deploy the lambda function using CDK for Terraform visit the [CDKTF Infrastructure folder](./infrastructure/cdktf) for more details
+
+To deploy the lambda function using CDK visit the [CDK Infrastructure folder](./infrastructure/cdktf) for more details
+
+**NOTE:** Please be aware cost/ charges may be incurred from deploying this lambda (and supporting resources) onto AWS
+
 ## Postman
 
-To test the solution including the API, Postman is used.
+To test the solution including the API, Postman can be used.
 
 The Postman Scripts can be seen in the postman-scripts folder
-
-**NOTE:** These postman tests are run as part of the E2E tests
 
 ### Running Postman Tests via GUI
 
@@ -72,15 +68,15 @@ To run the postman scripts via the Postman GUI.
 Setup
 
 - Import the lambda collection (found within the postman-scripts folder)
-- Configure Environment to run the tests against (Add Variable URL and set the initial value as the API Gateway URL)
+- Import the environment configuration and set the `URL` and `ApiKey` initial values
 
 To run an individual script/ request
 
-- Click on script/ request you wan to run
+- Click on the script/ request you wan to run
 - Click Send Request
 - Verify Tests Results
 
-Alternatively you can use the Postman Collection Runner.
+Alternatively, you can use the Postman Collection Runner.
 
 - Open Collection Runner
 - Select the imported lambda collection
@@ -99,53 +95,3 @@ To run the postman scripts via the CLI, Newman test runner is used. To run the N
 For more information on Postman, see <https://www.getpostman.com/>
 
 For more information on Newman, see <https://github.com/postmanlabs/newman>
-
-## Deploying to AWS
-
-To setup and build the artefact (lambda zip) which will be deployed to AWS, please to run the following commands:
-
-```bash
-yarn install
-yarn build
-```
-
-To see what resources will be provisioned, change into the deployment folder and run the following:
-
-```bash
-terragrunt plan-all
-```
-
-This will show you all the resources that will be provisioned, including:
-
-- [API Gateway](https://aws.amazon.com/api-gateway/)
-- [Lambda](https://aws.amazon.com/lambda/)
-
-If you want to provision these resources, please run the following command (Please note cost/ charges may be incurred):
-
-```bash
-terragrunt apply-all
-```
-
-When you see `[terragrunt] Are you sure you want to run 'terragrunt apply' in each folder of the stack described above? (y/n)` type `y` and hit the return/ enter key. Alternatively if you don't want the manual accept process you can run the following command:
-
-```bash
-terragrunt apply-all --terragrunt-non-interactive
-```
-
-The resources should be provisioned
-
-## Remove Resources from AWS
-
-Once you are finished with the resources you can remove all the provisioned resources by running the following command (from from the deployment folder):
-
-```bash
-terragrunt destroy-all
-```
-
-When you see `[terragrunt] Are you sure you want to run 'terragrunt destroy' in each folder of the stack described above? (y/n)` type `y` and hit the return/ enter key. Alternatively if you don't want the manual accept process you can run the following command:
-
-```bash
-terragrunt destroy-all --terragrunt-non-interactive
-```
-
-Then all the resources (which Terraform/ Terragrunt has state information for) should be removed.
