@@ -15,7 +15,7 @@ inputs = {
   region = "northeurope"
 
   artefact = {
-    name = "azure-function.zip",
+    name   = "azure-function.zip",
     source = "${get_parent_terragrunt_dir()}/../../../dist/azure-function.zip"
   }
 

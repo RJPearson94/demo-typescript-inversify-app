@@ -1,5 +1,9 @@
 default: deploy
 
+format:
+	find . -type f -name "*.tf" -prune -exec terraform fmt {} \;
+	find . -type f -name "*.hcl" -prune -exec terragrunt hclfmt {} \;
+
 clean-deployments:
 	find ./deployment -type d -name ".terragrunt-cache" -prune -exec rm -rf {} \;
 
@@ -12,4 +16,4 @@ deploy:
 destroy:
 	cd deployment; terragrunt run-all destroy $(DESTROYARGS)
 
-.PHONY: clean-deployments plan deploy destroy
+.PHONY: clean-deployments plan deploy destroy format

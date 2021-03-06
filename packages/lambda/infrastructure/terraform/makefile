@@ -1,5 +1,9 @@
 default: deploy
 
+format:
+	find . -type f -name "*.tf" -prune -exec terraform fmt {} \;
+	find . -type f -name "*.hcl" -prune -exec terragrunt hclfmt {} \;
+
 clean: integration-test-clean e2e-test-clean
 
 download: 
@@ -31,4 +35,4 @@ destroy:
 
 test: integration-test e2e-test
 
-.PHONY: download clean test clean-integration-tests integration-test clean-deployments e2e-test plan deploy destroy
+.PHONY: download clean test clean-integration-tests integration-test clean-deployments e2e-test plan deploy destroy format

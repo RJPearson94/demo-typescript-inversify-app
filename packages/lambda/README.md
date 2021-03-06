@@ -39,7 +39,6 @@ The scripts can be run using the following
 Open a command prompt in this directory and run
 
 ```sh
-yarn install
 yarn <script>
 ```
 

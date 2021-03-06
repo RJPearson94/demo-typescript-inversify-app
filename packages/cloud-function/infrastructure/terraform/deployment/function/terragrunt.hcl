@@ -24,7 +24,7 @@ inputs = {
   }
 
   artefact = {
-    name = "cloud-function.zip",
+    name   = "cloud-function.zip",
     source = "${get_terragrunt_dir()}/../../../../dist/cloud-function.zip"
   }
 }

@@ -30,6 +30,6 @@ inputs = {
   resource_suffix = ""
   tags = {
     Environment = "Testing"
-    IaC = "Terraform"
+    IaC         = "Terraform"
   }
 }
