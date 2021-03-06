@@ -1,3 +1,11 @@
+variable "artefact" {
+  description = "The cloud function artefact/ zip details"
+  type = object({
+    name   = string
+    source = string
+  })
+}
+
 variable "resource_suffix" {
   description = "Suffix for GCP resources to prevent name clashes between during testing"
   default     = ""

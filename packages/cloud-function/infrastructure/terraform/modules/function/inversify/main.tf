@@ -1,13 +1,9 @@
-locals {
-  name = "inversify-demo-cloud-function.zip"
-}
-
 module "inversify_function" {
   source = "../"
 
   artefact = {
-    name         = local.name
-    local_source = "${path.module}/dist/${local.name}"
+    name         = var.artefact.name
+    local_source = var.artefact.source
     bucket       = var.bucket.name
   }
 

@@ -22,4 +22,9 @@ inputs = {
   bucket = {
     name = dependency.bucket.outputs.inversify_bucket.name
   }
+
+  artefact = {
+    name = "cloud-function.zip",
+    source = "${get_terragrunt_dir()}/../../../../dist/cloud-function.zip"
+  }
 }

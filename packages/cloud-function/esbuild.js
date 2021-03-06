@@ -2,7 +2,7 @@ const { pnpPlugin } = require('@yarnpkg/esbuild-plugin-pnp');
 const { ZipFile } = require('yazl');
 const fs = require('fs');
 
-const artefactPath = 'modules/function/inversify/dist';
+const artefactPath = 'dist';
 
 require('esbuild')
   .build({
@@ -20,7 +20,7 @@ require('esbuild')
     const zipfile = new ZipFile();
     zipfile.addFile(`${artefactPath}/index.js.map`, 'index.js.map');
     zipfile.addFile(`${artefactPath}/index.js`, 'index.js');
-    zipfile.outputStream.pipe(fs.createWriteStream(`${artefactPath}/inversify-demo-cloud-function.zip`)).on('close', () => {
+    zipfile.outputStream.pipe(fs.createWriteStream(`${artefactPath}/cloud-function.zip`)).on('close', () => {
       console.log('Function artefact zipped successfully');
     });
     zipfile.end();
