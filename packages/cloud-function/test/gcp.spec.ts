@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 
-import * as gcp from '@src/gcp';
-import { container } from '@src/inversify.config';
-import { TYPES } from '@src/constant/types';
-import { GreetingController } from '@src/controller';
+import * as gcp from '../src/gcp';
+import { container } from '../src/inversify.config';
+import { TYPES } from '../src/constant/types';
+import { GreetingController } from '../src/controller';
 
 describe('#GCP', () => {
   test('Should return HelloTest when cloud function is invoked', async () => {

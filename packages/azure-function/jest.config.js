@@ -6,5 +6,5 @@ module.exports = {
   moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'node'],
   preset: 'ts-jest',
   testEnvironment: 'node',
-  testPathIgnorePatterns: ['/.terraform/', '/.terragrunt-cache/']
+  testPathIgnorePatterns: ['/infrastructure/']
 };

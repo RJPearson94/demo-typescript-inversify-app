@@ -4,36 +4,77 @@ updates:
     directory: '/'
     schedule:
       interval: 'daily'
+    labels:
+      - 'npm'
+      - 'root'
 
   - package-ecosystem: 'npm'
     directory: '/packages/azure-function'
     schedule:
       interval: 'daily'
+    labels:
+      - 'npm'
+      - 'azure-function'
 
   - package-ecosystem: 'npm'
     directory: '/packages/cloud-function'
     schedule:
       interval: 'daily'
+    labels:
+      - 'npm'
+      - 'cloud-function'
 
   - package-ecosystem: 'npm'
     directory: '/packages/core'
     schedule:
       interval: 'daily'
+    labels:
+      - 'npm'
+      - 'core'
 
   - package-ecosystem: 'npm'
     directory: '/packages/lambda'
     schedule:
       interval: 'daily'
+    labels:
+      - 'npm'
+      - 'lambda'
+  - package-ecosystem: 'npm'
+    directory: '/packages/lambda/infrastructure/cdk'
+    schedule:
+      interval: 'daily'
+    labels:
+      - 'npm'
+      - 'lambda'
+      - 'cdk'
+  - package-ecosystem: 'npm'
+    directory: '/packages/lambda/infrastructure/cdktf'
+    schedule:
+      interval: 'daily'
+    labels:
+      - 'npm'
+      - 'lambda'
+      - 'cdktf'
 
   - package-ecosystem: 'npm'
     directory: '/packages/web-app'
     schedule:
       interval: 'daily'
+    labels:
+      - 'npm'
+      - 'web-app'
   - package-ecosystem: 'docker'
     directory: '/packages/web-app'
     schedule:
       interval: 'daily'
+    labels:
+      - 'docker'
+      - 'web-app'
   - package-ecosystem: 'docker'
     directory: '/packages/web-app/api'
     schedule:
       interval: 'daily'
+    labels:
+      - 'docker'
+      - 'web-app'
+      - 'api-docs'
