@@ -20,7 +20,7 @@ require('esbuild')
     const zipfile = new ZipFile();
     zipfile.addFile(`${artefactPath}/main.js.map`, 'main.js.map');
     zipfile.addFile(`${artefactPath}/main.js`, 'main.js');
-    zipfile.outputStream.pipe(fs.createWriteStream(`${artefactPath}/inversify-demo-lambda.zip`)).on('close', () => {
+    zipfile.outputStream.pipe(fs.createWriteStream(`${artefactPath}/lambda.zip`)).on('close', () => {
       console.log('Lambda artefact zipped successfully');
     });
     zipfile.end();

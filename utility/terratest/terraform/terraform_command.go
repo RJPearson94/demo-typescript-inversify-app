@@ -12,7 +12,7 @@ import (
 
 func Apply(test *testing.T, path string, resource_suffix string) {
 	tfOptions := setupTerraformOptions(path, resource_suffix)
-	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "apply-all", "-auto-approve")...)
+	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "run-all", "apply", "-auto-approve")...)
 }
 
 func Output(test *testing.T, path string, key string, resource_suffix string) string {
@@ -27,7 +27,7 @@ func OutputAll(test *testing.T, path string, resource_suffix string) map[string]
 
 func Destroy(test *testing.T, path string, resource_suffix string) {
 	tfOptions := setupTerraformOptions(path, resource_suffix)
-	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "destroy-all", "-auto-approve")...)
+	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "run-all", "destroy", "-auto-approve")...)
 }
 
 func Plan(test *testing.T, path string, resource_suffix string) *plans.Plan {
@@ -51,7 +51,7 @@ func setupTerraformOptions(path string, resource_suffix string) *terraform.Optio
 
 func runTerragruntPlan(test *testing.T, tfOptions *terraform.Options, planFilePath string) {
 	planOutputArgument := fmt.Sprintf("-out=%s", planFilePath)
-	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "plan-all", "--input=false", planOutputArgument)...)
+	terraform.RunTerraformCommand(test, tfOptions, terraform.FormatArgs(tfOptions, "run-all", "plan", "--input=false", planOutputArgument)...)
 }
 
 func readPlanFile(test *testing.T, planFilePath string) *plans.Plan {

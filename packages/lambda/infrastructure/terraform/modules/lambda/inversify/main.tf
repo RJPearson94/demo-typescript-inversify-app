@@ -2,7 +2,7 @@ module "inversify_function" {
   source = "../"
 
   artefact = {
-    source = "${path.module}/dist/inversify-demo-lambda.zip"
+    source = var.artefact.source
   }
 
   name        = "inversify_demo_function"

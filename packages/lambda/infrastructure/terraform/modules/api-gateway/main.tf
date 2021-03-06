@@ -8,6 +8,14 @@ resource "aws_api_gateway_rest_api" "greeting_rest_api" {
 resource "aws_api_gateway_deployment" "greeting_deployment" {
   description = var.deployment.description
   rest_api_id = aws_api_gateway_rest_api.greeting_rest_api.id
+
+  triggers = {
+    redeployment = sha512(jsonencode(var.openapi))
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_api_gateway_stage" "greeting_stage" {
@@ -49,5 +57,6 @@ resource "aws_lambda_permission" "api_gateway_lambda" {
   action        = "lambda:InvokeFunction"
   function_name = var.lambda.arn
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_rest_api.greeting_rest_api.execution_arn}/*/*"
+
+  source_arn = "${aws_api_gateway_stage.greeting_stage.execution_arn}/*"
 }

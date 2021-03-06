@@ -10,4 +10,8 @@ inputs = {
   logs = {
     retention = 14
   }
+
+  artefact = {
+    source = "${get_terragrunt_dir()}/../../../../dist/lambda.zip"
+  }
 }

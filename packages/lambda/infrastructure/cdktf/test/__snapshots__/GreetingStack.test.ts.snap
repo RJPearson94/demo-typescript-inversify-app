@@ -59,13 +59,13 @@ exports[`create greeting stack 1`] = `
     },
     \\"aws_lambda_function\\": {
       \\"lambda\\": {
-        \\"filename\\": \\"../../../dist/inversify-demo-lambda.zip\\",
+        \\"filename\\": \\"../../../dist/lambda.zip\\",
         \\"function_name\\": \\"greeting-stack-function\\",
         \\"handler\\": \\"main.handler\\",
         \\"memory_size\\": 128,
         \\"role\\": \\"\${aws_iam_role.lambda_role.arn}\\",
         \\"runtime\\": \\"nodejs14.x\\",
-        \\"source_code_hash\\": \\"filebase64sha256(../../../dist/inversify-demo-lambda.zip)\\",
+        \\"source_code_hash\\": \\"filebase64sha256(../../../dist/lambda.zip)\\",
         \\"timeout\\": 5,
         \\"tracing_config\\": [
           {
@@ -271,13 +271,13 @@ exports[`create greeting stack with prefix and tags 1`] = `
     },
     \\"aws_lambda_function\\": {
       \\"lambda\\": {
-        \\"filename\\": \\"../../../dist/inversify-demo-lambda.zip\\",
+        \\"filename\\": \\"../../../dist/lambda.zip\\",
         \\"function_name\\": \\"test-greeting-stack-function\\",
         \\"handler\\": \\"main.handler\\",
         \\"memory_size\\": 128,
         \\"role\\": \\"\${aws_iam_role.lambda_role.arn}\\",
         \\"runtime\\": \\"nodejs14.x\\",
-        \\"source_code_hash\\": \\"filebase64sha256(../../../dist/inversify-demo-lambda.zip)\\",
+        \\"source_code_hash\\": \\"filebase64sha256(../../../dist/lambda.zip)\\",
         \\"tags\\": {
           \\"service\\": \\"greeting-stack\\",
           \\"testing\\": \\"true\\"

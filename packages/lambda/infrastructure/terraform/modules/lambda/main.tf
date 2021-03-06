@@ -44,20 +44,18 @@ resource "aws_iam_role" "lambda_iam" {
   name        = "lambda_iam${local.resource_suffix}"
   description = "Lambda IAM Role"
 
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Effect": "Allow"
-    }
-  ]
-}
-EOF
+  assume_role_policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Action" : "sts:AssumeRole",
+        "Principal" : {
+          "Service" : "lambda.amazonaws.com"
+        },
+        "Effect" : "Allow"
+      }
+    ]
+  })
 
   tags = var.tags
 }
@@ -67,29 +65,27 @@ resource "aws_iam_policy" "lambda_policy" {
   path        = "/"
   description = "IAM policy for logging from a lambda"
 
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": [
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
-      ],
-      "Resource": "${aws_cloudwatch_log_group.lambda_log_group.arn}",
-      "Effect": "Allow"
-    },
-    {
-      "Action": [
-        "xray:PutTraceSegments", 
-        "xray:PutTelemetryRecords"
-      ],
-      "Resource": "*",
-      "Effect": "Allow"
-    }
-  ]
-}
-EOF
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Action" : [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        "Resource" : aws_cloudwatch_log_group.lambda_log_group.arn,
+        "Effect" : "Allow"
+      },
+      {
+        "Action" : [
+          "xray:PutTraceSegments",
+          "xray:PutTelemetryRecords"
+        ],
+        "Resource" : "*",
+        "Effect" : "Allow"
+      }
+    ]
+  })
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_logs" {

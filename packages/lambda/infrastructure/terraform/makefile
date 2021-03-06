@@ -1,39 +1,34 @@
 default: deploy
 
-clean: clean-artefact integration-test-clean e2e-test-clean
-
-clean-artefact:
-	rm -rf ./modules/lambda/inversify/dist
-
-copy-artefact: clean-artefact
-	mkdir ./modules/lambda/inversify/dist
-	cp -f ../../dist/inversify-demo-lambda.zip ./modules/lambda/inversify/dist
+clean: integration-test-clean e2e-test-clean
 
 download: 
 	@echo "==> Downloading dependencies"
 	go mod vendor
 
 clean-integration-tests:
-	find ./modules/lambda/inversify/test/integration -type d -name ".terragrunt-cache" -prune -exec rm -rf {} \;
+	find ./modules/lambda/inversify/integration-test -type d -name ".terragrunt-cache" -prune -exec rm -rf {} \;
+	find ./modules/lambda/inversify/integration-test -type f -name ".terraform.lock.hcl" -prune -exec rm -rf {} \;
 
-integration-test: clean-integration-tests copy-artefact
-	go test $(TESTARGS) -timeout=10m ./modules/lambda/inversify/test/integration 
+integration-test: clean-integration-tests
+	go test $(TESTARGS) -timeout=10m ./modules/lambda/inversify/integration-test
 
 clean-deployments:
 	find ./deployment -type d -name ".terragrunt-cache" -prune -exec rm -rf {} \;
+	find ./deployment -type f -name ".terraform.lock.hcl" -prune -exec rm -rf {} \;
 
-e2e-test: clean-deployments copy-artefact
-	go test $(TESTARGS) -timeout=20m ./deployment/test/e2e
+e2e-test: clean-deployments
+	go test $(TESTARGS) -timeout=20m ./e2e
 
-plan: copy-artefact
+plan:
 	cd deployment; terragrunt run-all plan
 
-deploy: copy-artefact
+deploy:
 	cd deployment; terragrunt run-all apply $(DEPLOYARGS)
 
-destroy: copy-artefact
+destroy:
 	cd deployment; terragrunt run-all destroy $(DESTROYARGS)
 
 test: integration-test e2e-test
 
-.PHONY: download clean-artefact copy-artefact clean test clean-integration-tests integration-test clean-deployments e2e-test plan deploy destroy
+.PHONY: download clean test clean-integration-tests integration-test clean-deployments e2e-test plan deploy destroy

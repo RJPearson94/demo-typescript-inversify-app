@@ -123,7 +123,7 @@ export class GreetingStack extends TerraformStack {
       policyArn: lambdaPolicy.arn
     });
 
-    const lambdaArtefactPath = '../../../dist/inversify-demo-lambda.zip';
+    const lambdaArtefactPath = '../../../dist/lambda.zip';
 
     const func = new LambdaFunction(this, `lambda`, {
       filename: lambdaArtefactPath,

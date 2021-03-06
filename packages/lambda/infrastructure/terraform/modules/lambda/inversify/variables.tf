@@ -5,6 +5,14 @@ variable "logs" {
   })
 }
 
+variable "artefact" {
+  description = "The lambda artefact/ zip details"
+  type = object({
+    source = string
+  })
+}
+
+
 variable "resource_suffix" {
   description = "Suffix for AWS resources to prevent name clashes between during testing"
   default     = ""

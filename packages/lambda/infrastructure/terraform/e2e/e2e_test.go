@@ -7,6 +7,7 @@ import (
 	"terratest_utility/helper"
 	"terratest_utility/terraform"
 	"testing"
+	"time"
 
 	http_helper "github.com/gruntwork-io/terratest/modules/http-helper"
 	"github.com/stretchr/testify/assert"
@@ -16,7 +17,7 @@ func TestServiceEndToEnd(test *testing.T) {
 	test.Parallel()
 
 	resourceSuffix := helper.GenerateUUID(test)
-	service := "../.."
+	service := "../deployment"
 
 	// Given
 	defer terraform.Destroy(test, service, resourceSuffix)
@@ -24,16 +25,19 @@ func TestServiceEndToEnd(test *testing.T) {
 
 	apiGateway := service + "/api-gateway"
 	invokeURL := terraform.Output(test, apiGateway, "invoke_url", resourceSuffix)
-	apiKeyId := terraform.Output(test, apiGateway, "api_key_id", resourceSuffix)
+	apiKeyID := terraform.Output(test, apiGateway, "api_key_id", resourceSuffix)
 
 	client := aws.NewApiGatewayClient()
-	apiKeyValue := aws.GetApiKey(test, client, apiKeyId)
+	apiKeyValue := aws.GetApiKey(test, client, apiKeyID)
+
+	time.Sleep(5 * time.Second) // Add a delay to allow resources to propogate
 
 	// When
 	url := fmt.Sprintf("%s/v1/greet", invokeURL)
 	headers := map[string]string{
 		"x-api-key": *apiKeyValue,
 	}
+
 	statusCode, respBody := http_helper.HTTPDo(test, "GET", url, nil, headers, nil)
 
 	// Then

@@ -67,7 +67,7 @@ export class GreetingStack extends Stack {
     });
 
     const func = new Function(this, `Function`, {
-      code: Code.fromAsset('../../dist/inversify-demo-lambda.zip'),
+      code: Code.fromAsset('../../dist/lambda.zip'),
       functionName,
       handler: 'main.handler',
       runtime: Runtime.NODEJS_14_X,
