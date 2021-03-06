@@ -16,8 +16,7 @@ inputs = {
 
   artefact = {
     name = "azure-function.zip",
-    # cd out of terragrunt cache folder
-    source = "../../../../../azure-function.zip"
+    source = "${get_parent_terragrunt_dir()}/../../../dist/azure-function.zip"
   }
 
   tags = {

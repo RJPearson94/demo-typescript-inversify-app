@@ -11,12 +11,13 @@ resource "azurerm_app_service_plan" "service_plan" {
 }
 
 resource "azurerm_function_app" "inversify_demo_function" {
-  name                      = var.name
-  location                  = var.region
-  resource_group_name       = var.resource_group.name
-  app_service_plan_id       = azurerm_app_service_plan.service_plan.id
-  storage_connection_string = var.storage.primary_connection
-  version                   = "~3"
+  name                       = var.name
+  location                   = var.region
+  resource_group_name        = var.resource_group.name
+  app_service_plan_id        = azurerm_app_service_plan.service_plan.id
+  storage_account_name       = var.storage_account.name
+  storage_account_access_key = var.storage_account.access_key
+  version                    = "~3"
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME     = "node"

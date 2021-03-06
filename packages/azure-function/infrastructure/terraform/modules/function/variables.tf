@@ -7,6 +7,11 @@ variable "storage" {
   type        = object({ url = string, primary_connection = string })
 }
 
+variable "storage_account" {
+  description = "Storage account details"
+  type        = object({ name = string, access_key = string })
+}
+
 variable "artefact" {
   description = "Artefact details"
   type        = object({ name = string, source = string })

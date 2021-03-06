@@ -8,7 +8,7 @@ dependency "resource_group" {
   mock_outputs = {
     resource_group = {
       name     = "test"
-      location = "test"
+      location = "northeurope"
     }
   }
 

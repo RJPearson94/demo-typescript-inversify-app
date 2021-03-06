@@ -23,7 +23,7 @@ require('esbuild')
     zipfile.addFile(`dist/index.js`, 'InversifyFunction/dist/index.js');
     zipfile.addFile(`dist/index.js.map`, 'InversifyFunction/dist/index.js.map');
     zipfile.addFile(`src/function.json`, 'InversifyFunction/function.json');
-    zipfile.outputStream.pipe(fs.createWriteStream(`azure-function.zip`)).on('close', () => {
+    zipfile.outputStream.pipe(fs.createWriteStream(`dist/azure-function.zip`)).on('close', () => {
       console.log('Azure function artefact zipped successfully');
     });
     zipfile.end();
