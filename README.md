@@ -4,12 +4,13 @@
 
 A monorepo to prototype using Inversify. Inversify was used to develop the following applications:
 
-| App                                         | Pipeline                                                                                                                                                                                                |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Azure Function](./packages/azure-function) | [![Actions Status](https://github.com/RJPearson94/demo-typescript-inversify-app/workflows/Azure%20Function%20Pipeline/badge.svg)](https://github.com/RJPearson94/demo-typescript-inversify-app/actions) |
-| [Cloud Function](./packages/azure-function) | [![Actions Status](https://github.com/RJPearson94/demo-typescript-inversify-app/workflows/Cloud%20Function%20Pipeline/badge.svg)](https://github.com/RJPearson94/demo-typescript-inversify-app/actions) |
-| [Express Web App](./packages/web-app)       | [![Actions Status](https://github.com/RJPearson94/demo-typescript-inversify-app/workflows/Web%20App%20Pipeline/badge.svg)](https://github.com/RJPearson94/demo-typescript-inversify-app/actions)        |
-| [Lambda Function](./packages/lambda)        | [![Actions Status](https://github.com/RJPearson94/demo-typescript-inversify-app/workflows/Lambda%20Pipeline/badge.svg)](https://github.com/RJPearson94/demo-typescript-inversify-app/actions)           |
+| App                                           | Pipeline                                                                                                                                                                                                 |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Azure Function](./packages/azure-function)   | [![Actions Status](https://github.com/RJPearson94/demo-typescript-inversify-app/workflows/Azure%20Function%20Pipeline/badge.svg)](https://github.com/RJPearson94/demo-typescript-inversify-app/actions)  |
+| [Cloud Function](./packages/azure-function)   | [![Actions Status](https://github.com/RJPearson94/demo-typescript-inversify-app/workflows/Cloud%20Function%20Pipeline/badge.svg)](https://github.com/RJPearson94/demo-typescript-inversify-app/actions)  |
+| [Express Web App](./packages/web-app)         | [![Actions Status](https://github.com/RJPearson94/demo-typescript-inversify-app/workflows/Web%20App%20Pipeline/badge.svg)](https://github.com/RJPearson94/demo-typescript-inversify-app/actions)         |
+| [Lambda Function](./packages/lambda)          | [![Actions Status](https://github.com/RJPearson94/demo-typescript-inversify-app/workflows/Lambda%20Pipeline/badge.svg)](https://github.com/RJPearson94/demo-typescript-inversify-app/actions)            |
+| [Twilio Function](./packages/twilio-function) | [![Actions Status](https://github.com/RJPearson94/demo-typescript-inversify-app/workflows/Twilio%20Function%20Pipeline/badge.svg)](https://github.com/RJPearson94/demo-typescript-inversify-app/actions) |
 
 ## Repository Structure
 
@@ -30,6 +31,9 @@ demo-typescript-inversify-app
         +-- ...
         +-- package.json
     +-- lambda
+        +-- ...
+        +-- package.json
+    +-- twilio-function
         +-- ...
         +-- package.json
     +-- web-app

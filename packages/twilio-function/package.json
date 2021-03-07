@@ -1,0 +1,30 @@
+{
+  "name": "@rjpearson94/twilio-function",
+  "description": "An example twilio function to prototype Dependency Injection using Typescript & Inversify",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">= 14.15"
+  },
+  "scripts": {
+    "build": "run-s clean build:function",
+    "build:function": "node ./esbuild.js",
+    "clean": "rm -rf ./dist",
+    "test": "yarn test:unit",
+    "test:unit": "jest ./test"
+  },
+  "dependencies": {
+    "@rjpearson94/core": "workspace:*",
+    "inversify": "^5.0.5",
+    "reflect-metadata": "^0.1.13",
+    "source-map-support": "^0.5.19"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.20",
+    "@yarnpkg/esbuild-plugin-pnp": "^0.0.1",
+    "esbuild": "^0.8.56",
+    "jest": "^26.6.3",
+    "npm-run-all": "^4.1.5",
+    "ts-jest": "^26.5.3",
+    "typescript": "~4.1.5"
+  }
+}
