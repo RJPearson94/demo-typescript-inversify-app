@@ -10,7 +10,7 @@ resource "twilio_serverless_function" "function" {
   service_sid   = twilio_serverless_service.service.sid
   friendly_name = "${var.function.friendly_name}${var.resource_suffix}"
   source        = var.function.artefact.source
-  source_hash   = filemd5(var.function.artefact.source)
+  source_hash   = filebase64sha256(var.function.artefact.source)
   content_type  = "application/javascript"
   path          = var.function.path
   visibility    = var.function.visibility

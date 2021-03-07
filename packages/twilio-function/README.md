@@ -32,8 +32,8 @@ yarn <script>
 
 As mentioned above the function can be deployed to Twilio using various Infrastructure as Code (IaC) tools and the Twilio CLI.
 
-**NOTE:** Currently this project only supports Terraform.
-
 To deploy the Twilio function using Terraform visit the [Terraform Infrastructure folder](./infrastructure/terraform) for more details
+
+To deploy the Twilio function using CDK for Terraform visit the [CDKTF Infrastructure folder](./infrastructure/cdktf) for more details
 
 **NOTE:** Please be aware cost/ charges may be incurred from deploying this Twilio function (and supporting resources) onto Twilio

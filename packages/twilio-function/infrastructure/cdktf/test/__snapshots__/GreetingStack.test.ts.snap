@@ -1,0 +1,209 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`create greeting stack 1`] = `
+"{
+  \\"//\\": {
+    \\"metadata\\": {
+      \\"version\\": \\"stubbed\\",
+      \\"stackName\\": \\"greeting-stack\\"
+    }
+  },
+  \\"resource\\": {
+    \\"twilio_serverless_service\\": {
+      \\"service\\": {
+        \\"friendly_name\\": \\"greeting-stack\\",
+        \\"include_credentials\\": false,
+        \\"ui_editable\\": false,
+        \\"unique_name\\": \\"greeting-stack\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/service\\",
+            \\"uniqueId\\": \\"service\\"
+          }
+        }
+      }
+    },
+    \\"twilio_serverless_function\\": {
+      \\"function\\": {
+        \\"content_type\\": \\"application/javascript\\",
+        \\"friendly_name\\": \\"greeting-stack\\",
+        \\"path\\": \\"/inversify\\",
+        \\"service_sid\\": \\"\${twilio_serverless_service.service.sid}\\",
+        \\"source\\": \\"../../../dist/index.js\\",
+        \\"source_hash\\": \\"filebase64sha256(../../../dist/index.js)\\",
+        \\"visibility\\": \\"public\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/function\\",
+            \\"uniqueId\\": \\"function\\"
+          }
+        }
+      }
+    },
+    \\"twilio_serverless_build\\": {
+      \\"build\\": {
+        \\"dependencies\\": {
+          \\"twilio\\": \\"3.57.0\\",
+          \\"fs\\": \\"0.0.1-security\\",
+          \\"lodash\\": \\"4.17.21\\",
+          \\"util\\": \\"0.12.3\\",
+          \\"xmldom\\": \\"0.4.0\\",
+          \\"@twilio/runtime-handler\\": \\"1.0.1\\"
+        },
+        \\"runtime\\": \\"node12\\",
+        \\"service_sid\\": \\"\${twilio_serverless_service.service.sid}\\",
+        \\"function_version\\": [
+          {
+            \\"sid\\": \\"\${twilio_serverless_function.function.latest_version_sid}\\"
+          }
+        ],
+        \\"polling\\": [
+          {
+            \\"enabled\\": true
+          }
+        ],
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/build\\",
+            \\"uniqueId\\": \\"build\\"
+          }
+        }
+      }
+    },
+    \\"twilio_serverless_environment\\": {
+      \\"environment\\": {
+        \\"service_sid\\": \\"\${twilio_serverless_service.service.sid}\\",
+        \\"unique_name\\": \\"dev\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/environment\\",
+            \\"uniqueId\\": \\"environment\\"
+          }
+        }
+      }
+    },
+    \\"twilio_serverless_deployment\\": {
+      \\"deployment\\": {
+        \\"build_sid\\": \\"\${twilio_serverless_build.build.sid}\\",
+        \\"environment_sid\\": \\"\${twilio_serverless_environment.environment.sid}\\",
+        \\"service_sid\\": \\"\${twilio_serverless_service.service.sid}\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/deployment\\",
+            \\"uniqueId\\": \\"deployment\\"
+          }
+        }
+      }
+    }
+  },
+  \\"output\\": {
+    \\"function_url\\": {
+      \\"value\\": \\"https://\${twilio_serverless_environment.environment.domain_name}\${twilio_serverless_function.function.path}\\"
+    }
+  }
+}"
+`;
+
+exports[`create greeting stack with suffix 1`] = `
+"{
+  \\"//\\": {
+    \\"metadata\\": {
+      \\"version\\": \\"stubbed\\",
+      \\"stackName\\": \\"greeting-stack\\"
+    }
+  },
+  \\"resource\\": {
+    \\"twilio_serverless_service\\": {
+      \\"service\\": {
+        \\"friendly_name\\": \\"greeting-stack-test\\",
+        \\"include_credentials\\": false,
+        \\"ui_editable\\": false,
+        \\"unique_name\\": \\"greeting-stack-test\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/service\\",
+            \\"uniqueId\\": \\"service\\"
+          }
+        }
+      }
+    },
+    \\"twilio_serverless_function\\": {
+      \\"function\\": {
+        \\"content_type\\": \\"application/javascript\\",
+        \\"friendly_name\\": \\"greeting-stack-test\\",
+        \\"path\\": \\"/inversify\\",
+        \\"service_sid\\": \\"\${twilio_serverless_service.service.sid}\\",
+        \\"source\\": \\"../../../dist/index.js\\",
+        \\"source_hash\\": \\"filebase64sha256(../../../dist/index.js)\\",
+        \\"visibility\\": \\"public\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/function\\",
+            \\"uniqueId\\": \\"function\\"
+          }
+        }
+      }
+    },
+    \\"twilio_serverless_build\\": {
+      \\"build\\": {
+        \\"dependencies\\": {
+          \\"twilio\\": \\"3.57.0\\",
+          \\"fs\\": \\"0.0.1-security\\",
+          \\"lodash\\": \\"4.17.21\\",
+          \\"util\\": \\"0.12.3\\",
+          \\"xmldom\\": \\"0.4.0\\",
+          \\"@twilio/runtime-handler\\": \\"1.0.1\\"
+        },
+        \\"runtime\\": \\"node12\\",
+        \\"service_sid\\": \\"\${twilio_serverless_service.service.sid}\\",
+        \\"function_version\\": [
+          {
+            \\"sid\\": \\"\${twilio_serverless_function.function.latest_version_sid}\\"
+          }
+        ],
+        \\"polling\\": [
+          {
+            \\"enabled\\": true
+          }
+        ],
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/build\\",
+            \\"uniqueId\\": \\"build\\"
+          }
+        }
+      }
+    },
+    \\"twilio_serverless_environment\\": {
+      \\"environment\\": {
+        \\"service_sid\\": \\"\${twilio_serverless_service.service.sid}\\",
+        \\"unique_name\\": \\"dev-test\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/environment\\",
+            \\"uniqueId\\": \\"environment\\"
+          }
+        }
+      }
+    },
+    \\"twilio_serverless_deployment\\": {
+      \\"deployment\\": {
+        \\"build_sid\\": \\"\${twilio_serverless_build.build.sid}\\",
+        \\"environment_sid\\": \\"\${twilio_serverless_environment.environment.sid}\\",
+        \\"service_sid\\": \\"\${twilio_serverless_service.service.sid}\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/deployment\\",
+            \\"uniqueId\\": \\"deployment\\"
+          }
+        }
+      }
+    }
+  },
+  \\"output\\": {
+    \\"function_url\\": {
+      \\"value\\": \\"https://\${twilio_serverless_environment.environment.domain_name}\${twilio_serverless_function.function.path}\\"
+    }
+  }
+}"
+`;
