@@ -1723,6 +1723,7 @@ __metadata:
     "@azure/functions": ^1.2.3
     "@rjpearson94/core": "workspace:*"
     "@types/jest": ^26.0.20
+    "@types/node": ^14.14.32
     "@yarnpkg/esbuild-plugin-pnp": ^0.0.1
     esbuild: ^0.8.56
     inversify: ^5.0.5
@@ -1743,6 +1744,7 @@ __metadata:
     "@rjpearson94/core": "workspace:*"
     "@types/express": ^4.17.11
     "@types/jest": ^26.0.20
+    "@types/node": ^14.14.32
     "@yarnpkg/esbuild-plugin-pnp": ^0.0.1
     esbuild: ^0.8.56
     express: ^4.17.1
@@ -1762,7 +1764,7 @@ __metadata:
   resolution: "@rjpearson94/core@workspace:packages/core"
   dependencies:
     "@types/jest": ^26.0.20
-    "@types/node": ^14.14.31
+    "@types/node": ^14.14.32
     esbuild: ^0.8.56
     inversify: ^5.0.5
     jest: ^26.6.3
@@ -1785,7 +1787,7 @@ __metadata:
     "@aws-cdk/aws-logs": ~1.92.0
     "@aws-cdk/core": ~1.92.0
     "@types/jest": ^26.0.20
-    "@types/node": ^14.14.31
+    "@types/node": ^14.14.32
     aws-cdk: ~1.92.0
     jest: ^26.6.3
     npm-run-all: ^4.1.5
@@ -1802,7 +1804,7 @@ __metadata:
   dependencies:
     "@cdktf/provider-aws": ^1.0.23
     "@types/jest": ^26.0.20
-    "@types/node": ^14.14.31
+    "@types/node": ^14.14.32
     cdktf: 0.1.0
     cdktf-cli: 0.1.0
     constructs: ^3.3.59
@@ -1822,6 +1824,7 @@ __metadata:
     "@rjpearson94/core": "workspace:*"
     "@types/aws-lambda": ^8.10.72
     "@types/jest": ^26.0.20
+    "@types/node": ^14.14.32
     "@yarnpkg/esbuild-plugin-pnp": ^0.0.1
     esbuild: ^0.8.56
     inversify: 5.0.5
@@ -1841,7 +1844,7 @@ __metadata:
   resolution: "@rjpearson94/twilio-function-cdktf-infrastructure@workspace:packages/twilio-function/infrastructure/cdktf"
   dependencies:
     "@types/jest": ^26.0.20
-    "@types/node": ^14.14.31
+    "@types/node": ^14.14.32
     cdktf: 0.1.0
     cdktf-cli: 0.1.0
     constructs: ^3.3.59
@@ -1859,6 +1862,7 @@ __metadata:
   dependencies:
     "@rjpearson94/core": "workspace:*"
     "@types/jest": ^26.0.20
+    "@types/node": ^14.14.32
     "@yarnpkg/esbuild-plugin-pnp": ^0.0.1
     esbuild: ^0.8.56
     inversify: ^5.0.5
@@ -1879,6 +1883,7 @@ __metadata:
     "@types/body-parser": ^1.19.0
     "@types/express": ^4.17.11
     "@types/jest": ^26.0.20
+    "@types/node": ^14.14.32
     "@types/supertest": ^2.0.10
     "@yarnpkg/esbuild-plugin-pnp": ^0.0.1
     body-parser: ^1.19.0
@@ -2121,10 +2126,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^14.0.26, @types/node@npm:^14.14.31":
+"@types/node@npm:*, @types/node@npm:^14.0.26":
   version: 14.14.31
   resolution: "@types/node@npm:14.14.31"
   checksum: 635dc8a0898a923621e02ca179e17baa39fdfa44f0096fcc1b7046c9b32317e74a99956a7b45ca0e8069874f51f4e7873a418239a318a4b6e7936f6510ac5992
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^14.14.32":
+  version: 14.14.32
+  resolution: "@types/node@npm:14.14.32"
+  checksum: ae73f3b668242da660b4f4f2047114fc047f5a6a92b8f9f4ab2f8ca1325c914c08cf13b6f90e6e88016fafb7a662d1963b075a6220d2208651a98a1cb3407221
   languageName: node
   linkType: hard
 
