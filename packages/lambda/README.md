@@ -12,7 +12,7 @@ The application is currently designed to run on Amazon Web Service (AWS). The ap
 
 A high-level architecture can be seen below
 
-![architecture diagram](./diagrams/Architecture.jpg)
+![architecture diagram](./diagrams/Architecture.svg)
 
 The lambda function can be deployed using the following tools:
 
@@ -87,7 +87,7 @@ Alternatively, you can use the Postman Collection Runner.
 
 To run the postman scripts via the CLI, Newman test runner is used. To run the Newman tests, please run the following command
 
-`yarn newman run postman-scripts/lambda.collection.json --env-var "URL=<<API_GATEWAY_URL>>" -r cli`
+`yarn newman run postman-scripts/lambda.collection.json --env-var "URL=<<API_GATEWAY_URL>>" --env-var "ApiKey=<<API_KEY>>" -r cli`
 
 **NOTE:** These postman tests are run as part of the E2E tests
 
