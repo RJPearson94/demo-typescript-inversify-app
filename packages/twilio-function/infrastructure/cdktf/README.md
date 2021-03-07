@@ -7,6 +7,7 @@ This package is responsible for deploying the function to Twilio using [CDK for 
 To be able to test and run the function on real Twilio infrastructure you need the following:
 
 - [Twilio Account](https://www.twilio.com/)
+- [Terraform](https://www.terraform.io/) (v0.14 or above)
 - [Yarn 2/ Berry](https://yarnpkg.com/)
 
 ## Commands

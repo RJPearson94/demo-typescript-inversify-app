@@ -8,6 +8,7 @@ To be able to run the lambda function on real AWS infrastructure you need the fo
 
 - [AWS Account](https://aws.amazon.com/)
 - [AWS CLI](https://aws.amazon.com/cli/) (configured)
+- [Terraform](https://www.terraform.io/) (v0.14 or above)
 - [Yarn 2/ Berry](https://yarnpkg.com/)
 
 ## Commands
