@@ -12,6 +12,6 @@ require('esbuild')
     sourcemap: 'inline',
     outfile: `${artefactPath}/index.js`,
     platform: 'node',
-    target: 'node14'
+    target: 'node12'
   })
   .catch(() => process.exit(1));
