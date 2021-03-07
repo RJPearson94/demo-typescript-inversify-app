@@ -57,6 +57,22 @@ updates:
       - 'cdktf'
 
   - package-ecosystem: 'npm'
+    directory: '/packages/twilio-function'
+    schedule:
+      interval: 'daily'
+    labels:
+      - 'npm'
+      - 'twilio-function'
+  - package-ecosystem: 'npm'
+    directory: '/packages/twilio-function/infrastructure/cdk'
+    schedule:
+      interval: 'daily'
+    labels:
+      - 'npm'
+      - 'twilio-function'
+      - 'cdktf'
+
+  - package-ecosystem: 'npm'
     directory: '/packages/web-app'
     schedule:
       interval: 'daily'
