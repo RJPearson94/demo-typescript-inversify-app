@@ -108,6 +108,12 @@ exports[`create greeting stack 1`] = `
     \\"aws_api_gateway_deployment\\": {
       \\"deployment\\": {
         \\"rest_api_id\\": \\"\${aws_api_gateway_rest_api.rest_api.id}\\",
+        \\"triggers\\": {
+          \\"redeployment\\": \\"12bc2a45ff45af9e0e33552ea15e29134514dd3b6f3c921dfa2a5c44a240bb8683d6b6468593b06c2248407901551c606d876c71da8a64729699b0fe531edd2d\\"
+        },
+        \\"lifecycle\\": {
+          \\"create_before_destroy\\": true
+        },
         \\"//\\": {
           \\"metadata\\": {
             \\"path\\": \\"greeting-stack/deployment\\",
@@ -182,7 +188,7 @@ exports[`create greeting stack 1`] = `
         \\"action\\": \\"lambda:InvokeFunction\\",
         \\"function_name\\": \\"\${aws_lambda_alias.lambda_alias.arn}\\",
         \\"principal\\": \\"apigateway.amazonaws.com\\",
-        \\"source_arn\\": \\"\${aws_api_gateway_rest_api.rest_api.execution_arn}/*/*\\",
+        \\"source_arn\\": \\"\${aws_api_gateway_stage.stage.execution_arn}/*\\",
         \\"statement_id\\": \\"AllowAPIGatewayInvoke\\",
         \\"//\\": {
           \\"metadata\\": {
@@ -328,6 +334,12 @@ exports[`create greeting stack with prefix and tags 1`] = `
     \\"aws_api_gateway_deployment\\": {
       \\"deployment\\": {
         \\"rest_api_id\\": \\"\${aws_api_gateway_rest_api.rest_api.id}\\",
+        \\"triggers\\": {
+          \\"redeployment\\": \\"12bc2a45ff45af9e0e33552ea15e29134514dd3b6f3c921dfa2a5c44a240bb8683d6b6468593b06c2248407901551c606d876c71da8a64729699b0fe531edd2d\\"
+        },
+        \\"lifecycle\\": {
+          \\"create_before_destroy\\": true
+        },
         \\"//\\": {
           \\"metadata\\": {
             \\"path\\": \\"greeting-stack/deployment\\",
@@ -414,7 +426,7 @@ exports[`create greeting stack with prefix and tags 1`] = `
         \\"action\\": \\"lambda:InvokeFunction\\",
         \\"function_name\\": \\"\${aws_lambda_alias.lambda_alias.arn}\\",
         \\"principal\\": \\"apigateway.amazonaws.com\\",
-        \\"source_arn\\": \\"\${aws_api_gateway_rest_api.rest_api.execution_arn}/*/*\\",
+        \\"source_arn\\": \\"\${aws_api_gateway_stage.stage.execution_arn}/*\\",
         \\"statement_id\\": \\"AllowAPIGatewayInvoke\\",
         \\"//\\": {
           \\"metadata\\": {

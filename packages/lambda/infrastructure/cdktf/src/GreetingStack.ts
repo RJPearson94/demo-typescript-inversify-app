@@ -1,4 +1,5 @@
 import { Construct } from 'constructs';
+import crypto from 'crypto';
 import { TerraformStack, TerraformOutput } from 'cdktf';
 import {
   LambdaFunction,
@@ -55,14 +56,14 @@ export class GreetingStack extends TerraformStack {
     this.resourcePrefix = props?.resourcePrefix ? `${props?.resourcePrefix}-` : '';
 
     const { alias } = this.createFunction();
-    const { restApi, stage, apiKey } = this.createAPIGateway(alias);
+    const { stage, apiKey } = this.createAPIGateway(alias);
 
     new LambdaPermission(this, `api_gateway_invoke_lambda`, {
       statementId: 'AllowAPIGatewayInvoke',
       action: 'lambda:InvokeFunction',
       functionName: alias.arn,
       principal: 'apigateway.amazonaws.com',
-      sourceArn: `${restApi.executionArn}/*/*`
+      sourceArn: `${stage.executionArn}/*`
     });
 
     this.apiGatewayURL = new TerraformOutput(this, `api_gateway_url`, {
@@ -171,7 +172,15 @@ export class GreetingStack extends TerraformStack {
     });
 
     const deployment = new ApiGatewayDeployment(this, `deployment`, {
-      restApiId: restApi.id
+      restApiId: restApi.id,
+
+      triggers: {
+        redeployment: crypto.createHash('sha512').update(template).digest('hex')
+      },
+
+      lifecycle: {
+        createBeforeDestroy: true
+      }
     });
 
     const stage = new ApiGatewayStage(this, `stage`, {
