@@ -41,14 +41,14 @@ export class GreetingStack extends TerraformStack {
 
   private createFunction(service: ServerlessService): ServerlessFunction {
     const source = '../../../dist/index.js';
-    const fileContents = fs.readFileSync(path.resolve(__dirname, source), { encoding: 'utf8', flag: 'r' });
+    const fileContents = fs.readFileSync(path.resolve(__dirname, source));
 
     return new ServerlessFunction(this, 'function', {
       serviceSid: service.sid,
       friendlyName: `${this.name}${this.resourceSuffix}`,
 
       source,
-      sourceHash: crypto.createHash('sha512').update(fileContents).digest('hex'),
+      sourceHash: crypto.createHash('sha256').update(fileContents).digest('base64'),
 
       contentType: 'application/javascript',
       path: '/inversify',

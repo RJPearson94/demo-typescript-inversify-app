@@ -127,11 +127,11 @@ export class GreetingStack extends TerraformStack {
     });
 
     const lambdaArtefactPath = '../../../dist/lambda.zip';
-    const fileContents = fs.readFileSync(path.resolve(__dirname, lambdaArtefactPath), { encoding: 'utf8', flag: 'r' });
+    const fileContents = fs.readFileSync(path.resolve(__dirname, lambdaArtefactPath));
 
     const func = new LambdaFunction(this, `lambda`, {
       filename: lambdaArtefactPath,
-      sourceCodeHash: crypto.createHash('sha512').update(fileContents).digest('hex'),
+      sourceCodeHash: crypto.createHash('sha256').update(fileContents).digest('base64'),
 
       functionName,
       role: lambdaRole.arn,
