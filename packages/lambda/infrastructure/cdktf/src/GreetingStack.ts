@@ -1,5 +1,7 @@
 import { Construct } from 'constructs';
 import crypto from 'crypto';
+import fs from 'fs';
+import path from 'path';
 import { TerraformStack, TerraformOutput } from 'cdktf';
 import {
   LambdaFunction,
@@ -125,10 +127,11 @@ export class GreetingStack extends TerraformStack {
     });
 
     const lambdaArtefactPath = '../../../dist/lambda.zip';
+    const fileContents = fs.readFileSync(path.resolve(__dirname, lambdaArtefactPath), { encoding: 'utf8', flag: 'r' });
 
     const func = new LambdaFunction(this, `lambda`, {
       filename: lambdaArtefactPath,
-      // source_code_hash set using escape hatch
+      sourceCodeHash: crypto.createHash('sha512').update(fileContents).digest('hex'),
 
       functionName,
       role: lambdaRole.arn,
@@ -145,8 +148,6 @@ export class GreetingStack extends TerraformStack {
         }
       ]
     });
-
-    func.addOverride('source_code_hash', `filebase64sha256(${lambdaArtefactPath})`);
 
     const alias = new LambdaAlias(this, `lambda_alias`, {
       name: this.props?.lambda?.alias || 'stable',

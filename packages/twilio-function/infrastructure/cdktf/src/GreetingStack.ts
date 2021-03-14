@@ -1,6 +1,9 @@
 import { Construct } from 'constructs';
 import { TerraformStack, TerraformOutput } from 'cdktf';
 import { ServerlessBuild, ServerlessDeployment, ServerlessEnvironment, ServerlessFunction, ServerlessService } from '../.gen/providers/twilio';
+import fs from 'fs';
+import path from 'path';
+import crypto from 'crypto';
 
 export type GreetingStackProps = {
   resourceSuffix?: string;
@@ -38,22 +41,19 @@ export class GreetingStack extends TerraformStack {
 
   private createFunction(service: ServerlessService): ServerlessFunction {
     const source = '../../../dist/index.js';
+    const fileContents = fs.readFileSync(path.resolve(__dirname, source), { encoding: 'utf8', flag: 'r' });
 
-    const func = new ServerlessFunction(this, 'function', {
+    return new ServerlessFunction(this, 'function', {
       serviceSid: service.sid,
       friendlyName: `${this.name}${this.resourceSuffix}`,
 
       source,
-      // source_hash set using the escape hatch,
+      sourceHash: crypto.createHash('sha512').update(fileContents).digest('hex'),
 
       contentType: 'application/javascript',
       path: '/inversify',
       visibility: 'public'
     });
-
-    func.addOverride('source_hash', `filebase64sha256(${source})`);
-
-    return func;
   }
 
   private createBuild(service: ServerlessService, func: ServerlessFunction): ServerlessBuild {
@@ -81,7 +81,11 @@ export class GreetingStack extends TerraformStack {
         {
           enabled: true
         }
-      ]
+      ],
+
+      lifecycle: {
+        createBeforeDestroy: true
+      }
     });
   }
 
@@ -96,7 +100,11 @@ export class GreetingStack extends TerraformStack {
     return new ServerlessDeployment(this, 'deployment', {
       serviceSid: service.sid,
       environmentSid: environment.sid,
-      buildSid: build.sid
+      buildSid: build.sid,
+
+      lifecycle: {
+        createBeforeDestroy: true
+      }
     });
   }
 }

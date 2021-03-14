@@ -30,7 +30,7 @@ exports[`create greeting stack 1`] = `
         \\"path\\": \\"/inversify\\",
         \\"service_sid\\": \\"\${twilio_serverless_service.service.sid}\\",
         \\"source\\": \\"../../../dist/index.js\\",
-        \\"source_hash\\": \\"filebase64sha256(../../../dist/index.js)\\",
+        \\"source_hash\\": \\"7e3f5e9071391464b6543493c2be870f8e0cd878146d5d34d82197a0dcaf01e4bcbf764ea8c0547917e325cb878141a7dfa7c9bcd4fd75ab74a2207de716ffd2\\",
         \\"visibility\\": \\"public\\",
         \\"//\\": {
           \\"metadata\\": {
@@ -62,6 +62,9 @@ exports[`create greeting stack 1`] = `
             \\"enabled\\": true
           }
         ],
+        \\"lifecycle\\": {
+          \\"create_before_destroy\\": true
+        },
         \\"//\\": {
           \\"metadata\\": {
             \\"path\\": \\"greeting-stack/build\\",
@@ -87,6 +90,9 @@ exports[`create greeting stack 1`] = `
         \\"build_sid\\": \\"\${twilio_serverless_build.build.sid}\\",
         \\"environment_sid\\": \\"\${twilio_serverless_environment.environment.sid}\\",
         \\"service_sid\\": \\"\${twilio_serverless_service.service.sid}\\",
+        \\"lifecycle\\": {
+          \\"create_before_destroy\\": true
+        },
         \\"//\\": {
           \\"metadata\\": {
             \\"path\\": \\"greeting-stack/deployment\\",
@@ -134,7 +140,7 @@ exports[`create greeting stack with suffix 1`] = `
         \\"path\\": \\"/inversify\\",
         \\"service_sid\\": \\"\${twilio_serverless_service.service.sid}\\",
         \\"source\\": \\"../../../dist/index.js\\",
-        \\"source_hash\\": \\"filebase64sha256(../../../dist/index.js)\\",
+        \\"source_hash\\": \\"7e3f5e9071391464b6543493c2be870f8e0cd878146d5d34d82197a0dcaf01e4bcbf764ea8c0547917e325cb878141a7dfa7c9bcd4fd75ab74a2207de716ffd2\\",
         \\"visibility\\": \\"public\\",
         \\"//\\": {
           \\"metadata\\": {
@@ -166,6 +172,9 @@ exports[`create greeting stack with suffix 1`] = `
             \\"enabled\\": true
           }
         ],
+        \\"lifecycle\\": {
+          \\"create_before_destroy\\": true
+        },
         \\"//\\": {
           \\"metadata\\": {
             \\"path\\": \\"greeting-stack/build\\",
@@ -191,6 +200,9 @@ exports[`create greeting stack with suffix 1`] = `
         \\"build_sid\\": \\"\${twilio_serverless_build.build.sid}\\",
         \\"environment_sid\\": \\"\${twilio_serverless_environment.environment.sid}\\",
         \\"service_sid\\": \\"\${twilio_serverless_service.service.sid}\\",
+        \\"lifecycle\\": {
+          \\"create_before_destroy\\": true
+        },
         \\"//\\": {
           \\"metadata\\": {
             \\"path\\": \\"greeting-stack/deployment\\",

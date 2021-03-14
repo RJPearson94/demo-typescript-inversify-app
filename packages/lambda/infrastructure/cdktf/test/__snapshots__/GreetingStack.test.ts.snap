@@ -65,7 +65,7 @@ exports[`create greeting stack 1`] = `
         \\"memory_size\\": 128,
         \\"role\\": \\"\${aws_iam_role.lambda_role.arn}\\",
         \\"runtime\\": \\"nodejs14.x\\",
-        \\"source_code_hash\\": \\"filebase64sha256(../../../dist/lambda.zip)\\",
+        \\"source_code_hash\\": \\"9a55743606260c1d871daa9c28b2254aa46fe1e04b6d3a034d261d7de92bd4e48a701e557baadaf6978be946792527784cbf881cb68fd53648a97d20af28456e\\",
         \\"timeout\\": 5,
         \\"tracing_config\\": [
           {
@@ -283,7 +283,7 @@ exports[`create greeting stack with prefix and tags 1`] = `
         \\"memory_size\\": 128,
         \\"role\\": \\"\${aws_iam_role.lambda_role.arn}\\",
         \\"runtime\\": \\"nodejs14.x\\",
-        \\"source_code_hash\\": \\"filebase64sha256(../../../dist/lambda.zip)\\",
+        \\"source_code_hash\\": \\"9a55743606260c1d871daa9c28b2254aa46fe1e04b6d3a034d261d7de92bd4e48a701e557baadaf6978be946792527784cbf881cb68fd53648a97d20af28456e\\",
         \\"tags\\": {
           \\"service\\": \\"greeting-stack\\",
           \\"testing\\": \\"true\\"
