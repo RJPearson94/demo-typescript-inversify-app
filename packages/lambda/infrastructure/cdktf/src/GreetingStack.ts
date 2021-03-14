@@ -109,7 +109,7 @@ export class GreetingStack extends TerraformStack {
         Statement: [
           {
             Action: ['logs:CreateLogStream', 'logs:PutLogEvents'],
-            Resource: logGroup.arn,
+            Resource: `${logGroup.arn}:*`,
             Effect: 'Allow'
           },
           {

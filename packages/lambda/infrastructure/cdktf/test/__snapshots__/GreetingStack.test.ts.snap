@@ -36,7 +36,7 @@ exports[`create greeting stack 1`] = `
     \\"aws_iam_policy\\": {
       \\"lambda_policy\\": {
         \\"name\\": \\"greeting-stack-function-policy\\",
-        \\"policy\\": \\"{\\\\\\"Version\\\\\\":\\\\\\"2012-10-17\\\\\\",\\\\\\"Statement\\\\\\":[{\\\\\\"Action\\\\\\":[\\\\\\"logs:CreateLogStream\\\\\\",\\\\\\"logs:PutLogEvents\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"\${aws_cloudwatch_log_group.lambda_logs.arn}\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"},{\\\\\\"Action\\\\\\":[\\\\\\"xray:PutTraceSegments\\\\\\",\\\\\\"xray:PutTelemetryRecords\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"*\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"}]}\\",
+        \\"policy\\": \\"{\\\\\\"Version\\\\\\":\\\\\\"2012-10-17\\\\\\",\\\\\\"Statement\\\\\\":[{\\\\\\"Action\\\\\\":[\\\\\\"logs:CreateLogStream\\\\\\",\\\\\\"logs:PutLogEvents\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"\${aws_cloudwatch_log_group.lambda_logs.arn}:*\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"},{\\\\\\"Action\\\\\\":[\\\\\\"xray:PutTraceSegments\\\\\\",\\\\\\"xray:PutTelemetryRecords\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"*\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"}]}\\",
         \\"//\\": {
           \\"metadata\\": {
             \\"path\\": \\"greeting-stack/lambda_policy\\",
@@ -254,7 +254,7 @@ exports[`create greeting stack with prefix and tags 1`] = `
     \\"aws_iam_policy\\": {
       \\"lambda_policy\\": {
         \\"name\\": \\"test-greeting-stack-function-policy\\",
-        \\"policy\\": \\"{\\\\\\"Version\\\\\\":\\\\\\"2012-10-17\\\\\\",\\\\\\"Statement\\\\\\":[{\\\\\\"Action\\\\\\":[\\\\\\"logs:CreateLogStream\\\\\\",\\\\\\"logs:PutLogEvents\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"\${aws_cloudwatch_log_group.lambda_logs.arn}\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"},{\\\\\\"Action\\\\\\":[\\\\\\"xray:PutTraceSegments\\\\\\",\\\\\\"xray:PutTelemetryRecords\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"*\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"}]}\\",
+        \\"policy\\": \\"{\\\\\\"Version\\\\\\":\\\\\\"2012-10-17\\\\\\",\\\\\\"Statement\\\\\\":[{\\\\\\"Action\\\\\\":[\\\\\\"logs:CreateLogStream\\\\\\",\\\\\\"logs:PutLogEvents\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"\${aws_cloudwatch_log_group.lambda_logs.arn}:*\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"},{\\\\\\"Action\\\\\\":[\\\\\\"xray:PutTraceSegments\\\\\\",\\\\\\"xray:PutTelemetryRecords\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"*\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"}]}\\",
         \\"//\\": {
           \\"metadata\\": {
             \\"path\\": \\"greeting-stack/lambda_policy\\",
