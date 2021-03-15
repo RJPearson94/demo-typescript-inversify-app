@@ -1,5 +1,4 @@
 import 'reflect-metadata';
-import 'source-map-support/register';
 
 import middy from '@middy/core';
 import { APIGatewayProxyEvent } from 'aws-lambda';

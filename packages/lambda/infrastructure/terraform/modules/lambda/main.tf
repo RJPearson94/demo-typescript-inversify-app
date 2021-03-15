@@ -18,6 +18,12 @@ resource "aws_lambda_function" "lambda_function" {
   timeout     = var.timeout
   tags        = var.tags
 
+  environment {
+    variables = {
+      NODE_OPTIONS = "--enable-source-maps"
+    }
+  }
+
   tracing_config {
     mode = "PassThrough"
   }
@@ -82,6 +88,13 @@ resource "aws_iam_policy" "lambda_policy" {
           "xray:PutTelemetryRecords"
         ],
         "Resource" : "*",
+        "Effect" : "Allow"
+      },
+      {
+        "Action" : [
+          "kms:Decrypt"
+        ],
+        "Resource" : data.aws_kms_alias.aws_managed_kms_lambda_key.arn,
         "Effect" : "Allow"
       }
     ]

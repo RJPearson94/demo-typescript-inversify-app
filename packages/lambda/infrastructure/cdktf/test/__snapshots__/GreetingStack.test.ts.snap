@@ -36,7 +36,7 @@ exports[`create greeting stack 1`] = `
     \\"aws_iam_policy\\": {
       \\"lambda_policy\\": {
         \\"name\\": \\"greeting-stack-function-policy\\",
-        \\"policy\\": \\"{\\\\\\"Version\\\\\\":\\\\\\"2012-10-17\\\\\\",\\\\\\"Statement\\\\\\":[{\\\\\\"Action\\\\\\":[\\\\\\"logs:CreateLogStream\\\\\\",\\\\\\"logs:PutLogEvents\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"\${aws_cloudwatch_log_group.lambda_logs.arn}:*\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"},{\\\\\\"Action\\\\\\":[\\\\\\"xray:PutTraceSegments\\\\\\",\\\\\\"xray:PutTelemetryRecords\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"*\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"}]}\\",
+        \\"policy\\": \\"{\\\\\\"Version\\\\\\":\\\\\\"2012-10-17\\\\\\",\\\\\\"Statement\\\\\\":[{\\\\\\"Action\\\\\\":[\\\\\\"logs:CreateLogStream\\\\\\",\\\\\\"logs:PutLogEvents\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"\${aws_cloudwatch_log_group.lambda_logs.arn}:*\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"},{\\\\\\"Action\\\\\\":[\\\\\\"xray:PutTraceSegments\\\\\\",\\\\\\"xray:PutTelemetryRecords\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"*\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"},{\\\\\\"Action\\\\\\":[\\\\\\"kms:Decrypt\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"\${data.aws_kms_alias.kms_alias.arn}\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"}]}\\",
         \\"//\\": {
           \\"metadata\\": {
             \\"path\\": \\"greeting-stack/lambda_policy\\",
@@ -65,8 +65,15 @@ exports[`create greeting stack 1`] = `
         \\"memory_size\\": 128,
         \\"role\\": \\"\${aws_iam_role.lambda_role.arn}\\",
         \\"runtime\\": \\"nodejs14.x\\",
-        \\"source_code_hash\\": \\"GhQ3MRCogWfyEJIutiyAjxbM8axebfo4a6YPHFe5nXg=\\",
+        \\"source_code_hash\\": \\"cxdDwaGTnW4rvOsz2rIjtXi8taNAHVoir5m4WlJdW4s=\\",
         \\"timeout\\": 5,
+        \\"environment\\": [
+          {
+            \\"variables\\": {
+              \\"NODE_OPTIONS\\": \\"--enable-source-maps\\"
+            }
+          }
+        ],
         \\"tracing_config\\": [
           {
             \\"mode\\": \\"PassThrough\\"
@@ -199,6 +206,19 @@ exports[`create greeting stack 1`] = `
       }
     }
   },
+  \\"data\\": {
+    \\"aws_kms_alias\\": {
+      \\"kms_alias\\": {
+        \\"name\\": \\"alias/aws/lambda\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/kms_alias\\",
+            \\"uniqueId\\": \\"kms_alias\\"
+          }
+        }
+      }
+    }
+  },
   \\"output\\": {
     \\"api_gateway_url\\": {
       \\"value\\": \\"\${aws_api_gateway_stage.stage.invoke_url}\\"
@@ -254,7 +274,7 @@ exports[`create greeting stack with prefix and tags 1`] = `
     \\"aws_iam_policy\\": {
       \\"lambda_policy\\": {
         \\"name\\": \\"test-greeting-stack-function-policy\\",
-        \\"policy\\": \\"{\\\\\\"Version\\\\\\":\\\\\\"2012-10-17\\\\\\",\\\\\\"Statement\\\\\\":[{\\\\\\"Action\\\\\\":[\\\\\\"logs:CreateLogStream\\\\\\",\\\\\\"logs:PutLogEvents\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"\${aws_cloudwatch_log_group.lambda_logs.arn}:*\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"},{\\\\\\"Action\\\\\\":[\\\\\\"xray:PutTraceSegments\\\\\\",\\\\\\"xray:PutTelemetryRecords\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"*\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"}]}\\",
+        \\"policy\\": \\"{\\\\\\"Version\\\\\\":\\\\\\"2012-10-17\\\\\\",\\\\\\"Statement\\\\\\":[{\\\\\\"Action\\\\\\":[\\\\\\"logs:CreateLogStream\\\\\\",\\\\\\"logs:PutLogEvents\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"\${aws_cloudwatch_log_group.lambda_logs.arn}:*\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"},{\\\\\\"Action\\\\\\":[\\\\\\"xray:PutTraceSegments\\\\\\",\\\\\\"xray:PutTelemetryRecords\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"*\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"},{\\\\\\"Action\\\\\\":[\\\\\\"kms:Decrypt\\\\\\"],\\\\\\"Resource\\\\\\":\\\\\\"\${data.aws_kms_alias.kms_alias.arn}\\\\\\",\\\\\\"Effect\\\\\\":\\\\\\"Allow\\\\\\"}]}\\",
         \\"//\\": {
           \\"metadata\\": {
             \\"path\\": \\"greeting-stack/lambda_policy\\",
@@ -283,12 +303,19 @@ exports[`create greeting stack with prefix and tags 1`] = `
         \\"memory_size\\": 128,
         \\"role\\": \\"\${aws_iam_role.lambda_role.arn}\\",
         \\"runtime\\": \\"nodejs14.x\\",
-        \\"source_code_hash\\": \\"GhQ3MRCogWfyEJIutiyAjxbM8axebfo4a6YPHFe5nXg=\\",
+        \\"source_code_hash\\": \\"cxdDwaGTnW4rvOsz2rIjtXi8taNAHVoir5m4WlJdW4s=\\",
         \\"tags\\": {
           \\"service\\": \\"greeting-stack\\",
           \\"testing\\": \\"true\\"
         },
         \\"timeout\\": 5,
+        \\"environment\\": [
+          {
+            \\"variables\\": {
+              \\"NODE_OPTIONS\\": \\"--enable-source-maps\\"
+            }
+          }
+        ],
         \\"tracing_config\\": [
           {
             \\"mode\\": \\"PassThrough\\"
@@ -432,6 +459,19 @@ exports[`create greeting stack with prefix and tags 1`] = `
           \\"metadata\\": {
             \\"path\\": \\"greeting-stack/api_gateway_invoke_lambda\\",
             \\"uniqueId\\": \\"api_gateway_invoke_lambda\\"
+          }
+        }
+      }
+    }
+  },
+  \\"data\\": {
+    \\"aws_kms_alias\\": {
+      \\"kms_alias\\": {
+        \\"name\\": \\"alias/aws/lambda\\",
+        \\"//\\": {
+          \\"metadata\\": {
+            \\"path\\": \\"greeting-stack/kms_alias\\",
+            \\"uniqueId\\": \\"kms_alias\\"
           }
         }
       }

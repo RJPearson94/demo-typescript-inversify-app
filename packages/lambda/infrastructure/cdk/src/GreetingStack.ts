@@ -72,7 +72,10 @@ export class GreetingStack extends Stack {
       handler: 'main.handler',
       runtime: Runtime.NODEJS_14_X,
       tracing: Tracing.ACTIVE,
-      timeout: Duration.seconds(5)
+      timeout: Duration.seconds(5),
+      environment: {
+        NODE_OPTIONS: '--enable-source-maps'
+      }
     });
 
     logGroup.grantWrite(func);

@@ -16,7 +16,8 @@ import {
   ApiGatewayStage,
   ApiGatewayApiKey,
   ApiGatewayUsagePlan,
-  ApiGatewayUsagePlanKey
+  ApiGatewayUsagePlanKey,
+  DataAwsKmsAlias
 } from '@cdktf/provider-aws';
 import openApiTemplate from './templates/openapi.tpl.json';
 
@@ -102,6 +103,10 @@ export class GreetingStack extends TerraformStack {
       tags: this.props?.tags
     });
 
+    const awsManagedLambdaKMSKey = new DataAwsKmsAlias(this, 'kms_alias', {
+      name: 'alias/aws/lambda'
+    });
+
     const lambdaPolicy = new IamPolicy(this, `lambda_policy`, {
       name: `${functionName}-policy`,
       policy: JSON.stringify({
@@ -115,6 +120,11 @@ export class GreetingStack extends TerraformStack {
           {
             Action: ['xray:PutTraceSegments', 'xray:PutTelemetryRecords'],
             Resource: '*',
+            Effect: 'Allow'
+          },
+          {
+            Action: ['kms:Decrypt'],
+            Resource: awsManagedLambdaKMSKey.arn,
             Effect: 'Allow'
           }
         ]
@@ -141,6 +151,14 @@ export class GreetingStack extends TerraformStack {
       memorySize: 128,
       timeout: 5,
       tags: this.props?.tags,
+
+      environment: [
+        {
+          variables: {
+            NODE_OPTIONS: '--enable-source-maps'
+          }
+        }
+      ],
 
       tracingConfig: [
         {

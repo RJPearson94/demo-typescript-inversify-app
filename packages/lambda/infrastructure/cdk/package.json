@@ -10,7 +10,8 @@
     "destroy": "cdk destroy",
     "synth": "cdk synth",
     "test": "run-s test:unit",
-    "test:unit": "jest ./test"
+    "test:unit": "jest ./test",
+    "test:unit:snapshot-refresh": "jest ./test -u"
   },
   "devDependencies": {
     "@aws-cdk/assert": "~1.92.0",

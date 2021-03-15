@@ -18,8 +18,7 @@
     "@middy/core": "^1.5.2",
     "@rjpearson94/core": "workspace:*",
     "inversify": "5.0.5",
-    "reflect-metadata": "0.1.13",
-    "source-map-support": "^0.5.19"
+    "reflect-metadata": "0.1.13"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.72",
