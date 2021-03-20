@@ -1,7 +1,13 @@
 {
   "language": "typescript",
   "app": "ts-node bin/app.ts",
-  "terraformProviders": ["RJPearson94/twilio@>= 0.8.1"],
+  "terraformProviders": [
+    {
+      "name": "twilio",
+      "source": "RJPearson94/twilio",
+      "version": ">= 0.8.1"
+    }
+  ],
   "terraformModules": [],
   "context": {
     "excludeStackIdFromLogicalIds": "true",
