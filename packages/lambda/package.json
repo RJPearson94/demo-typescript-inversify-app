@@ -17,7 +17,7 @@
   "dependencies": {
     "@middy/core": "^1.5.2",
     "@rjpearson94/core": "workspace:*",
-    "inversify": "5.0.5",
+    "inversify": "5.1.1",
     "reflect-metadata": "0.1.13"
   },
   "devDependencies": {
