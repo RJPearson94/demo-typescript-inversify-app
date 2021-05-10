@@ -22,7 +22,7 @@
   "dependencies": {
     "@rjpearson94/core": "workspace:*",
     "body-parser": "^1.19.0",
-    "dotenv": "^8.2.0",
+    "dotenv": "^9.0.1",
     "express": "^4.17.1",
     "inversify": "5.0.5",
     "inversify-express-utils": "^6.3.2",
