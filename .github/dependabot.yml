@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     labels:
       - 'npm'
       - 'root'
@@ -11,7 +11,7 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/packages/azure-function'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     labels:
       - 'npm'
       - 'azure-function'
@@ -19,7 +19,7 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/packages/cloud-function'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     labels:
       - 'npm'
       - 'cloud-function'
@@ -27,7 +27,7 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/packages/core'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     labels:
       - 'npm'
       - 'core'
@@ -35,14 +35,14 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/packages/lambda'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     labels:
       - 'npm'
       - 'lambda'
   - package-ecosystem: 'npm'
     directory: '/packages/lambda/infrastructure/cdk'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     labels:
       - 'npm'
       - 'lambda'
@@ -50,7 +50,7 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/packages/lambda/infrastructure/cdktf'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     labels:
       - 'npm'
       - 'lambda'
@@ -59,14 +59,14 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/packages/twilio-function'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     labels:
       - 'npm'
       - 'twilio-function'
   - package-ecosystem: 'npm'
     directory: '/packages/twilio-function/infrastructure/cdk'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     labels:
       - 'npm'
       - 'twilio-function'
@@ -75,21 +75,21 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/packages/web-app'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     labels:
       - 'npm'
       - 'web-app'
   - package-ecosystem: 'docker'
     directory: '/packages/web-app'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     labels:
       - 'docker'
       - 'web-app'
   - package-ecosystem: 'docker'
     directory: '/packages/web-app/api'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     labels:
       - 'docker'
       - 'web-app'
