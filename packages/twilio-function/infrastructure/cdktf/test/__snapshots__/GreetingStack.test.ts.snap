@@ -30,7 +30,7 @@ exports[`create greeting stack 1`] = `
         \\"path\\": \\"/inversify\\",
         \\"service_sid\\": \\"\${twilio_serverless_service.service.sid}\\",
         \\"source\\": \\"../../../dist/index.js\\",
-        \\"source_hash\\": \\"kvQatY0b+Msn90/nN4MhRFgGZftDm8g5rJXZy8jR6BU=\\",
+        \\"source_hash\\": \\"2KjtpOEQkNDiGqzM6aYcEzyi4kB2Ml5bwsivOzme43E=\\",
         \\"visibility\\": \\"public\\",
         \\"//\\": {
           \\"metadata\\": {
@@ -140,7 +140,7 @@ exports[`create greeting stack with suffix 1`] = `
         \\"path\\": \\"/inversify\\",
         \\"service_sid\\": \\"\${twilio_serverless_service.service.sid}\\",
         \\"source\\": \\"../../../dist/index.js\\",
-        \\"source_hash\\": \\"kvQatY0b+Msn90/nN4MhRFgGZftDm8g5rJXZy8jR6BU=\\",
+        \\"source_hash\\": \\"2KjtpOEQkNDiGqzM6aYcEzyi4kB2Ml5bwsivOzme43E=\\",
         \\"visibility\\": \\"public\\",
         \\"//\\": {
           \\"metadata\\": {

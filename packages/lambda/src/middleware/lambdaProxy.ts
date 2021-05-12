@@ -1,5 +1,5 @@
 import { APIGatewayProxyResult } from 'aws-lambda';
-import { MiddlewareConfig, APIGatewayProxyMiddleware } from '../middleware';
+import { APIGatewayProxyMiddleware } from '../middleware';
 
 const createResponse = (statusCode: number, body: string): APIGatewayProxyResult => ({
   statusCode,
@@ -9,17 +9,15 @@ const createResponse = (statusCode: number, body: string): APIGatewayProxyResult
   body
 });
 
-export const lambdaProxyMiddleware: MiddlewareConfig = (): APIGatewayProxyMiddleware => ({
-  after: (handler, next): void => {
+export const lambdaProxyMiddleware = (): APIGatewayProxyMiddleware => ({
+  after: async (handler): Promise<void> => {
     handler.response = createResponse(200, JSON.stringify(handler.response));
-    next();
   },
-  onError: (handler, next): void => {
+  onError: async (handler): Promise<void> => {
     console.error({
       requestId: handler.context.awsRequestId,
       ...handler.error
     });
     handler.response = createResponse(500, 'An error occurred');
-    next();
   }
 });

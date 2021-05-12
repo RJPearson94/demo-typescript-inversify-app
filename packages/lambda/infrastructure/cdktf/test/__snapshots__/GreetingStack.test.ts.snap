@@ -65,7 +65,7 @@ exports[`create greeting stack 1`] = `
         \\"memory_size\\": 128,
         \\"role\\": \\"\${aws_iam_role.lambda_role.arn}\\",
         \\"runtime\\": \\"nodejs14.x\\",
-        \\"source_code_hash\\": \\"G56QA7Uqw/CXuLAQIZ/rfT2BNpjzhInT9bF0AwQfMrM=\\",
+        \\"source_code_hash\\": \\"XXp6WaBmsj/G1AwLfRtEVx6IJzZwNWW3mxZtrZyB/R0=\\",
         \\"timeout\\": 5,
         \\"environment\\": [
           {
@@ -303,7 +303,7 @@ exports[`create greeting stack with prefix and tags 1`] = `
         \\"memory_size\\": 128,
         \\"role\\": \\"\${aws_iam_role.lambda_role.arn}\\",
         \\"runtime\\": \\"nodejs14.x\\",
-        \\"source_code_hash\\": \\"G56QA7Uqw/CXuLAQIZ/rfT2BNpjzhInT9bF0AwQfMrM=\\",
+        \\"source_code_hash\\": \\"XXp6WaBmsj/G1AwLfRtEVx6IJzZwNWW3mxZtrZyB/R0=\\",
         \\"tags\\": {
           \\"service\\": \\"greeting-stack\\",
           \\"testing\\": \\"true\\"
