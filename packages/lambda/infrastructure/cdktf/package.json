@@ -17,7 +17,7 @@
   "devDependencies": {
     "@cdktf/provider-aws": "^1.0.70",
     "@types/jest": "^26.0.23",
-    "@types/node": "^14.14.37",
+    "@types/node": "^15.0.2",
     "cdktf": "0.3.0",
     "cdktf-cli": "0.3.0",
     "constructs": "^3.3.75",
