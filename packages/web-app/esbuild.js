@@ -10,6 +10,6 @@ require('esbuild')
     sourcemap: true,
     outfile: 'dist/main.js',
     platform: 'node',
-    target: 'node14'
+    target: 'node16'
   })
   .catch(() => process.exit(1));
