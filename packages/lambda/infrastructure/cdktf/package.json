@@ -18,7 +18,7 @@
     "@cdktf/provider-aws": "^1.0.70",
     "@types/jest": "^26.0.23",
     "@types/node": "^14.14.37",
-    "cdktf": "0.3.0",
+    "cdktf": "0.4.1",
     "cdktf-cli": "0.3.0",
     "constructs": "^3.3.75",
     "jest": "^26.6.3",
