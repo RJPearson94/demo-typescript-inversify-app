@@ -1,4 +1,4 @@
-FROM swaggerapi/swagger-ui:v3.48.0
+FROM swaggerapi/swagger-ui:v3.51.0
 
 LABEL maintainer = "RJPearson94"
 LABEL app = "Typescript Inversify Express App API Docs"
