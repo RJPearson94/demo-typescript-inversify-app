@@ -3,6 +3,8 @@ import { Function, Runtime, Code, Tracing, Alias, IFunction, IAlias } from '@aws
 import { LogGroup, RetentionDays } from '@aws-cdk/aws-logs';
 import { IRestApi, SpecRestApi, ApiDefinition, RateLimitedApiKey, Period, IApiKey } from '@aws-cdk/aws-apigateway';
 import { ServicePrincipal } from '@aws-cdk/aws-iam';
+import { Metric, Alarm, ComparisonOperator } from '@aws-cdk/aws-cloudwatch';
+import { LambdaApplication, LambdaDeploymentGroup, LambdaDeploymentConfig } from '@aws-cdk/aws-codedeploy';
 import openApiTemplate from './templates/openapi.tpl.json';
 
 export interface FunctionResources {
@@ -83,6 +85,19 @@ export class GreetingStack extends Stack {
     const alias = new Alias(this, `FunctionAlias`, {
       aliasName: this.props?.lambda?.alias || 'stable',
       version: func.currentVersion
+    });
+
+    new LambdaDeploymentGroup(this, 'LambdaDeploymentGroup', {
+      alias: alias,
+      deploymentConfig: LambdaDeploymentConfig.LINEAR_10PERCENT_EVERY_1MINUTE,
+      alarms: [
+        new Alarm(this, 'Errors', {
+          comparisonOperator: ComparisonOperator.GREATER_THAN_THRESHOLD,
+          threshold: 1,
+          evaluationPeriods: 1,
+          metric: alias.metricErrors()
+        })
+      ]
     });
 
     return {

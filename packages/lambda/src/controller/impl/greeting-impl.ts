@@ -9,6 +9,6 @@ export class GreetingControllerImpl implements GreetingController {
   public constructor(@inject(TYPES.HelloService) private helloService: HelloService) {}
 
   public greet(): string {
-    return this.helloService.sayHello() + 'Lambda';
+    return this.helloService.sayHello() + 'Lambda Function';
   }
 }

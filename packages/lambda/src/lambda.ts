@@ -1,16 +1,12 @@
-import 'reflect-metadata';
-
 import middy from '@middy/core';
-import { APIGatewayProxyEvent } from 'aws-lambda';
 
-import { MessageResponse, Context } from './lib';
-import { inversifyMiddleware, lambdaProxyMiddleware } from './middleware';
+import { MessageResponse } from './lib';
+import { lambdaProxyMiddleware } from './middleware';
 
-const apiGatewayHandler = async (_: APIGatewayProxyEvent, { greetingController }: Context): Promise<MessageResponse> => {
-  const helloResponse = greetingController.greet();
+const apiGatewayHandler = async (): Promise<MessageResponse> => {
   return {
-    message: helloResponse
+    message: 'Hello World'
   };
 };
 
-export const handler = middy(apiGatewayHandler).use(inversifyMiddleware()).use(lambdaProxyMiddleware());
+export const handler = middy(apiGatewayHandler).use(lambdaProxyMiddleware());
