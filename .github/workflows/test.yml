@@ -1,4 +1,4 @@
-name: Twilio Function Pipeline
+name: Pipeline
 
 on:
   push:
