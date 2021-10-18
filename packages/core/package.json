@@ -13,7 +13,7 @@
     "tsc": "tsc -p tsconfig.build.json && tscpaths -p tsconfig.build.json -s ./src -o ./dist"
   },
   "dependencies": {
-    "inversify": "^5.1.1",
+    "inversify": "^6.0.1",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
